@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+class MenuHomePageScreen extends StatelessWidget {
+  final String title;
+  final String subTitle;
+  final Function ontap;
+  final String imageUrl;
+
+  MenuHomePageScreen({
+    @required this.title,
+    @required this.subTitle,
+    @required this.ontap,
+    @required this.imageUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      splashColor: Theme.of(context).colorScheme.secondary,
+      onTap: ontap,
+      child: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Card(
+          elevation: 4,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                imageUrl,
+                width: MediaQuery.of(context).size.height * .09,
+              ),
+              SizedBox(height: 7),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
+                  color: Color(0xFF130B3B),
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                subTitle,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Ubuntu',
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

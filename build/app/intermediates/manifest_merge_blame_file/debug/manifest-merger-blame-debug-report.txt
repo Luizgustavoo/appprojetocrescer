@@ -1,0 +1,95 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.projetocrescer"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="18"
+9        android:targetSdkVersion="29" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:3:10-72
+14-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:3:27-69
+15    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15-->[:connectivity] C:\flutterprojects\projetocrescer\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-79
+15-->[:connectivity] C:\flutterprojects\projetocrescer\build\connectivity\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-76
+16    <uses-permission android:name="android.permission.CAMERA" />
+16-->[:barcode_scan2] C:\flutterprojects\projetocrescer\build\barcode_scan2\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-65
+16-->[:barcode_scan2] C:\flutterprojects\projetocrescer\build\barcode_scan2\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-62
+17
+18    <application
+19        android:name="android.app.Application"
+19-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:5:9-42
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.6.0] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\994708e1e6653878baeebd8231af8667\core-1.6.0\AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:icon="@mipmap/ic_launcher"
+22-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:7:9-43
+23        android:label="projetocrescer"
+23-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:6:9-39
+24        android:usesCleartextTraffic="true" >
+24-->C:\flutterprojects\projetocrescer\android\app\src\debug\AndroidManifest.xml:7:18-53
+25        <activity
+25-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:8:9-19:20
+26            android:name="com.example.projetocrescer.MainActivity"
+26-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:9:13-41
+27            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+27-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:12:13-163
+28            android:hardwareAccelerated="true"
+28-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:13:13-47
+29            android:launchMode="singleTop"
+29-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:10:13-43
+30            android:theme="@style/LaunchTheme"
+30-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:11:13-47
+31            android:windowSoftInputMode="adjustResize" >
+31-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:14:13-55
+32            <intent-filter>
+32-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:15:13-18:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:16:17-68
+33-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:16:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:17:17-76
+35-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:17:27-74
+36            </intent-filter>
+37        </activity>
+38
+39        <meta-data
+39-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:20:9-22:33
+40            android:name="flutterEmbedding"
+40-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:21:13-44
+41            android:value="2" />
+41-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:22:13-30
+42
+43        <activity
+43-->[:url_launcher_android] C:\flutterprojects\projetocrescer\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-11:74
+44            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+44-->[:url_launcher_android] C:\flutterprojects\projetocrescer\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-74
+45            android:exported="false"
+45-->[:url_launcher_android] C:\flutterprojects\projetocrescer\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-37
+46            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+46-->[:url_launcher_android] C:\flutterprojects\projetocrescer\build\url_launcher_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-71
+47        <activity android:name="de.mintware.barcode_scan.BarcodeScannerActivity" />
+47-->[:barcode_scan2] C:\flutterprojects\projetocrescer\build\barcode_scan2\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-84
+47-->[:barcode_scan2] C:\flutterprojects\projetocrescer\build\barcode_scan2\intermediates\library_manifest\debug\AndroidManifest.xml:10:19-81
+48
+49        <uses-library
+49-->[androidx.window:window:1.0.0-beta04] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\418febda90583e1ff94f2758fcdcfbb1\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+50            android:name="androidx.window.extensions"
+50-->[androidx.window:window:1.0.0-beta04] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\418febda90583e1ff94f2758fcdcfbb1\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+51            android:required="false" />
+51-->[androidx.window:window:1.0.0-beta04] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\418febda90583e1ff94f2758fcdcfbb1\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+52        <uses-library
+52-->[androidx.window:window:1.0.0-beta04] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\418febda90583e1ff94f2758fcdcfbb1\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+53            android:name="androidx.window.sidecar"
+53-->[androidx.window:window:1.0.0-beta04] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\418febda90583e1ff94f2758fcdcfbb1\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+54            android:required="false" />
+54-->[androidx.window:window:1.0.0-beta04] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\418febda90583e1ff94f2758fcdcfbb1\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+55    </application>
+56
+57</manifest>

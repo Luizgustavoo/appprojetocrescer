@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\flutterprojects\\projetocrescer\\build\\shared_preferences_android\\intermediates\\res\\merged\\debug\\values-ne\\values-ne.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\luiz\\.gradle\\caches\\transforms-2\\files-2.1\\994708e1e6653878baeebd8231af8667\\core-1.6.0\\res\\values-ne\\values-ne.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\flutterprojects\\projetocrescer\\build\\shared_preferences_android\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ne\\values-ne.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\luiz\\.gradle\\caches\\transforms-2\\files-2.1\\994708e1e6653878baeebd8231af8667\\core-1.6.0\\res\\values-ne\\values-ne.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}
