@@ -13,9 +13,7 @@
     </ul>
     <h2>Como utilizar</h2>
     <p>O aplicativo Projeto Crescer - Controle para Pais estará disponível em breve para download gratuito na App Store e Google Play.</p>
-    
     <h2>Contribuições</h2>
     <p>Este é um projeto em constante evolução, e aceitamos contribuições da comunidade para melhorá-lo e ampliar suas funcionalidades. Caso queira colaborar, envie um pull request ou entre em contato com a equipe de desenvolvimento.</p>
-    
     <h2>Licença</h2>
     <p>Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE para obter mais informações.</p>
