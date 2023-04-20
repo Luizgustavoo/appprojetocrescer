@@ -3,7 +3,7 @@
          <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name="${applicationName}"
-        android:label="projetocrescer"
+        android:label="Projeto Crescer"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

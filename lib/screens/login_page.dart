@@ -1,9 +1,10 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/widgets/clip_path.dart';
-import 'package:projetocrescer/widgets/custom_colors.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -270,7 +271,19 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           _isLoading
                               ? Center(
-                                  child: CircularProgressIndicator(),
+                                  child: SizedBox(
+                                    width: 80,
+                                    height: 80,
+                                    child: LoadingIndicator(
+                                      indicatorType: Indicator.ballPulseSync,
+                                      colors: [
+                                        Color(0xFF130B3B),
+                                        Color(0xFFEBAE1F),
+                                        Color(0XFFd7f1fa),
+                                      ],
+                                      strokeWidth: 1,
+                                    ),
+                                  ),
                                 )
                               : SizedBox(
                                   height: 50,

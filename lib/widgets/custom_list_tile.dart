@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetocrescer/widgets/custom_colors.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 
 class CustomListTile extends StatelessWidget {
   final IconData icon;

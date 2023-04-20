@@ -22,7 +22,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\lu
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.6.0] C:\Users\luiz\.gradle\caches\transforms-2\files-2.1\994708e1e6653878baeebd8231af8667\core-1.6.0\AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:6:9-39
+		ADDED from C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:6:9-40
 	android:icon
 		ADDED from C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:7:9-43
 	android:usesCleartextTraffic

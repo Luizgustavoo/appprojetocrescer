@@ -10,8 +10,14 @@ class Usuario {
   final String matriculaUsuario;
   final String nomeUsuario;
   final String emailUsuario;
+  final String foto;
+  // ignore: non_constant_identifier_names
+  final String serie_matricula;
 
   Usuario({
+    // ignore: non_constant_identifier_names
+    this.serie_matricula,
+    this.foto,
     this.matriculaUsuario,
     this.nomeUsuario,
     this.emailUsuario,
@@ -26,9 +32,26 @@ class Login with ChangeNotifier {
 
   String _matricula;
   String _usuarioMatricula;
+  String _foto;
+  // ignore: non_constant_identifier_names
+  String _serie_matricula;
 
   int get itemsCount {
     return _items.length;
+  }
+
+  // ignore: missing_return
+  String get serie {
+    if (_serie_matricula != null) {
+      return _serie_matricula;
+    }
+  }
+
+  // ignore: missing_return
+  String get foto {
+    if (_foto != null) {
+      return _foto;
+    }
   }
 
   // ignore: missing_return
@@ -53,6 +76,8 @@ class Login with ChangeNotifier {
     _items.clear();
     _matricula = null;
     _usuarioMatricula = null;
+    _foto = null;
+    _serie_matricula = null;
     Store.remove('userData');
     notifyListeners();
   }
@@ -68,6 +93,8 @@ class Login with ChangeNotifier {
     } else {
       _matricula = userData["matricula_usuario"].toString();
       _usuarioMatricula = userData["nome_usuario"].toString();
+      _foto = userData["foto"].toString();
+      _serie_matricula = userData["serie_matricula"].toString();
 
       notifyListeners();
       return Future.value();
@@ -102,19 +129,24 @@ class Login with ChangeNotifier {
                 matriculaUsuario: usuarioData['matricula_usuario'].toString(),
                 nomeUsuario: usuarioData['nome_usuario'].toString(),
                 emailUsuario: usuarioData['email_usuario'].toString(),
+                foto: usuarioData['foto'].toString(),
+                serie_matricula: usuarioData['serie_matricula'].toString(),
               ),
             );
 
             _matricula = usuarioData['matricula_usuario'].toString();
             _usuarioMatricula = usuarioData['nome_usuario'].toString();
+            _foto = usuarioData['foto'].toString();
+            _serie_matricula = usuarioData['serie_matricula'].toString();
 
             Store.saveMap('userData', {
               "matricula_usuario": usuarioData['matricula_usuario'].toString(),
               "nome_usuario": usuarioData['nome_usuario'].toString(),
               "email_usuario": usuarioData['email_usuario'].toString(),
+              "foto": usuarioData['foto'].toString(),
+              "serie_matricula": usuarioData['serie_matricula'].toString(),
             });
           });
-
           retorno = 'success';
         } else {
           retorno = 'fail';

@@ -6,10 +6,13 @@ class Constants {
 
   static const String URL_LIST_PENALIDADES = 'http://' +
       IP +
-      '/sistemaalunos/penalidade/listagempormatricula/matricula/';
+      '/sistemaalunos/penalidade/listagempormatricula/matricula';
 
   static const String URL_LIST_USUARIOS =
       'http://' + IP + '/sistemaalunos/usuario/listarusuarioapp';
+
+  static const String URL_FOTOS =
+      'http://' + IP + '/sistemaalunos//web-pages/documentos/fotos/';
 
   static const String URL_LIST_PENDENCIAS = 'http://' +
       IP +
@@ -19,19 +22,16 @@ class Constants {
       IP +
       '/sistemaalunos/frequencia/listagempormatricula/matricula/';
 
-  static const String URL_BOLETIM =
-      'http://' + IP + '/sistemaalunos/boletim/listagempormatriculaano/';
-
   static const String URL_AGENDAMENTO =
-      'http://' + IP + '/sistemaalunos/agendamentoatendimento/cadastrar/';
+      'http://' + IP + '/sistemaalunos/agendamentoatendimento/cadastrar';
 
   static const String URL_LIST_AGENDAMENTOS = 'http://' +
       IP +
-      '/sistemaalunos/agendamentoatendimento/listagempormatricula/matricula/';
+      '/sistemaalunos/agendamentoatendimento/listagempormatricula/matricula';
 
-  static const String URL_HORARIOS_ATENDIMENTO = 'http://' +
-      IP +
-      '/sistemaalunos/horariosatendimento/listartodosbeforetoday/';
+  // static const String URL_HORARIOS_ATENDIMENTO = 'http://' +
+  //     IP +
+  //     '/sistemaalunos/horariosatendimento/listartodosbeforetoday/';
 
   static const String URL_COMUNICADOS = 'http://' +
       IP +

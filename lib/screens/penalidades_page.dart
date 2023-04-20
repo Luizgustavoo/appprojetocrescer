@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_penalidades.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/widgets/penalidade_item.dart';
 import 'package:provider/provider.dart';
 
 class PenalidadesPage extends StatefulWidget {
@@ -34,185 +36,122 @@ class _PenalidadesPageState extends State<PenalidadesPage> {
     final penalidades = penalidadesData.items;
 
     return Scaffold(
-      appBar: PreferredSize(
-        child: AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(0))),
-          title: Text(
-            'PENALIDADES DO ALUNO',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).textScaleFactor * 20,
-            ),
-          ),
+      backgroundColor: CustomColors.fundo,
+      appBar: AppBar(
+        title: Text(
+          'PENALIDADES DO ALUNO',
         ),
-        preferredSize: Size.fromHeight(70),
       ),
-      // drawer: AppDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
           : RefreshIndicator(
+              color: CustomColors.amarelo,
               onRefresh: () => loadPenalidades(context),
               child: Column(
                 children: [
                   Card(
-                    margin: EdgeInsets.all(15),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.only(
+                        top: 10, bottom: 10, left: 15, right: 15),
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       child: SizedBox(
                         height: 40,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Ocorrências: ',
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          15,
-                                ),
-                              ),
-                              Chip(
-                                label: Text(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Chip(
+                              avatar: CircleAvatar(
+                                backgroundColor: Colors.blue[900],
+                                child: Text(
                                   penalidadesData.totalOcorrencias.toString(),
                                   style: TextStyle(
-                                    color: Colors.black,
                                     fontSize:
                                         MediaQuery.of(context).textScaleFactor *
-                                            15,
+                                            17,
+                                    fontFamily: 'Montserrat',
                                   ),
                                 ),
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
                               ),
-                              Text(
-                                'Advertências: ',
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          15,
+                              elevation: 3,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).textScaleFactor * 15,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: .5,
+                              ),
+                              label: Container(
+                                child: Text(
+                                  'Ocorrências',
                                 ),
                               ),
-                              Chip(
-                                label: Text(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
+                            Chip(
+                              avatar: CircleAvatar(
+                                backgroundColor: Colors.red[900],
+                                child: Text(
                                   penalidadesData.totalAdvertencias.toString(),
                                   style: TextStyle(
-                                    color: Colors.white,
                                     fontSize:
                                         MediaQuery.of(context).textScaleFactor *
-                                            15,
+                                            17,
+                                    fontFamily: 'Montserrat',
                                   ),
                                 ),
-                                backgroundColor: Theme.of(context).errorColor,
                               ),
-                            ],
-                          ),
+                              elevation: 3,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).textScaleFactor * 15,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: .5,
+                              ),
+                              label: Text(
+                                'Advertências',
+                              ),
+                              backgroundColor: Theme.of(context).errorColor,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: penalidadesData.itemsCount,
-                      itemBuilder: (ctx, i) {
-                        return PenalidadesItem(penalidades[i]);
-                      },
-                    ),
+                    child: penalidadesData.itemsCount <= 0
+                        ? Center(
+                            child: Text(
+                              'Nenhuma penalidade encontrada! \nParabéns.' +
+                                  '💙',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: penalidadesData.itemsCount,
+                            itemBuilder: (ctx, i) {
+                              return PenalidadesItem(penalidades[i]);
+                            },
+                          ),
                   ),
                 ],
               ),
             ),
-    );
-  }
-}
-
-class PenalidadesItem extends StatefulWidget {
-  final Penalidade _penalidade;
-
-  PenalidadesItem(this._penalidade);
-
-  @override
-  _PenalidadesItemState createState() => _PenalidadesItemState();
-}
-
-class _PenalidadesItemState extends State<PenalidadesItem> {
-  bool _expanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      curve: Curves.linear,
-      height: _expanded ? 200 : 96,
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              ListTile(
-                onTap: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                },
-                title: Text(
-                  widget._penalidade.descricaoTipoPenalidade,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).textScaleFactor * 15,
-                  ),
-                ),
-                subtitle: Text(
-                  widget._penalidade.dataPenalidade,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                leading: Image.asset(
-                    int.parse(widget._penalidade.tipoPenalidade) <= 1
-                        ? 'images/penalidades.png'
-                        : 'images/perigo.png'),
-                trailing: IconButton(
-                  icon: _expanded
-                      ? Icon(Icons.expand_less)
-                      : Icon(Icons.expand_more),
-                  onPressed: () {
-                    setState(() {
-                      _expanded = !_expanded;
-                    });
-                  },
-                ),
-              ),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.linear,
-                height: _expanded ? 100 : 0,
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                child: ListView(
-                  children: [
-                    Text(
-                      widget._penalidade.observacao,
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                      textAlign: TextAlign.left,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

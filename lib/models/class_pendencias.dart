@@ -39,7 +39,7 @@ class Pendencias with ChangeNotifier {
 //   }
 
   Future<void> loadPendencias(String matricula) async {
-    final Uri _base = Uri.http(_baseUrl, '$matricula');
+    var _base = Uri.parse('$_baseUrl/$matricula');
     final response = await http.get(_base);
 
     final data = json.decode(response.body);

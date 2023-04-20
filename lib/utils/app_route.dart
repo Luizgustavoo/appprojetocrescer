@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class AppRoute {
   static const String INDEX = "/";
   static const String SPLASH = "/splash";
@@ -17,10 +15,7 @@ class AppRoute {
   static const String DETALHES_COMUNICADOS = "/detalhes-comunicados";
   static const String EVENTOS = "/eventos";
 
+  /* IMPLEMENTADO DEPOIS*/
+  static const String FALE = "/fale-conosco";
   static const String OPCOES_AGENDAMENTO = "/opcoes-agendamento";
-}
-
-class AppColor {
-  static const Color corTitulo = Colors.amber;
-  static const Color corMenu = Colors.blue;
 }

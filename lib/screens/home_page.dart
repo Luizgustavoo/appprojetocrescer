@@ -11,7 +11,7 @@ import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/widgets/app_drawer.dart';
-import 'package:projetocrescer/widgets/custom_colors.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/menu_home_page_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -136,48 +136,43 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             actions: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: CustomColors.azul,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () => Navigator.of(context).pop(false),
-                      //return false when click on "NO"
-                      child: Text(
-                        'NÃO',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+              SizedBox(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: CustomColors.azul,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  SizedBox(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: CustomColors.azul,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () => Navigator.of(context).pop(true),
-                      //return true when click on "Yes"
-                      child: Text(
-                        'SIM',
-                        style: TextStyle(
-                          fontFamily: 'Ubuntu',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  onPressed: () => Navigator.of(context).pop(false),
+                  //return false when click on "NO"
+                  child: Text(
+                    'NÃO',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ],
+                ),
+              ),
+              SizedBox(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: CustomColors.azul,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pop(true),
+                  //return true when click on "Yes"
+                  child: Text(
+                    'SIM',
+                    style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               )
             ],
           ),
@@ -192,15 +187,8 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: CustomColors.fundo,
         appBar: AppBar(
-          backgroundColor: CustomColors.azul,
           title: Text(
             'PROJETO CRESCER',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).textScaleFactor * 20,
-              fontFamily: 'Montserrat',
-            ),
           ),
         ),
         drawer: AppDrawer(
@@ -210,11 +198,12 @@ class _HomePageState extends State<HomePage> {
           itemsPsicologoConfirmado > 0 ? itemsPsicologoConfirmado : 0,
         ),
         body: GridView.count(
+          shrinkWrap: true,
           childAspectRatio: 1,
           crossAxisCount: 2,
           crossAxisSpacing: 5,
           mainAxisSpacing: 5,
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(12),
           children: [
             MenuHomePageScreen(
               title: 'COMUNICADOS',

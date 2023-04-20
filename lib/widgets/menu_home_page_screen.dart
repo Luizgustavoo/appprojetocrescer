@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 
 class MenuHomePageScreen extends StatelessWidget {
   final String title;
@@ -15,14 +16,17 @@ class MenuHomePageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      splashColor: Theme.of(context).colorScheme.secondary,
-      onTap: ontap,
-      child: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: InkWell(
+        splashColor: CustomColors.azul,
+        borderRadius: BorderRadius.circular(10),
+        onTap: ontap,
         child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           elevation: 4,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +51,8 @@ class MenuHomePageScreen extends StatelessWidget {
                 subTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 15,
+                  overflow: TextOverflow.clip,
                   fontFamily: 'Ubuntu',
                 ),
               ),

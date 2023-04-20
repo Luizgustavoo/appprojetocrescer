@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_pendencias.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/widgets/pendecias_item.dart';
 import 'package:provider/provider.dart';
 
-class PendecniasPage extends StatefulWidget {
+class PendeciasPage extends StatefulWidget {
   @override
-  _PendecniasPageState createState() => _PendecniasPageState();
+  _PendeciasPageState createState() => _PendeciasPageState();
 }
 
-class _PendecniasPageState extends State<PendecniasPage> {
+class _PendeciasPageState extends State<PendeciasPage> {
   bool _isLoading = true;
 
   Future<void> loadPendencias(BuildContext context) {
     // final usuarioData = Provider.of<Login>(context, listen: false);
-
     return Provider.of<Pendencias>(context, listen: false)
         .loadPendencias(Provider.of<Login>(context, listen: false).matricula)
         .then((_) {
@@ -34,22 +34,10 @@ class _PendecniasPageState extends State<PendecniasPage> {
     final pendencias = pendenciasData.items;
 
     return Scaffold(
-      appBar: PreferredSize(
-        child: AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(0))),
-          title: Text(
-            'PENDÊNCIAS DO ALUNO',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: MediaQuery.of(context).textScaleFactor * 20,
-            ),
-          ),
+      appBar: AppBar(
+        title: Text(
+          'PENDÊNCIAS DO ALUNO',
         ),
-        preferredSize: Size.fromHeight(70),
       ),
       body: _isLoading
           ? Center(
@@ -62,8 +50,16 @@ class _PendecniasPageState extends State<PendecniasPage> {
                   Expanded(
                     child: pendenciasData.itemsCount <= 0
                         ? Center(
-                            child:
-                                Text('Nenhuma pendência encontrada! Parabéns.'),
+                            child: Text(
+                              'Nenhuma pendência encontrada! \nParabéns.' +
+                                  '💙',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
                           )
                         : ListView.builder(
                             itemCount: pendenciasData.itemsCount,
@@ -75,108 +71,6 @@ class _PendecniasPageState extends State<PendecniasPage> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-class PendenciasItem extends StatefulWidget {
-  final Pendencia _pendencia;
-
-  PendenciasItem(this._pendencia);
-
-  @override
-  _PendenciasItemState createState() => _PendenciasItemState();
-}
-
-class _PendenciasItemState extends State<PendenciasItem> {
-  bool _expanded = false;
-
-  @override
-  Widget build(BuildContext context) {
-    var imagem = "";
-    if (widget._pendencia.descricaoTipoPendencia.contains('CRACHÁ')) {
-      imagem = 'images/crachaa.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('LIVRO')) {
-      imagem = 'images/livro.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('CHAVE')) {
-      imagem = 'images/chave.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('FIGURINO')) {
-      imagem = 'images/figurino.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('FLAUTA')) {
-      imagem = 'images/flauta.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('MÁSCARA')) {
-      imagem = 'images/mascara.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('UNIFORME')) {
-      imagem = 'images/uniforme.png';
-    } else {
-      imagem = 'images/perigo.png';
-    }
-
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      curve: Curves.linear,
-      height: _expanded ? 200 : 96,
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              ListTile(
-                onTap: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                },
-                title: Text(
-                  widget._pendencia.descricaoTipoPendencia,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                subtitle: Text(
-                  widget._pendencia.dataPendencia +
-                      " - Status: " +
-                      widget._pendencia.statusPendencia,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                leading: Image.asset(imagem),
-                trailing: widget._pendencia.statusPendencia == 'ativo'
-                    ? Icon(
-                        Icons.dangerous,
-                        size: 50,
-                        color: Colors.red,
-                      )
-                    : Icon(
-                        Icons.warning,
-                        size: 50,
-                        color: Colors.green,
-                      ),
-              ),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.linear,
-                height: _expanded ? 100 : 0,
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                child: ListView(
-                  children: [
-                    Text(
-                      widget._pendencia.observacao,
-                      style: TextStyle(
-                          color: widget._pendencia.statusPendencia == 'ativo'
-                              ? Theme.of(context).errorColor
-                              : Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                      textAlign: TextAlign.left,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

@@ -8,22 +8,22 @@ import 'package:projetocrescer/utils/constants.dart';
 
 class AgendamentoAtendimento {
   final String idAgendamento;
+  final String nomeResponsavel;
+  final String motivoAgendamento;
   final String dataAgendamento;
   final String horaAgendamento;
-  final String matricula;
-  final String nomePessoa;
-  final String dataCadastro;
-  final String setorAgendamento;
   final String statusAgendamento;
-  final String motivoAgendamento;
+  final String idMatricula;
+  final String dataSolicitacao;
+  final String setorAgendamento;
 
   AgendamentoAtendimento({
+    this.nomeResponsavel,
+    this.idMatricula,
+    this.dataSolicitacao,
     this.idAgendamento,
     this.dataAgendamento,
     this.horaAgendamento,
-    this.matricula,
-    this.nomePessoa,
-    this.dataCadastro,
     this.setorAgendamento,
     this.statusAgendamento,
     this.motivoAgendamento,
@@ -31,7 +31,7 @@ class AgendamentoAtendimento {
 }
 
 class AgendamentosAtendimentos with ChangeNotifier {
-  final Uri _baseUrl = Uri.parse(Constants.URL_AGENDAMENTO);
+  var _baseUrl = Uri.parse(Constants.URL_AGENDAMENTO);
   List<AgendamentoAtendimento> _items = [];
 
   List<AgendamentoAtendimento> get items => [..._items];
@@ -98,8 +98,6 @@ class AgendamentosAtendimentos with ChangeNotifier {
       body: {
         "data_agendamento": agendamento.dataAgendamento,
         "hora_agendamento": agendamento.horaAgendamento,
-        "matricula": agendamento.matricula,
-        "nome_pessoa": agendamento.nomePessoa,
         "setor_agendamento": agendamento.setorAgendamento,
         "status_agendamento": agendamento.statusAgendamento,
         "motivo_agendamento": agendamento.motivoAgendamento,
@@ -117,8 +115,8 @@ class AgendamentosAtendimentos with ChangeNotifier {
   }
 
   Future<void> loadAgendamentos(String matricula) async {
-    final _baseUrl = Constants.URL_LIST_AGENDAMENTOS;
-    final Uri _base = Uri.http(_baseUrl, '$matricula');
+    final String _baseUrl = Constants.URL_LIST_AGENDAMENTOS;
+    var _base = Uri.parse('$_baseUrl/$matricula');
     final response = await http.get(_base);
 
     final data = json.decode(response.body);
@@ -129,16 +127,16 @@ class AgendamentosAtendimentos with ChangeNotifier {
         _items.add(
           AgendamentoAtendimento(
             idAgendamento: dados['id_agendamento'].toString(),
+            nomeResponsavel: dados['nome_responsavel'].toString(),
+            motivoAgendamento: dados['motivo_agendamento'].toString(),
             dataAgendamento: DateFormat('dd/MM/y')
                 .format(DateTime.parse(dados['data_agendamento'].toString())),
             horaAgendamento: dados['hora_agendamento'].toString(),
-            matricula: dados['matricula'].toString(),
-            nomePessoa: dados['nome_pessoa'].toString(),
-            dataCadastro: DateFormat('dd/MM/y')
-                .format(DateTime.parse(dados['data_cadastro'].toString())),
-            setorAgendamento: dados['setor_agendamento'].toString(),
             statusAgendamento: dados['status_agendamento'].toString(),
-            motivoAgendamento: dados['motivo_agendamento'].toString(),
+            idMatricula: dados['id_matricula'].toString(),
+            dataSolicitacao: DateFormat('dd/MM/y')
+                .format(DateTime.parse(dados['data_solicitacao'].toString())),
+            setorAgendamento: dados['setor_agendamento'].toString(),
           ),
         );
       });

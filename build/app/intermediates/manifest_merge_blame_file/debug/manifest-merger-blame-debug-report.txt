@@ -29,8 +29,8 @@
 21        android:debuggable="true"
 22        android:icon="@mipmap/ic_launcher"
 22-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:7:9-43
-23        android:label="projetocrescer"
-23-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:6:9-39
+23        android:label="Projeto Crescer"
+23-->C:\flutterprojects\projetocrescer\android\app\src\main\AndroidManifest.xml:6:9-40
 24        android:usesCleartextTraffic="true" >
 24-->C:\flutterprojects\projetocrescer\android\app\src\debug\AndroidManifest.xml:7:18-53
 25        <activity
