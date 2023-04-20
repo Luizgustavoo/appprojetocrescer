@@ -1,4 +1,4 @@
-##Projeto Crescer - Controle para Pais
+<h1>Projeto Crescer - Controle para Pais</h1>
     <p>O Projeto Crescer é uma instituição de ensino comprometida com a formação integral de seus alunos, buscando sempre a excelência acadêmica e pessoal. Para auxiliar os pais nesse acompanhamento, foi criado o aplicativo Projeto Crescer - Controle para Pais.</p>
     <h2>Funcionalidades</h2>
     <ul>
