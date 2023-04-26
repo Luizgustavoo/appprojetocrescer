@@ -29,28 +29,27 @@ dependencies:
   shared_preferences: ^2.0.5
   connectivity: ^3.0.3
   localization: ^0.1.0
-  url_launcher: ^6.1.10
+  url_launcher: ^6.1.6
   rive: ^0.10.3
   loading_indicator: ^3.0.0
   barcode_scan2: ^4.2.4
-  # syncfusion_flutter_calendar: ^19.1.55
+  firebase_core: ^1.24.0
+  firebase_remote_config: ^2.0.20
+  flutter_local_notifications: ^5.0.0+4
+  firebase_core_platform_interface: 4.5.1
+  firebase_messaging: ^13.0.4
+  app_settings: ^4.2.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   table_calendar: 
 
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.0
 
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "dev_assets/calc.png"
-  adaptive_icon_background: "#191919"
-  adaptive_icon_foreground: "dev_assets/calc-adaptive.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -3,11 +3,14 @@ import 'dart:convert';
 
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/class_penalidades.dart';
 import 'package:projetocrescer/models/class_pendencias.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/preferences/notification_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/widgets/app_drawer.dart';
@@ -28,13 +31,27 @@ class _HomePageState extends State<HomePage> {
 
   CustomLinks links = CustomLinks();
 
-  //-----------------------------------------------
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  NotificationServices services = NotificationServices();
+
+  //* QR CODE PARA AGENDAR REFEIÇÃO --------------------------------------------
   String qrCodeResult = "Aguardando...";
 
   bool resultInternet = false;
   String codeInvalido = "";
-  String _connection = "";
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  //* QR CODE PARA AGENDAR REFEIÇÃO --------------------------------------------
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  final AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    'This channel is used for important notifications.', // description
+    importance: Importance.high,
+  );
 
   void _updateStatus(ConnectivityResult connectivityResult) async {
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -56,15 +73,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void updateText(String texto) {
-    setState(() {
-      _connection = texto;
-    });
+    setState(() {});
   }
 
   @override
   void dispose() {
     _connectivitySubscription.cancel();
-
     super.dispose();
   }
 
@@ -85,9 +99,78 @@ class _HomePageState extends State<HomePage> {
         .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula);
   }
 
+  //*--------------
+
+  _registerOnFirebase() {
+    _firebaseMessaging.subscribeToTopic('all');
+    _firebaseMessaging.getToken();
+  }
+
+  Future<dynamic> onSelectNotificaton(payload) async {
+    print("PAYLOAD" + payload);
+    if (payload == 'comunicados') {
+      Navigator.of(context).pushNamed(AppRoute.COMUNICADOS);
+    }
+  }
+
+//*--------------------
   @override
   void initState() {
     super.initState();
+    services.requestPermission();
+    var initilizationSettingsAndroid =
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    var initializationSettings =
+        InitializationSettings(android: initilizationSettingsAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: onSelectNotificaton);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      Map<String, dynamic> dataValue = message.data;
+      String screen = dataValue['screen'].toString();
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+                channel.id, channel.name, channel.description,
+                icon: "@mipmap/ic_launcher", setAsGroupSummary: true),
+            iOS: IOSNotificationDetails(
+              presentAlert: true,
+              presentBadge: true,
+              presentSound: true,
+            ),
+          ),
+          payload: screen,
+        );
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body)],
+                  ),
+                ),
+              );
+            });
+      }
+    });
+    _registerOnFirebase();
+
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen(_updateStatus);
 
@@ -344,12 +427,20 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             MenuHomePageScreen(
-              title: 'EVENTOS',
-              subTitle: 'Confira os próximos eventos',
+              title: 'FALE CONOSCO',
+              subTitle: 'Confira nossos canais \nde atendimento',
               ontap: () {
-                Navigator.of(context).pushNamed(AppRoute.EVENTOS);
+                Navigator.of(context).pushNamed(AppRoute.FALE);
               },
-              imageUrl: 'images/eventos.png',
+              imageUrl: 'images/faleconosco.png',
+            ),
+            MenuHomePageScreen(
+              title: 'REDES SOCIAIS',
+              subTitle: 'Confira nossas redes sociais',
+              ontap: () {
+                Navigator.of(context).pushNamed(AppRoute.FALE);
+              },
+              imageUrl: 'images/redessociais.png',
             ),
           ],
         ),

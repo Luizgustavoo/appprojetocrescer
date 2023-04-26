@@ -32,6 +32,8 @@
 	<array>
     <string>http</string>
     <string>https</string>
+    <string>tel</string>
+    <string>whatsapp</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

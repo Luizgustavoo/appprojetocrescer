@@ -31,7 +31,6 @@ class Comunicado {
 class Comunicados with ChangeNotifier {
   List<Comunicado> _items = [];
   final String _baseUrl = Constants.URL_COMUNICADOS;
-  final Uri _baseParse = Uri.parse(Constants.URL_COMUNICADOS);
 
   List<Comunicado> get items => [..._items];
 
@@ -39,16 +38,8 @@ class Comunicados with ChangeNotifier {
     return _items.length;
   }
 
-//  int get totalJustificada {
-//     return _items.where((frequencia) => frequencia.justificado == 'sim').toList().length;
-//   }
-
-//  int get totalNaoJustificada {
-//     return _items.where((frequencia) => frequencia.justificado == 'nao').toList().length;
-//   }
-
   Future<bool> loadComunicados(String matricula) async {
-    final Uri _base = Uri.http(_baseUrl, '$matricula');
+    var _base = Uri.parse('$_baseUrl/$matricula');
     final response = await http.get(_base);
 
     final data = json.decode(response.body);
@@ -80,9 +71,10 @@ class Comunicados with ChangeNotifier {
   Future<String> visualizarComunicado(
       String comunicado, String matricula) async {
     String retorno = "fail";
+    var _baseUrl = Uri.parse(Constants.URL_VIEW_COMUNICADO);
 
     final response = await http.post(
-      _baseParse,
+      _baseUrl,
       body: {
         "comunicado": comunicado,
         "matricula": matricula,
@@ -92,8 +84,6 @@ class Comunicados with ChangeNotifier {
     if (response.body.contains('return')) {
       retorno = json.decode(response.body)['return'];
     }
-
-    print(retorno);
 
     notifyListeners();
     return Future.value(retorno);

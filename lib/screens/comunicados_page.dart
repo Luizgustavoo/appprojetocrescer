@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_comunicado.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/comunicados_item.dart';
 import 'package:provider/provider.dart';
 
@@ -33,24 +34,19 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
   Widget build(BuildContext context) {
     final comunicadosData = Provider.of<Comunicados>(context);
     final comunicados = comunicadosData.items;
-    print('Passei aqui!');
     return Scaffold(
+      backgroundColor: CustomColors.fundo,
       appBar: AppBar(
         title: Text(
           'COMUNICADOS',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).textScaleFactor * 18,
-          ),
         ),
       ),
-      // drawer: AppDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
           : RefreshIndicator(
+              color: CustomColors.amarelo,
               onRefresh: () => loadComunicados(context),
               child: Column(
                 children: [

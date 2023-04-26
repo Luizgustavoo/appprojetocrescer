@@ -134,13 +134,12 @@ class AppDrawer extends StatelessWidget {
               }, true),
               CustomListTile(
                   Icons.people_alt_rounded, 'MEUS DADOS', () {}, true),
-              CustomListTile(
-                  Icons.fastfood_rounded, 'AGENDAR CAFÉ/ALMOÇO', () {}, true),
               Stack(
                 children: [
                   CustomListTile(Icons.pending_actions_rounded, 'AG. PSICÓLOGO',
                       () {
-                    Navigator.of(context).pushNamed(AppRoute.LIST_AGENDAMENTOS);
+                    Navigator.of(context)
+                        .pushNamed(AppRoute.LIST_AGENDAMENTOS_PSICOLOGO);
                   }, true),
                   if (totalAgendamentoPsicologoConfirmado > 0)
                     Positioned(
@@ -172,7 +171,8 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   CustomListTile(
                       Icons.pending_actions_rounded, 'AG. COORDENAÇÃO', () {
-                    Navigator.of(context).pushNamed(AppRoute.LIST_AGENDAMENTOS);
+                    Navigator.of(context)
+                        .pushNamed(AppRoute.LIST_AGENDAMENTOS_COORDENACAO);
                   }, true),
                   if (totalAgendamentoCoordenacaoConfirmado > 0)
                     Positioned(
@@ -205,11 +205,7 @@ class AppDrawer extends StatelessWidget {
               }, true),
               CustomListTile(Icons.message_rounded, 'COMUNICADOS', () {}, true),
               CustomListTile(Icons.credit_card_rounded, 'CRACHÁ', () {}, true),
-              CustomListTile(
-                  Icons.paste_rounded, 'FICHA DO ALUNO', () {}, true),
               CustomListTile(Icons.category_rounded, 'OFICINAS', () {}, true),
-              // CustomListTile(
-              //     Icons.auto_stories_rounded, 'MATERIAL DA AULA', () {}, true),
               Stack(
                 children: [
                   CustomListTile(Icons.pending_actions_rounded, 'PENDÊNCIAS',

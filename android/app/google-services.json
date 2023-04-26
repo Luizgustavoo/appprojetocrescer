@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "869247178721",
+    "project_id": "projeto-crescer-8fef9",
+    "storage_bucket": "projeto-crescer-8fef9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869247178721:android:7ee5bae244b8d41f6564a0",
+        "android_client_info": {
+          "package_name": "com.example.projetocrescer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869247178721-2747svvbb8rnco15vt53anj94obop5hv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.projetocrescer",
+            "certificate_hash": "ea04320274b43d38d77d569bb0a48009c8322d44"
+          }
+        },
+        {
+          "client_id": "869247178721-gpknve6bus4p8o53kf26g84crq3a05j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAActoovUuK9cVEjWb0VbSaaKaSGZRgKTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869247178721-gpknve6bus4p8o53kf26g84crq3a05j1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

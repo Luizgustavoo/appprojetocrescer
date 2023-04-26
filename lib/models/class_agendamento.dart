@@ -96,10 +96,12 @@ class AgendamentosAtendimentos with ChangeNotifier {
     final response = await http.post(
       _baseUrl,
       body: {
-        "data_agendamento": agendamento.dataAgendamento,
-        "hora_agendamento": agendamento.horaAgendamento,
+        "id_matricula": agendamento.idMatricula,
+        "nome_responsavel": agendamento.nomeResponsavel,
         "setor_agendamento": agendamento.setorAgendamento,
         "status_agendamento": agendamento.statusAgendamento,
+        "data_agendamento": agendamento.dataAgendamento,
+        "hora_agendamento": agendamento.horaAgendamento,
         "motivo_agendamento": agendamento.motivoAgendamento,
       },
     );
@@ -108,7 +110,7 @@ class AgendamentosAtendimentos with ChangeNotifier {
       retorno = json.decode(response.body)['return'];
     }
 
-    print(retorno);
+    print(response.body);
 
     notifyListeners();
     return Future.value(retorno);

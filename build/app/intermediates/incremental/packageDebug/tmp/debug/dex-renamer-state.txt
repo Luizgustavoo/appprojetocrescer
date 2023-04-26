@@ -1,4 +1,7 @@
-#Thu Apr 20 10:12:41 BRT 2023
+#Wed Apr 26 16:38:59 BRT 2023
+base.1=C\:\\flutterprojects\\projetocrescer\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex
+path.1=classes2.dex
 base.0=C\:\\flutterprojects\\projetocrescer\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
 path.0=classes.dex

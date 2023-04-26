@@ -11,8 +11,10 @@ class Frequencia {
   final String justificado;
   final String justificativa;
   final String tipoFalta;
+  final String descricaoTipoFalta;
 
   Frequencia({
+    this.descricaoTipoFalta,
     this.nomePessoa,
     this.idMatricula,
     this.dataFrequencia,
@@ -34,7 +36,7 @@ class Frequencias with ChangeNotifier {
 
   int get totalJustificada {
     return _items
-        .where((frequencia) => frequencia.justificado == 'sim')
+        .where((frequencia) => frequencia.justificado == 'SIM')
         .toList()
         .length;
   }
@@ -47,7 +49,7 @@ class Frequencias with ChangeNotifier {
   }
 
   Future<void> loadFrequencias(String matricula) async {
-    final Uri _base = Uri.http(_baseUrl, '$matricula');
+    var _base = Uri.parse('$_baseUrl/$matricula');
     final response = await http.get(_base);
 
     final data = json.decode(response.body);
@@ -62,6 +64,7 @@ class Frequencias with ChangeNotifier {
                 .format(DateTime.parse(dados['data_frequencia'].toString())),
             justificado: dados['justificado'].toString(),
             justificativa: dados['justificativa'].toString(),
+            descricaoTipoFalta: dados['descricao_tipo_falta'].toString(),
             tipoFalta: dados['tipo_falta'].toString()),
       );
     });

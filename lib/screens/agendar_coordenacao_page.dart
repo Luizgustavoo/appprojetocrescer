@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +20,7 @@ class _AgendarCoordenacaoPageState extends State<AgendarCoordenacaoPage> {
   bool _isLoadingButton = true;
 
   void _saveForm() {
+    final focusNode = FocusScope.of(context);
     var isValid = _form.currentState.validate();
 
     if (!isValid) return;
@@ -26,12 +29,17 @@ class _AgendarCoordenacaoPageState extends State<AgendarCoordenacaoPage> {
     final agendamento = new AgendamentoAtendimento(
       idMatricula: Provider.of<Login>(context, listen: false).matricula,
       nomeResponsavel: _formData['nome'],
+      dataAgendamento: DateFormat('dd/MM/y').format(DateTime.now()),
+      horaAgendamento: DateFormat('Hms').format(DateTime.now()),
       setorAgendamento: "coordenacao",
       statusAgendamento: "aguardando",
       motivoAgendamento: _formData['motivo'],
     );
 
     setState(() {
+      focusNode.unfocus();
+      Navigator.of(context)
+          .pushReplacementNamed(AppRoute.LIST_AGENDAMENTOS_COORDENACAO);
       _isLoadingButton = false;
     });
 
@@ -43,8 +51,16 @@ class _AgendarCoordenacaoPageState extends State<AgendarCoordenacaoPage> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(value.toString()),
-            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+            content: Text(
+              value.toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Ubuntu',
+              ),
+            ),
+            duration: Duration(seconds: 4),
           ),
         );
       });
@@ -84,15 +100,14 @@ class _AgendarCoordenacaoPageState extends State<AgendarCoordenacaoPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 15,
-                        horizontal: 5,
                       ),
                       child: Center(
                         child: Text(
-                          'Solicite uma visita com a coordenação da escola através do nosso aplicativo.',
+                          'Solicite uma conversa com a coordenação do Projeto Crescer através do nosso aplicativo.',
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: 'Montserrat',
-                            fontSize: 18,
+                            fontSize: 17,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -106,13 +121,32 @@ class _AgendarCoordenacaoPageState extends State<AgendarCoordenacaoPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Nome Aluno: Luiz Gustavo da Silva'),
-                          Text('Série: 6º ANO'),
+                          Text(
+                            'NOME ALUNO: ' +
+                                Provider.of<Login>(context)
+                                    .usuarioMatricula
+                                    .toString(),
+                            style: TextStyle(
+                              color: CustomColors.azul,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'SÉRIE: ' +
+                                Provider.of<Login>(context).serie.toString() +
+                                'º ANO',
+                            style: TextStyle(
+                              color: CustomColors.azul,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     TextFormField(
                       decoration: InputDecoration(

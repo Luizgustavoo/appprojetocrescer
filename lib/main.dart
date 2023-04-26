@@ -1,5 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/class_comunicado.dart';
 import 'package:projetocrescer/models/class_frequencias.dart';
@@ -10,14 +13,15 @@ import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/screens/auth_or_home_page.dart';
 import 'package:projetocrescer/screens/comunicado_detalhe_page.dart';
 import 'package:projetocrescer/screens/comunicados_page.dart';
-import 'package:projetocrescer/screens/calendar.dart';
-import 'package:projetocrescer/screens/fale_conosco.dart';
-import 'package:projetocrescer/screens/listagem_agendamentos_page.dart';
+import 'package:projetocrescer/screens/fale_conosco_page.dart';
+import 'package:projetocrescer/screens/listagem_agendamentos_coordenacao_page.dart';
+import 'package:projetocrescer/screens/listagem_agendamentos_psicologo_page.dart';
 import 'package:projetocrescer/screens/opcoes_agend_ref.dart';
 import 'package:projetocrescer/screens/pendencias_page.dart';
 import 'package:projetocrescer/screens/splash_screen.dart';
 import 'package:projetocrescer/utils/custom_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/screens/agendar_psicologo_page.dart';
 import 'package:provider/provider.dart';
 import 'package:projetocrescer/screens/agendar_coordenacao_page.dart';
 import 'package:projetocrescer/screens/assiduidade_page.dart';
@@ -26,13 +30,46 @@ import 'package:projetocrescer/screens/login_page.dart';
 import 'package:projetocrescer/screens/penalidades_page.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // await Firebase.initializeApp(options: );
+  // await setupFlutterNotifications();
+  // showFlutterNotification(message);
+  await Firebase.initializeApp();
+  print('Handling a background message ${message.messageId}');
+}
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  'This channel is used for important notifications.',
+  importance: Importance.high,
+);
+
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor:
         CustomColors.azul, // cor de fundo da barra de navegação
-    systemNavigationBarIconBrightness: Brightness.light,
   ));
+  await Firebase.initializeApp();
+  //await FirebaseMessaging.instance.getToken();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
   runApp(MyApp());
 }
 
@@ -59,14 +96,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AgendamentosAtendimentos(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => HorariosAtendimentos(),
-        // ),
         ChangeNotifierProvider(
           create: (_) => Comunicados(),
         ),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         initialRoute: AppRoute.SPLASH,
         debugShowCheckedModeBanner: false,
         title: 'Projeto Crescer ',
@@ -113,10 +148,13 @@ class MyApp extends StatelessWidget {
           AppRoute.ASSIDUIDADE: (ctx) => AssiduidadePage(),
           AppRoute.PENALIDADES: (ctx) => PenalidadesPage(),
           AppRoute.AGENDAR_COORDENACAO: (ctx) => AgendarCoordenacaoPage(),
+          AppRoute.AGENDAR_PSICOLOGO: (ctx) => AgendarPsicologoPage(),
           AppRoute.PENDENCIAS_PAGE: (ctx) => PendeciasPage(),
-          AppRoute.LIST_AGENDAMENTOS: (ctx) => ListagemAgendamentoPage(),
+          AppRoute.LIST_AGENDAMENTOS_COORDENACAO: (ctx) =>
+              ListagemAgendamentoCoordenacaoPage(),
+          AppRoute.LIST_AGENDAMENTOS_PSICOLOGO: (ctx) =>
+              ListagemAgendamentoPsicologoPage(),
           AppRoute.DETALHES_COMUNICADOS: (ctx) => ComunicadoDetalhePage(),
-          AppRoute.EVENTOS: (ctx) => TableEventsExample(),
           AppRoute.FALE: (ctx) => FaleConosco(),
         },
       ),
@@ -124,7 +162,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class IndexPage extends StatelessWidget {
+class IndexPage extends StatefulWidget {
+  @override
+  State<IndexPage> createState() => _IndexPageState();
+}
+
+class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

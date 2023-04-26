@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_frequencias.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/widgets/frequencia_item_tile.dart';
 import 'package:provider/provider.dart';
 
 class AssiduidadePage extends StatefulWidget {
@@ -37,11 +39,6 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
       appBar: AppBar(
         title: Text(
           'FREQUENCIAS DO(A) ALUNO(A)',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: MediaQuery.of(context).textScaleFactor * 20,
-          ),
         ),
       ),
       // drawer: AppDrawer(),
@@ -50,62 +47,84 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
               child: CircularProgressIndicator(),
             )
           : RefreshIndicator(
+              color: CustomColors.amarelo,
               onRefresh: () => loadFrequencias(context),
               child: Column(
                 children: [
                   Card(
-                    margin: EdgeInsets.all(15),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.only(
+                        top: 10, bottom: 10, left: 15, right: 15),
                     child: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       child: SizedBox(
                         height: 40,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Justificadas: ',
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          15,
-                                ),
-                              ),
-                              Chip(
-                                label: Text(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Chip(
+                              avatar: CircleAvatar(
+                                backgroundColor: Colors.blue[900],
+                                child: Text(
                                   frequenciasData.totalJustificada.toString(),
                                   style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).textScaleFactor *
-                                            15,
+                                            17,
+                                    fontFamily: 'Montserrat',
                                   ),
                                 ),
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
                               ),
-                              Text(
-                                'Sem justificar: ',
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          15,
+                              elevation: 3,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).textScaleFactor * 15,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: .5,
+                              ),
+                              label: Container(
+                                child: Text(
+                                  'Justificadas',
                                 ),
                               ),
-                              Chip(
-                                label: Text(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
+                            Chip(
+                              avatar: CircleAvatar(
+                                backgroundColor: Colors.red[900],
+                                child: Text(
                                   frequenciasData.totalNaoJustificada
                                       .toString(),
                                   style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).textScaleFactor *
-                                            15,
+                                            17,
+                                    fontFamily: 'Montserrat',
                                   ),
                                 ),
-                                backgroundColor: Theme.of(context).errorColor,
-                              )
-                            ],
-                          ),
+                              ),
+                              elevation: 3,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize:
+                                    MediaQuery.of(context).textScaleFactor * 15,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: .5,
+                              ),
+                              label: Text(
+                                'Sem Justificar',
+                              ),
+                              backgroundColor: Theme.of(context).errorColor,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -121,101 +140,6 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-class FrequenciasItem extends StatefulWidget {
-  final Frequencia _frequencia;
-
-  FrequenciasItem(this._frequencia);
-
-  @override
-  _FrequenciasItemState createState() => _FrequenciasItemState();
-}
-
-class _FrequenciasItemState extends State<FrequenciasItem> {
-  bool _expanded = false;
-
-  AnimationController _controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 300),
-      curve: Curves.linear,
-      height: _expanded ? 196 : 96,
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              ListTile(
-                onTap: widget._frequencia.justificado == 'sim'
-                    ? () {
-                        setState(() {
-                          _expanded = !_expanded;
-                        });
-
-                        // animação quando clicar aqui
-                      }
-                    : null,
-                title: Text(
-                  widget._frequencia.tipoFalta,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).textScaleFactor * 18,
-                  ),
-                ),
-                subtitle: Text(
-                  widget._frequencia.dataFrequencia,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                leading: Image.asset((widget._frequencia.justificado == 'sim')
-                    ? 'images/positivo.png'
-                    : 'images/negativo.png'),
-                trailing: IconButton(
-                  icon: (widget._frequencia.justificado == 'sim')
-                      ? _expanded
-                          ? Icon(Icons.expand_less)
-                          : Icon(Icons.expand_more)
-                      : Icon(Icons.block),
-                  onPressed: widget._frequencia.justificado == 'sim'
-                      ? () {
-                          setState(() {
-                            _expanded = !_expanded;
-                          });
-
-                          // animação quando clicar aqui
-                        }
-                      : null,
-                ),
-              ),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.linear,
-                height: _expanded ? 100 : 0,
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                child: ListView(
-                  children: [
-                    Text(
-                      widget._frequencia.justificativa,
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                      textAlign: TextAlign.left,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
