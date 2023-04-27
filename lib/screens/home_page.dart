@@ -107,7 +107,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<dynamic> onSelectNotificaton(payload) async {
-    print("PAYLOAD" + payload);
     if (payload == 'comunicados') {
       Navigator.of(context).pushNamed(AppRoute.COMUNICADOS);
     }
@@ -120,7 +119,6 @@ class _HomePageState extends State<HomePage> {
     services.requestPermission();
     var initilizationSettingsAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
-
     var initializationSettings =
         InitializationSettings(android: initilizationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
@@ -137,8 +135,13 @@ class _HomePageState extends State<HomePage> {
           notification.body,
           NotificationDetails(
             android: AndroidNotificationDetails(
-                channel.id, channel.name, channel.description,
-                icon: "@mipmap/ic_launcher", setAsGroupSummary: true),
+              channel.id,
+              channel.name,
+              channel.description,
+              icon: "@mipmap/ic_launcher",
+              setAsGroupSummary: true,
+              enableLights: true,
+            ),
             iOS: IOSNotificationDetails(
               presentAlert: true,
               presentBadge: true,
@@ -152,23 +155,34 @@ class _HomePageState extends State<HomePage> {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
+      Map<String, dynamic> dataValue = message.data;
+      String screen = dataValue['screen'].toString();
       AndroidNotification android = message.notification?.android;
       if (notification != null && android != null) {
-        showDialog(
-            context: context,
-            builder: (_) {
-              return AlertDialog(
-                title: Text(notification.title),
-                content: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(notification.body)],
-                  ),
-                ),
-              );
-            });
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channel.description,
+              icon: "@mipmap/ic_launcher",
+              setAsGroupSummary: true,
+              enableLights: true,
+            ),
+            iOS: IOSNotificationDetails(
+              presentAlert: true,
+              presentBadge: true,
+              presentSound: true,
+            ),
+          ),
+          payload: screen,
+        );
       }
     });
+
     _registerOnFirebase();
 
     _connectivitySubscription =

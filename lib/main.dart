@@ -30,11 +30,13 @@ import 'package:projetocrescer/screens/login_page.dart';
 import 'package:projetocrescer/screens/penalidades_page.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 
+var initilizationSettingsAndroid =
+    new AndroidInitializationSettings('@mipmap/ic_launcher');
+var initializationSettings =
+    InitializationSettings(android: initilizationSettingsAndroid);
+
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // await Firebase.initializeApp(options: );
-  // await setupFlutterNotifications();
-  // showFlutterNotification(message);
-  await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
 }
 
@@ -57,7 +59,6 @@ void main() async {
         CustomColors.azul, // cor de fundo da barra de navegação
   ));
   await Firebase.initializeApp();
-  //await FirebaseMessaging.instance.getToken();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
