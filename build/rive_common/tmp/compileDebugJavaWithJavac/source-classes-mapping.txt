@@ -1,2 +1,0 @@
-app/rive/rive/BuildConfig.java
- app.rive.rive.BuildConfig

@@ -106,9 +106,9 @@ class _HomePageState extends State<HomePage> {
     _firebaseMessaging.getToken();
   }
 
-  Future<dynamic> onSelectNotificaton(payload) async {
+  Future onSelectNotificaton(payload) async {
     if (payload == 'comunicados') {
-      Navigator.of(context).pushNamed(AppRoute.COMUNICADOS);
+      await Navigator.of(context).pushNamed(AppRoute.COMUNICADOS);
     }
   }
 
@@ -119,8 +119,13 @@ class _HomePageState extends State<HomePage> {
     services.requestPermission();
     var initilizationSettingsAndroid =
         new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings =
-        InitializationSettings(android: initilizationSettingsAndroid);
+    var initializationSettingsIOS = IOSInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+    var initializationSettings = InitializationSettings(
+        android: initilizationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotificaton);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

@@ -22,6 +22,7 @@ import 'package:projetocrescer/screens/splash_screen.dart';
 import 'package:projetocrescer/utils/custom_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/screens/agendar_psicologo_page.dart';
+import 'package:projetocrescer/utils/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:projetocrescer/screens/agendar_coordenacao_page.dart';
 import 'package:projetocrescer/screens/assiduidade_page.dart';
@@ -58,12 +59,24 @@ void main() async {
     systemNavigationBarColor:
         CustomColors.azul, // cor de fundo da barra de navegação
   ));
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>()
+      ?.requestPermissions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
