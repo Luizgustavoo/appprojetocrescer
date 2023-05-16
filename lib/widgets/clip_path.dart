@@ -11,7 +11,7 @@ class ClipPathCustom extends StatelessWidget {
           clipper: BorderCurveClipper(),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .5,
+            height: MediaQuery.of(context).size.height * .45,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -27,7 +27,7 @@ class ClipPathCustom extends StatelessWidget {
           clipper: CurveClipper(),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .4,
+            height: MediaQuery.of(context).size.height * .38,
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -46,7 +46,7 @@ class ClipPathCustom extends StatelessWidget {
                 clipper: BorderBottomDecClipper(),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: MediaQuery.of(context).size.height * 0.20,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(
                     begin: Alignment.bottomLeft,
@@ -66,7 +66,7 @@ class ClipPathCustom extends StatelessWidget {
                 clipper: BottomDecClipper(),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: MediaQuery.of(context).size.height * 0.20,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(
                     begin: Alignment.bottomLeft,

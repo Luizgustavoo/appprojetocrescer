@@ -13,8 +13,8 @@ import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/preferences/notification_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
-import 'package:projetocrescer/widgets/app_drawer.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/widgets/app_drawer.dart';
 import 'package:projetocrescer/widgets/menu_home_page_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -302,16 +302,17 @@ class _HomePageState extends State<HomePage> {
         body: GridView.count(
           shrinkWrap: true,
           childAspectRatio: 1,
+          scrollDirection: Axis.vertical,
           crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-          padding: EdgeInsets.all(12),
+          crossAxisSpacing: 4,
+          mainAxisSpacing: 4,
+          padding: EdgeInsets.all(8),
           children: [
             MenuHomePageScreen(
               title: 'COMUNICADOS',
               subTitle: 'Importantes',
               ontap: () {
-                Navigator.of(context).pushNamed(AppRoute.COMUNICADOS);
+                Navigator.pushNamed(context, AppRoute.COMUNICADOS);
               },
               imageUrl: 'images/comunicados.png',
             ),
@@ -350,12 +351,6 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pushNamed(AppRoute.ASSIDUIDADE);
               },
               imageUrl: 'images/frequencia.png',
-            ),
-            MenuHomePageScreen(
-              title: 'AULAS DO DIA',
-              subTitle: 'Confira aulas do dia',
-              ontap: () {},
-              imageUrl: 'images/aulas.png',
             ),
             MenuHomePageScreen(
               title: 'HORÁRIO',
@@ -452,14 +447,6 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pushNamed(AppRoute.FALE);
               },
               imageUrl: 'images/faleconosco.png',
-            ),
-            MenuHomePageScreen(
-              title: 'REDES SOCIAIS',
-              subTitle: 'Confira nossas redes sociais',
-              ontap: () {
-                Navigator.of(context).pushNamed(AppRoute.FALE);
-              },
-              imageUrl: 'images/redessociais.png',
             ),
           ],
         ),

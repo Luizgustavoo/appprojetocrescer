@@ -3,6 +3,7 @@ import 'package:projetocrescer/models/class_pendencias.dart';
 import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/widgets/pendecias_item.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 class PendeciasPage extends StatefulWidget {
   @override
@@ -64,7 +65,14 @@ class _PendeciasPageState extends State<PendeciasPage> {
                         : ListView.builder(
                             itemCount: pendenciasData.itemsCount,
                             itemBuilder: (ctx, i) {
-                              return PendenciasItem(pendencias[i]);
+                              return AnimationConfiguration.staggeredList(
+                                position: i,
+                                duration: Duration(milliseconds: 100),
+                                child: ScaleAnimation(
+                                  duration: Duration(milliseconds: 500),
+                                  child: PendenciasItem(pendencias[i]),
+                                ),
+                              );
                             },
                           ),
                   ),

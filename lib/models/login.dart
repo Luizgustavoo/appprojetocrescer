@@ -101,8 +101,9 @@ class Login with ChangeNotifier {
     }
   }
 
-  Future<String> signin(String email, String senha) async {
+  Future<String> signin(String email, String senha, int tipoLogin) async {
     String retorno = "fail";
+    print(tipoLogin);
 
     final response = await http.post(
       _baseUrl,

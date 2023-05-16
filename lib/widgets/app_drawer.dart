@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/constants.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/widgets/custom_list_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +21,8 @@ class AppDrawer extends StatelessWidget {
       this.totalAgendamentoPsicologoConfirmado);
   @override
   Widget build(BuildContext context) {
+    CustomLinks links = CustomLinks();
+
     final providerFoto = Provider.of<Login>(context).foto.toString();
 
     bool fotoExiste = false;
@@ -37,7 +41,7 @@ class AppDrawer extends StatelessWidget {
         child: Drawer(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(20),
+              bottomRight: Radius.circular(10),
             ),
           ),
           child: ListView(
@@ -203,9 +207,12 @@ class AppDrawer extends StatelessWidget {
               CustomListTile(Icons.percent_rounded, 'ASSIDUIDADE', () {
                 Navigator.of(context).pushNamed(AppRoute.ASSIDUIDADE);
               }, true),
-              CustomListTile(Icons.message_rounded, 'COMUNICADOS', () {}, true),
+              CustomListTile(Icons.message_rounded, 'COMUNICADOS', () {
+                Navigator.pushNamed(context, AppRoute.COMUNICADOS);
+              }, true),
               CustomListTile(Icons.credit_card_rounded, 'CRACHÁ', () {}, true),
-              CustomListTile(Icons.category_rounded, 'OFICINAS', () {}, true),
+              CustomListTile(
+                  Icons.category_rounded, 'OFICINAS/NÍVEIS', () {}, true),
               Stack(
                 children: [
                   CustomListTile(Icons.pending_actions_rounded, 'PENDÊNCIAS',
@@ -282,6 +289,67 @@ class AppDrawer extends StatelessWidget {
                   AppRoute.INDEX,
                 );
               }, false),
+
+              Container(
+                padding: EdgeInsets.only(top: 8, bottom: 3),
+                child: Column(
+                  children: [
+                    Text(
+                      'Redes Sociais - Projeto Crescer',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                padding: EdgeInsets.only(bottom: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        links.instagram();
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.instagram,
+                        color: Colors.purple,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        links.facebook();
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.facebook,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        links.tiktok();
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.tiktok,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        links.youtube();
+                      },
+                      icon: FaIcon(
+                        FontAwesomeIcons.youtube,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

@@ -4,10 +4,15 @@ import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 
-class ComunicadoDetalhePage extends StatelessWidget {
-  final ScrollController _scrollController = ScrollController();
+class ComunicadoDetalhePage extends StatefulWidget {
+  @override
+  State<ComunicadoDetalhePage> createState() => _ComunicadoDetalhePageState();
+}
+
+class _ComunicadoDetalhePageState extends State<ComunicadoDetalhePage> {
   String imagem =
       'http://projetocrescer.ddns.net/sistemaalunos/web-pages/documentos/comunicados/';
+
   @override
   Widget build(BuildContext context) {
     final comunicado = ModalRoute.of(context).settings.arguments as Comunicado;

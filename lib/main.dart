@@ -129,11 +129,14 @@ class MyApp extends StatelessWidget {
             isDense: true,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(width: 3, color: Colors.grey[600]),
+              borderSide: BorderSide(
+                width: 3,
+                color: Colors.grey.withAlpha(350),
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(width: 3, color: CustomColors.azul),
+              borderSide: BorderSide(width: 2, color: CustomColors.azul),
             ),
           ),
           appBarTheme: AppBarTheme(

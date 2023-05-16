@@ -4,6 +4,7 @@ import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/penalidade_item.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 class PenalidadesPage extends StatefulWidget {
   @override
@@ -145,7 +146,14 @@ class _PenalidadesPageState extends State<PenalidadesPage> {
                         : ListView.builder(
                             itemCount: penalidadesData.itemsCount,
                             itemBuilder: (ctx, i) {
-                              return PenalidadesItem(penalidades[i]);
+                              return AnimationConfiguration.staggeredList(
+                                position: i,
+                                duration: Duration(milliseconds: 100),
+                                child: ScaleAnimation(
+                                  duration: Duration(milliseconds: 500),
+                                  child: PenalidadesItem(penalidades[i]),
+                                ),
+                              );
                             },
                           ),
                   ),

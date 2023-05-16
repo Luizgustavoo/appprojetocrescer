@@ -4,6 +4,7 @@ import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/frequencia_item_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 class AssiduidadePage extends StatefulWidget {
   @override
@@ -14,8 +15,6 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
   bool _isLoading = true;
 
   Future<void> loadFrequencias(BuildContext context) {
-    final usuarioData = Provider.of<Login>(context, listen: false);
-
     return Provider.of<Frequencias>(context, listen: false)
         .loadFrequencias(Provider.of<Login>(context, listen: false).matricula)
         .then((_) {
@@ -133,7 +132,14 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
                     child: ListView.builder(
                       itemCount: frequenciasData.itemsCount,
                       itemBuilder: (ctx, i) {
-                        return FrequenciasItem(frequencias[i]);
+                        return AnimationConfiguration.staggeredList(
+                            delay: Duration(milliseconds: 5),
+                            position: i,
+                            duration: Duration(milliseconds: 100),
+                            child: ScaleAnimation(
+                              duration: Duration(milliseconds: 500),
+                              child: FrequenciasItem(frequencias[i]),
+                            ));
                       },
                     ),
                   ),

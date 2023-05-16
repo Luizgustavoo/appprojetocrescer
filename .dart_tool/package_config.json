@@ -188,6 +188,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/font_awesome_flutter-10.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "graphs",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/graphs-2.2.0",
       "packageUri": "lib/",
@@ -222,12 +228,6 @@
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/loading_indicator-3.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "localization",
-      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/localization-0.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.6"
     },
     {
       "name": "matcher",
@@ -362,6 +362,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "simple_annimated_staggered",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/simple_annimated_staggered-0.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///C:/src/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -406,6 +412,12 @@
     {
       "name": "timezone",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/timezone-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "toggle_switch",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/toggle_switch-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -488,7 +500,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2023-05-03T16:33:16.675601Z",
+  "generated": "2023-05-15T18:40:49.646599Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

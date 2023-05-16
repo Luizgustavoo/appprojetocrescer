@@ -8,6 +8,38 @@ class CustomLinks {
     }
   }
 
+  final Uri _urlFacebook =
+      Uri.parse('https://www.facebook.com/casadobommeninodearapongas');
+  Future<void> facebook() async {
+    if (!await launchUrl(_urlFacebook)) {
+      throw Exception('Não consegui encontrar a $_url');
+    }
+  }
+
+  final Uri _urlYoutube =
+      Uri.parse('https://www.youtube.com/c/ProjetoCrescerArapongas');
+  Future<void> youtube() async {
+    if (!await launchUrl(_urlYoutube, mode: LaunchMode.externalApplication)) {
+      throw Exception('Não consegui encontrar a $_url');
+    }
+  }
+
+  final Uri _urlInstagram =
+      Uri.parse('https://www.instagram.com/casabommeninoarapongas/');
+  Future<void> instagram() async {
+    if (!await launchUrl(_urlInstagram)) {
+      throw Exception('Não consegui encontrar a $_url');
+    }
+  }
+
+  final Uri _urlTiktok =
+      Uri.parse('https://www.tiktok.com/@projetocrescerarapongas');
+  Future<void> tiktok() async {
+    if (!await launchUrl(_urlTiktok)) {
+      throw Exception('Não consegui encontrar a $_url');
+    }
+  }
+
   Future<void> makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',

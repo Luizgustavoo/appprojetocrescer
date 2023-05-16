@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/login.dart';
@@ -92,27 +93,54 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
               child: CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(8.0),
               child: Form(
                 key: _form,
                 child: ListView(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 5,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Solicite uma conversa com um de nossos psicólogos do Projeto Crescer através do nosso aplicativo.',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            color: Colors.blue[600],
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: Text(
+                                      'Solicite uma conversa com um de nossos psicólogos do Projeto Crescer através do nosso aplicativo.',
+                                      textAlign: TextAlign.justify,
+                                      softWrap: true,
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontFamily: 'Ubuntu',
+                                        letterSpacing: 1.5,
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: Text(
+                                          "Fechar",
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            color: CustomColors.azul,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: Icon(
+                              FontAwesomeIcons.circleInfo,
+                            ))
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -131,6 +159,7 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
                               color: CustomColors.azul,
                               fontFamily: 'Ubuntu',
                               fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.clip,
                             ),
                           ),
                           Text(
@@ -141,6 +170,7 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
                               color: CustomColors.azul,
                               fontFamily: 'Ubuntu',
                               fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.clip,
                             ),
                           ),
                         ],
@@ -171,7 +201,6 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
                       decoration: InputDecoration(
                         labelText: 'Motivo/Assunto',
                       ),
-                      // textInputAction: TextInputAction.next,
                       focusNode: _tituloFocusNode,
                       keyboardType: TextInputType.multiline,
                       maxLines: 6,
