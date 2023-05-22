@@ -17,5 +17,7 @@ class AppRoute {
 
   /* IMPLEMENTADO DEPOIS*/
   static const String FALE = "/fale-conosco";
+  static const String AGENDAR_REF = "/agendar-ref";
+  static const String HORARIO_ALUNO = "/horario";
   static const String OPCOES_AGENDAMENTO = "/opcoes-agendamento";
 }

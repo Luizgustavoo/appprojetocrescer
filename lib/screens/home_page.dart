@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:barcode_scan2/barcode_scan2.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -10,10 +7,12 @@ import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/class_penalidades.dart';
 import 'package:projetocrescer/models/class_pendencias.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/preferences/network_services.dart';
 import 'package:projetocrescer/preferences/notification_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/utils/hide_home.dart';
 import 'package:projetocrescer/widgets/app_drawer.dart';
 import 'package:projetocrescer/widgets/menu_home_page_screen.dart';
 import 'package:provider/provider.dart';
@@ -31,58 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   CustomLinks links = CustomLinks();
 
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-  NotificationServices services = NotificationServices();
-
-  //* QR CODE PARA AGENDAR REFEIÇÃO --------------------------------------------
-  String qrCodeResult = "Aguardando...";
-
-  bool resultInternet = false;
-  String codeInvalido = "";
-  StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  //* QR CODE PARA AGENDAR REFEIÇÃO --------------------------------------------
-
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  final AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
-
-  void _updateStatus(ConnectivityResult connectivityResult) async {
-    if (connectivityResult == ConnectivityResult.mobile) {
-      setState(() {
-        resultInternet = true;
-      });
-      updateText("3G/4G");
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      setState(() {
-        resultInternet = true;
-      });
-      updateText("Conectado via wi-fi");
-    } else {
-      setState(() {
-        resultInternet = false;
-      });
-      updateText("Atenção, você não tem uma conexão válida!");
-    }
-  }
-
-  void updateText(String texto) {
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel();
-    super.dispose();
-  }
-
-  //-------------------------------------------------
+  //*---------LOAD REQUESTS----------------------------------------
 
   Future<void> loadPendencias(BuildContext context) {
     return Provider.of<Pendencias>(context, listen: false)
@@ -99,7 +47,19 @@ class _HomePageState extends State<HomePage> {
         .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula);
   }
 
-  //*--------------
+  //*--------------FIREBASE E NOTIFICACAO------------------------
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  NotificationServices services = NotificationServices();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  final AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    'This channel is used for important notifications.', // description
+    importance: Importance.high,
+  );
 
   _registerOnFirebase() {
     _firebaseMessaging.subscribeToTopic('all');
@@ -112,7 +72,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-//*--------------------
+//*--------------------------------------------------------------
+
   @override
   void initState() {
     super.initState();
@@ -157,7 +118,6 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
-
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification;
       Map<String, dynamic> dataValue = message.data;
@@ -187,12 +147,7 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
-
     _registerOnFirebase();
-
-    _connectivitySubscription =
-        Connectivity().onConnectivityChanged.listen(_updateStatus);
-
     loadPenalidades(context).then((value) {
       itemsPenalidades =
           Provider.of<Penalidades>(context, listen: false).itemsCount;
@@ -203,7 +158,6 @@ class _HomePageState extends State<HomePage> {
             Provider.of<Pendencias>(context, listen: false).itemsCount;
       });
     });
-
     loadAgendamentos(context).then((value) {
       setState(() {
         itemsCoordenacaoConfirmado =
@@ -214,6 +168,11 @@ class _HomePageState extends State<HomePage> {
                 .itemsCountPsicologoConfirmado;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<bool> showExitPopup() async {
@@ -284,6 +243,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var networkStatus = Provider.of<NetworkStatus>(context);
     return WillPopScope(
       onWillPop: showExitPopup,
       child: Scaffold(
@@ -299,158 +259,160 @@ class _HomePageState extends State<HomePage> {
           itemsCoordenacaoConfirmado > 0 ? itemsCoordenacaoConfirmado : 0,
           itemsPsicologoConfirmado > 0 ? itemsPsicologoConfirmado : 0,
         ),
-        body: GridView.count(
-          shrinkWrap: true,
-          childAspectRatio: 1,
-          scrollDirection: Axis.vertical,
-          crossAxisCount: 2,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 4,
-          padding: EdgeInsets.all(8),
+        body: networkStatus == NetworkStatus.online
+            ? BodyHome(
+                links: links,
+                itemsPendencias: itemsPendencias,
+                itemsPenalidades: itemsPenalidades)
+            : HideHome(),
+      ),
+    );
+  }
+}
+
+class BodyHome extends StatelessWidget {
+  const BodyHome({
+    Key key,
+    @required this.links,
+    @required this.itemsPendencias,
+    @required this.itemsPenalidades,
+  }) : super(key: key);
+
+  final CustomLinks links;
+  final int itemsPendencias;
+  final int itemsPenalidades;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      shrinkWrap: true,
+      childAspectRatio: 1,
+      scrollDirection: Axis.vertical,
+      crossAxisCount: 2,
+      crossAxisSpacing: 4,
+      mainAxisSpacing: 4,
+      padding: EdgeInsets.all(8),
+      children: [
+        MenuHomePageScreen(
+          title: 'COMUNICADOS',
+          subTitle: 'Importantes',
+          ontap: () {
+            Navigator.pushNamed(context, AppRoute.COMUNICADOS);
+          },
+          imageUrl: 'images/comunicados.png',
+        ),
+        MenuHomePageScreen(
+            title: 'CAFÉ/ALMOÇO',
+            subTitle: 'Agende suas refeições',
+            imageUrl: 'images/cafe.png',
+            ontap: () {
+              Navigator.pushNamed(context, AppRoute.AGENDAR_REF);
+            }),
+        MenuHomePageScreen(
+          title: 'FREQUÊNCIA',
+          subTitle: 'Confira as faltas do(a) aluno(a)',
+          ontap: () {
+            Navigator.of(context).pushNamed(AppRoute.ASSIDUIDADE);
+          },
+          imageUrl: 'images/frequencia.png',
+        ),
+        MenuHomePageScreen(
+          title: 'HORÁRIO',
+          subTitle: 'Confira o horário completo',
+          ontap: () {},
+          imageUrl: 'images/horarios.png',
+        ),
+        MenuHomePageScreen(
+          title: 'PORTAL DO ALUNO',
+          subTitle: 'Acesse seu portal \ndo aluno',
+          ontap: () async {
+            await links.entrarPortal();
+          },
+          imageUrl: 'images/portal.png',
+        ),
+        Stack(
+          alignment: Alignment.center,
           children: [
             MenuHomePageScreen(
-              title: 'COMUNICADOS',
-              subTitle: 'Importantes',
+              title: 'PENDÊNCIAS',
+              subTitle: 'Confira as pendências \nem nossos registros',
               ontap: () {
-                Navigator.pushNamed(context, AppRoute.COMUNICADOS);
+                Navigator.of(context).pushNamed(AppRoute.PENDENCIAS_PAGE);
               },
-              imageUrl: 'images/comunicados.png',
+              imageUrl: 'images/pendencia.png',
             ),
-            MenuHomePageScreen(
-              title: 'CAFÉ/ALMOÇO',
-              subTitle: 'Agende suas refeições',
-              ontap: () async {
-                await BarcodeScanner.scan().then((value) {
-                  var jsonTEMP = jsonDecode(
-                      utf8.decode(base64Url.decode(value.rawContent ?? '')));
-
-                  print(jsonTEMP['matricula']);
-
-                  if (jsonTEMP['matricula'] == null ||
-                      jsonTEMP['nome'] == null ||
-                      jsonTEMP['periodo'] == null ||
-                      jsonTEMP['tipo'] == null) {
-                    setState(() {
-                      codeInvalido = "QR Code INVÁLIDO!";
-                    });
-                  } else {
-                    setState(() {
-                      codeInvalido = "";
-                    });
-                    Navigator.of(context).pushNamed(AppRoute.OPCOES_AGENDAMENTO,
-                        arguments: value.rawContent);
-                  }
-                });
-              },
-              imageUrl: 'images/cafe.png',
-            ),
-            MenuHomePageScreen(
-              title: 'FREQUÊNCIA',
-              subTitle: 'Confira as faltas do(a) aluno(a)',
-              ontap: () {
-                Navigator.of(context).pushNamed(AppRoute.ASSIDUIDADE);
-              },
-              imageUrl: 'images/frequencia.png',
-            ),
-            MenuHomePageScreen(
-              title: 'HORÁRIO',
-              subTitle: 'Confira o horário completo',
-              ontap: () {},
-              imageUrl: 'images/horarios.png',
-            ),
-            MenuHomePageScreen(
-              title: 'PORTAL DO ALUNO',
-              subTitle: 'Acesse seu portal \ndo aluno',
-              ontap: () async {
-                await links.entrarPortal();
-              },
-              imageUrl: 'images/portal.png',
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                MenuHomePageScreen(
-                  title: 'PENDÊNCIAS',
-                  subTitle: 'Confira as pendências \nem nossos registros',
-                  ontap: () {
-                    Navigator.of(context).pushNamed(AppRoute.PENDENCIAS_PAGE);
-                  },
-                  imageUrl: 'images/pendencia.png',
-                ),
-                if (itemsPendencias > 0)
-                  Positioned(
-                    right: MediaQuery.of(context).size.width * .13,
-                    top: MediaQuery.of(context).size.width * .04,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Theme.of(context).errorColor),
-                      constraints: BoxConstraints(
-                        minHeight: 5,
-                        minWidth: 22,
-                      ),
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                        itemsPendencias.toString(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
+            if (itemsPendencias > 0)
+              Positioned(
+                right: MediaQuery.of(context).size.width * .13,
+                top: MediaQuery.of(context).size.width * .04,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Theme.of(context).errorColor),
+                  constraints: BoxConstraints(
+                    minHeight: 5,
+                    minWidth: 22,
+                  ),
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    itemsPendencias.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
-              ],
-            ),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                MenuHomePageScreen(
-                  title: 'PENALIDADES',
-                  subTitle: 'Confira as penalidades',
-                  ontap: () {
-                    Navigator.of(context).pushNamed(AppRoute.PENALIDADES);
-                  },
-                  imageUrl: 'images/penalidades.png',
                 ),
-                if (itemsPenalidades > 0)
-                  Positioned(
-                    right: MediaQuery.of(context).size.width * .13,
-                    top: MediaQuery.of(context).size.width * .06,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Theme.of(context).errorColor),
-                      constraints: BoxConstraints(
-                        minHeight: 5,
-                        minWidth: 22,
-                      ),
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                        itemsPenalidades.toString(),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            MenuHomePageScreen(
-              title: 'FALE CONOSCO',
-              subTitle: 'Confira nossos canais \nde atendimento',
-              ontap: () {
-                Navigator.of(context).pushNamed(AppRoute.FALE);
-              },
-              imageUrl: 'images/faleconosco.png',
-            ),
+              ),
           ],
         ),
-      ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            MenuHomePageScreen(
+              title: 'PENALIDADES',
+              subTitle: 'Confira as penalidades',
+              ontap: () {
+                Navigator.of(context).pushNamed(AppRoute.PENALIDADES);
+              },
+              imageUrl: 'images/penalidades.png',
+            ),
+            if (itemsPenalidades > 0)
+              Positioned(
+                right: MediaQuery.of(context).size.width * .13,
+                top: MediaQuery.of(context).size.width * .06,
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Theme.of(context).errorColor),
+                  constraints: BoxConstraints(
+                    minHeight: 5,
+                    minWidth: 22,
+                  ),
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    itemsPenalidades.toString(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        MenuHomePageScreen(
+          title: 'FALE CONOSCO',
+          subTitle: 'Confira nossos canais \nde atendimento',
+          ontap: () {
+            Navigator.of(context).pushNamed(AppRoute.FALE);
+          },
+          imageUrl: 'images/faleconosco.png',
+        ),
+      ],
     );
   }
 }

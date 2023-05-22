@@ -1,4 +1,4 @@
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -43,32 +43,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _submit() {
-    if (!_form.currentState.validate()) {
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    _form.currentState.save();
-
-    Provider.of<Login>(context, listen: false)
-        .signin(_authData['email'], _authData['senha'], onToggle)
-        .then((value) {
-      setState(() {
-        _isLoading = false;
-      });
-
-      if (value == 'USER_NOT_FOUND') {
-        _showErrorDialog('Usuário não encontrado');
-      } else {
-        Navigator.of(context).pushReplacementNamed(AppRoute.HOME);
-      }
-    });
-  }
-
   checkStatus() async {
     var result = await Connectivity().checkConnectivity();
 
@@ -90,6 +64,33 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
     }
+  }
+
+  void _submit() {
+    checkStatus();
+    if (!_form.currentState.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _form.currentState.save();
+
+    Provider.of<Login>(context, listen: false)
+        .signin(_authData['email'], _authData['senha'], onToggle)
+        .then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (value == 'USER_NOT_FOUND') {
+        _showErrorDialog('Aluno não encontrado');
+      } else {
+        Navigator.of(context).pushReplacementNamed(AppRoute.HOME);
+      }
+    });
   }
 
   @override
@@ -221,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: "Nº MATRÍCULA",
                             errorStyle: TextStyle(
                                 color: Color.fromARGB(255, 255, 17, 0),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold),
                             labelStyle: TextStyle(
                               color: CustomColors.azul,
@@ -255,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: "Nº CPF",
                             errorStyle: TextStyle(
                                 color: Color.fromARGB(255, 255, 17, 0),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold),
                             labelStyle: TextStyle(
                               color: CustomColors.azul,
@@ -320,14 +321,10 @@ class _LoginPageState extends State<LoginPage> {
                                   onPressed: () {
                                     ScaffoldMessenger.of(context)
                                         .hideCurrentSnackBar();
-                                    checkStatus();
-                                    if (resultInternet == true) {
-                                      _submit();
-                                    }
+                                    _submit();
                                   },
                                 ),
                               ),
-                        //Divisor
                       ],
                     ),
                   ),

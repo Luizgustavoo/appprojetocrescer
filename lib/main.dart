@@ -10,10 +10,13 @@ import 'package:projetocrescer/models/class_penalidades.dart';
 import 'package:projetocrescer/models/class_pendencias.dart';
 import 'package:projetocrescer/models/class_refeicao.dart';
 import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/preferences/network_services.dart';
+import 'package:projetocrescer/screens/agendar_refeicao_page.dart';
 import 'package:projetocrescer/screens/auth_or_home_page.dart';
 import 'package:projetocrescer/screens/comunicado_detalhe_page.dart';
 import 'package:projetocrescer/screens/comunicados_page.dart';
 import 'package:projetocrescer/screens/fale_conosco_page.dart';
+import 'package:projetocrescer/screens/horario_aluno_page.dart';
 import 'package:projetocrescer/screens/listagem_agendamentos_coordenacao_page.dart';
 import 'package:projetocrescer/screens/listagem_agendamentos_psicologo_page.dart';
 import 'package:projetocrescer/screens/opcoes_agend_ref.dart';
@@ -51,8 +54,6 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -62,13 +63,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
-
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           IOSFlutterLocalNotificationsPlugin>()
@@ -77,7 +76,6 @@ void main() async {
         badge: true,
         sound: true,
       );
-
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
@@ -113,12 +111,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Comunicados(),
         ),
+        StreamProvider(
+          create: (context) => NetworkService().controller.stream,
+          initialData: NetworkStatus.online,
+        ),
       ],
       child: MaterialApp(
-        navigatorKey: navigatorKey,
         initialRoute: AppRoute.SPLASH,
         debugShowCheckedModeBanner: false,
-        title: 'Projeto Crescer ',
+        title: 'Projeto Crescer',
         theme: ThemeData(
           inputDecorationTheme: InputDecorationTheme(
             labelStyle: TextStyle(
@@ -173,6 +174,8 @@ class MyApp extends StatelessWidget {
               ListagemAgendamentoPsicologoPage(),
           AppRoute.DETALHES_COMUNICADOS: (ctx) => ComunicadoDetalhePage(),
           AppRoute.FALE: (ctx) => FaleConosco(),
+          AppRoute.AGENDAR_REF: (ctx) => AgendarRefeicao(),
+          AppRoute.HORARIO_ALUNO: (ctx) => HorarioPage(),
         },
       ),
     );

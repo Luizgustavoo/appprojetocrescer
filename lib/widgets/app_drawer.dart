@@ -136,6 +136,7 @@ class AppDrawer extends StatelessWidget {
               CustomListTile(Icons.home_rounded, 'INÍCIO', () {
                 Navigator.of(context).pushNamed(AppRoute.HOME);
               }, true),
+              CustomListTile(FontAwesomeIcons.bell, 'ALERTAS', () {}, true),
               CustomListTile(
                   Icons.people_alt_rounded, 'MEUS DADOS', () {}, true),
               Stack(

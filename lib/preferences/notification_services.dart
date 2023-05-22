@@ -7,7 +7,7 @@ class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   void requestPermission() async {
-    if (Platform.isMacOS) {
+    if (Platform.isIOS) {
       NotificationSettings settings = await messaging.requestPermission(
           alert: true,
           announcement: true,
