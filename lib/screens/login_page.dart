@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pop(ctx);
             },
             child: Text('Fechar'),
           )
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _submit() {
     checkStatus();
-    if (!_form.currentState.validate()) {
+    if (!_form.currentState!.validate()) {
       return;
     }
 
@@ -76,10 +76,10 @@ class _LoginPageState extends State<LoginPage> {
       _isLoading = true;
     });
 
-    _form.currentState.save();
+    _form.currentState!.save();
 
     Provider.of<Login>(context, listen: false)
-        .signin(_authData['email'], _authData['senha'], onToggle)
+        .signin(_authData['email']!, _authData['senha']!, onToggle)
         .then((value) {
       setState(() {
         _isLoading = false;
@@ -133,8 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                                 minWidth: 150.0,
                                 minHeight: 38.0,
                                 cornerRadius: 8.0,
-                                onToggle: (index) => onToggle = index,
-                                labels: ['Aluno', 'Professor'],
+                                onToggle: (index) => onToggle = index!,
+                                labels: ['ALUNO', 'PROFESSOR'],
                                 activeBgColor: [
                                   CustomColors.azul,
                                 ],
@@ -142,12 +142,12 @@ class _LoginPageState extends State<LoginPage> {
                                   TextStyle(
                                       color: Colors.white,
                                       fontSize: 18.0,
-                                      fontFamily: 'Ubuntu',
+                                      fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w900),
                                   TextStyle(
                                       color: Colors.white,
                                       fontSize: 18.0,
-                                      fontFamily: 'Ubuntu',
+                                      fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w900)
                                 ],
                               ),
@@ -233,13 +233,13 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           style: TextStyle(fontSize: 20),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "MATRÍCULA INVÁLIDA!";
                             }
 
                             return null;
                           },
-                          onSaved: (value) => _authData['email'] = value,
+                          onSaved: (value) => _authData['email'] = value!,
                         ),
                         SizedBox(
                           height: 15,
@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           style: TextStyle(fontSize: 20),
                           validator: (value) {
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return "CPF NÃO PODE SER VAZIO!";
                             } else if (value.length != 11) {
                               return "CPF DEVE CONTER 11 DIGITOS!";
@@ -281,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
 
                             return null;
                           },
-                          onSaved: (value) => _authData['senha'] = value,
+                          onSaved: (value) => _authData['senha'] = value!,
                         ),
                         SizedBox(
                           height: 15,
@@ -306,14 +306,15 @@ class _LoginPageState extends State<LoginPage> {
                                 height: 50,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: CustomColors.azul,
-                                      elevation: 3),
+                                    backgroundColor: CustomColors.azul,
+                                    elevation: 3,
+                                  ),
                                   child: Text(
                                     'ENTRAR',
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
-                                      color: CustomColors.amarelo,
+                                      color: Colors.white,
                                       fontFamily: 'Montserrat',
                                       letterSpacing: 1,
                                     ),

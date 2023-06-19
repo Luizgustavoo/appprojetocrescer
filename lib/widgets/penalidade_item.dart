@@ -37,7 +37,7 @@ class _PenalidadesItemState extends State<PenalidadesItem> {
                   });
                 },
                 title: Text(
-                  widget._penalidade.descricaoTipoPenalidade,
+                  widget._penalidade.descricaoTipoPenalidade!,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: MediaQuery.of(context).textScaleFactor * 17,
@@ -48,7 +48,7 @@ class _PenalidadesItemState extends State<PenalidadesItem> {
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(
-                    widget._penalidade.dataPenalidade,
+                    "DATA: " + widget._penalidade.dataPenalidade!,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Ubuntu',
@@ -58,7 +58,7 @@ class _PenalidadesItemState extends State<PenalidadesItem> {
                   ),
                 ),
                 leading: Image.asset(
-                    int.parse(widget._penalidade.tipoPenalidade) <= 1
+                    int.parse(widget._penalidade.tipoPenalidade!) <= 1
                         ? 'images/penalidades.png'
                         : 'images/perigo.png'),
                 trailing: IconButton(
@@ -88,7 +88,7 @@ class _PenalidadesItemState extends State<PenalidadesItem> {
                 child: ListView(
                   children: [
                     Text(
-                      widget._penalidade.observacao,
+                      widget._penalidade.observacao!,
                       style: TextStyle(
                         color: CustomColors.azul,
                         fontFamily: 'Ubuntu',

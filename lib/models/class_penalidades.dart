@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:projetocrescer/utils/constants.dart';
 
 class Penalidade {
-  final String idPenalidade;
-  final String dataPenalidade;
-  final String tipoPenalidade;
-  final String descricaoTipoPenalidade;
-  final String observacao;
+  final String? idPenalidade;
+  final String? dataPenalidade;
+  final String? tipoPenalidade;
+  final String? descricaoTipoPenalidade;
+  final String? observacao;
 
   Penalidade({
     this.idPenalidade,
@@ -32,14 +32,14 @@ class Penalidades with ChangeNotifier {
 
   int get totalOcorrencias {
     return _items
-        .where((penalidade) => int.parse(penalidade.tipoPenalidade) == 1)
+        .where((penalidade) => int.parse(penalidade.tipoPenalidade!) == 1)
         .toList()
         .length;
   }
 
   int get totalAdvertencias {
     return _items
-        .where((penalidade) => int.parse(penalidade.tipoPenalidade) == 2)
+        .where((penalidade) => int.parse(penalidade.tipoPenalidade!) == 2)
         .toList()
         .length;
   }

@@ -16,7 +16,7 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
 
   Future<void> loadFrequencias(BuildContext context) {
     return Provider.of<Frequencias>(context, listen: false)
-        .loadFrequencias(Provider.of<Login>(context, listen: false).matricula)
+        .loadFrequencias(Provider.of<Login>(context, listen: false).matricula!)
         .then((_) {
       setState(() {
         _isLoading = false;
@@ -58,7 +58,7 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
                     margin: EdgeInsets.only(
                         top: 10, bottom: 10, left: 15, right: 15),
                     child: Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(5),
                       child: SizedBox(
                         height: 40,
                         child: Row(
@@ -66,19 +66,19 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Chip(
+                              side: BorderSide.none,
                               avatar: CircleAvatar(
-                                backgroundColor: Colors.blue[900],
+                                backgroundColor: Colors.green.shade400,
                                 child: Text(
                                   frequenciasData.totalJustificada.toString(),
                                   style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).textScaleFactor *
-                                            17,
+                                            15,
                                     fontFamily: 'Montserrat',
                                   ),
                                 ),
                               ),
-                              elevation: 3,
                               labelStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -89,27 +89,26 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
                               ),
                               label: Container(
                                 child: Text(
-                                  'Justificadas',
+                                  'JUSTIFICADAS',
                                 ),
                               ),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
+                              backgroundColor: Colors.green.shade900,
                             ),
                             Chip(
+                              side: BorderSide.none,
                               avatar: CircleAvatar(
-                                backgroundColor: Colors.red[900],
+                                backgroundColor: Colors.red.shade500,
                                 child: Text(
                                   frequenciasData.totalNaoJustificada
                                       .toString(),
                                   style: TextStyle(
                                     fontSize:
                                         MediaQuery.of(context).textScaleFactor *
-                                            17,
+                                            15,
                                     fontFamily: 'Montserrat',
                                   ),
                                 ),
                               ),
-                              elevation: 3,
                               labelStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize:
@@ -119,9 +118,9 @@ class _AssiduidadePageState extends State<AssiduidadePage> {
                                 letterSpacing: .5,
                               ),
                               label: Text(
-                                'Sem Justificar',
+                                'SEM JUSTIFICAR',
                               ),
-                              backgroundColor: Theme.of(context).errorColor,
+                              backgroundColor: Colors.red.shade900,
                             ),
                           ],
                         ),

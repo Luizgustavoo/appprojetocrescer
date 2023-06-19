@@ -9,7 +9,7 @@ class ComunicadosItem extends StatelessWidget {
   ComunicadosItem(this.comunicado);
 
   void _selectComunicado(BuildContext context) {
-    if (int.parse(comunicado.visualizou) <= 0) {
+    if (int.parse(comunicado.visualizou!) <= 0) {
       Provider.of<Comunicados>(context, listen: false)
           .visualizarComunicado(comunicado.idComunicado.toString(),
               Provider.of<Login>(context, listen: false).matricula.toString())
@@ -48,9 +48,9 @@ class ComunicadosItem extends StatelessWidget {
                     topLeft: Radius.circular(10),
                   ),
                   child: Hero(
-                    tag: comunicado.idComunicado,
+                    tag: comunicado.idComunicado!,
                     child: Image.network(
-                      imagem + comunicado.imagemComunicado,
+                      imagem + comunicado.imagemComunicado!,
                       height: MediaQuery.of(context).size.height * .34,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -65,7 +65,7 @@ class ComunicadosItem extends StatelessWidget {
                     color: Colors.black87,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                     child: Text(
-                      comunicado.assuntoComunicado.toUpperCase(),
+                      comunicado.assuntoComunicado!.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: MediaQuery.of(context).textScaleFactor * 18,
@@ -94,7 +94,7 @@ class ComunicadosItem extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        comunicado.dataComunicado,
+                        comunicado.dataComunicado!,
                         style: TextStyle(
                           fontFamily: 'Ubuntu',
                           fontSize: 16,
@@ -112,7 +112,7 @@ class ComunicadosItem extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        comunicado.nomeUsuario.substring(0, 10),
+                        comunicado.nomeUsuario!.substring(0, 10),
                         softWrap: true,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
@@ -126,7 +126,7 @@ class ComunicadosItem extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      int.parse(comunicado.visualizou) > 0
+                      int.parse(comunicado.visualizou!) > 0
                           ? Icon(
                               Icons.check_box_rounded,
                               color: Colors.green,

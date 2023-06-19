@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:projetocrescer/firebase_options.dart';
 import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/class_comunicado.dart';
 import 'package:projetocrescer/models/class_frequencias.dart';
@@ -25,7 +24,7 @@ import 'package:projetocrescer/screens/splash_screen.dart';
 import 'package:projetocrescer/utils/custom_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/screens/agendar_psicologo_page.dart';
-import 'package:projetocrescer/utils/firebase_options.dart';
+import 'package:projetocrescer/utils/firebase_api.dart';
 import 'package:provider/provider.dart';
 import 'package:projetocrescer/screens/agendar_coordenacao_page.dart';
 import 'package:projetocrescer/screens/assiduidade_page.dart';
@@ -33,55 +32,20 @@ import 'package:projetocrescer/screens/home_page.dart';
 import 'package:projetocrescer/screens/login_page.dart';
 import 'package:projetocrescer/screens/penalidades_page.dart';
 import 'package:projetocrescer/utils/app_route.dart';
+import 'package:showcaseview/showcaseview.dart';
 
-var initilizationSettingsAndroid =
-    new AndroidInitializationSettings('@mipmap/ic_launcher');
-var initializationSettings =
-    InitializationSettings(android: initilizationSettingsAndroid);
-
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Handling a background message ${message.messageId}');
-}
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // title
-  'This channel is used for important notifications.',
-  importance: Importance.high,
-);
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor:
         CustomColors.azul, // cor de fundo da barra de navegação
   ));
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
-      ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-
+  await FirebaseApi().initNotifications();
   runApp(MyApp());
 }
 
@@ -121,6 +85,13 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Projeto Crescer',
         theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ))),
+          useMaterial3: true,
+          primaryColor: CustomColors.azul,
           inputDecorationTheme: InputDecorationTheme(
             labelStyle: TextStyle(
               color: CustomColors.azul,
@@ -132,7 +103,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                 width: 3,
-                color: Colors.grey.withAlpha(350),
+                color: Colors.grey.shade400,
               ),
             ),
             focusedBorder: OutlineInputBorder(
@@ -149,14 +120,15 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat',
               color: Colors.white,
-            ), //TextStyle
-          ), //AppBarThem
+            ),
+          ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
           pageTransitionsTheme: PageTransitionsTheme(builders: {
             TargetPlatform.android: CustomPageTransitionsBuilder(),
             TargetPlatform.iOS: CustomPageTransitionsBuilder(),
           }),
         ),
+        navigatorKey: navigatorKey,
         routes: {
           AppRoute.SPLASH: (ctx) => SplashScreen(),
           AppRoute.INDEX: (ctx) => AuthOrHomePage(),
@@ -173,7 +145,9 @@ class MyApp extends StatelessWidget {
           AppRoute.LIST_AGENDAMENTOS_PSICOLOGO: (ctx) =>
               ListagemAgendamentoPsicologoPage(),
           AppRoute.DETALHES_COMUNICADOS: (ctx) => ComunicadoDetalhePage(),
-          AppRoute.FALE: (ctx) => FaleConosco(),
+          AppRoute.FALE: (ctx) => ShowCaseWidget(
+                builder: Builder(builder: (context) => FaleConosco()),
+              ),
           AppRoute.AGENDAR_REF: (ctx) => AgendarRefeicao(),
           AppRoute.HORARIO_ALUNO: (ctx) => HorarioPage(),
         },

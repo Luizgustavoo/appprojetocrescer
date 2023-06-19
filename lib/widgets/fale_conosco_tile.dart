@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 
 class FaleConoscoTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color color;
-  final Function ontap;
+  final String? title;
+  final String? subtitle;
+  final IconData? icon;
+  final Color? color;
+  final Function? ontap;
 
   FaleConoscoTile({
     this.ontap,
@@ -29,21 +29,21 @@ class FaleConoscoTile extends StatelessWidget {
         child: ListTile(
           contentPadding:
               EdgeInsets.only(top: 15, bottom: 10, right: 10, left: 10),
-          onTap: ontap,
+          onTap: () => ontap,
           leading: Icon(
             icon,
             color: color,
             size: 40,
           ),
           title: Text(
-            title,
+            title!,
             style: TextStyle(
               fontSize: MediaQuery.of(context).textScaleFactor * 15,
               fontFamily: 'Montserrat',
             ),
           ),
           subtitle: Text(
-            subtitle,
+            subtitle!,
             style: TextStyle(
               fontSize: MediaQuery.of(context).textScaleFactor * 12,
               fontFamily: 'Ubuntu',

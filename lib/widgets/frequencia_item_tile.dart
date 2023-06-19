@@ -19,7 +19,7 @@ class _FrequenciasItemState extends State<FrequenciasItem> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       curve: Curves.linear,
-      height: _expanded ? 196 : 96,
+      height: _expanded ? 196 : 110,
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(
@@ -50,7 +50,7 @@ class _FrequenciasItemState extends State<FrequenciasItem> {
                   ),
                 ),
                 subtitle: Text(
-                  widget._frequencia.dataFrequencia,
+                  widget._frequencia.dataFrequencia!,
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: 'Ubuntu',
@@ -88,12 +88,13 @@ class _FrequenciasItemState extends State<FrequenciasItem> {
               AnimatedContainer(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.linear,
-                height: _expanded ? 100 : 0,
+                height: _expanded ? 50 : 0,
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
                 child: ListView(
+                  shrinkWrap: true,
                   children: [
                     Text(
-                      widget._frequencia.justificativa,
+                      widget._frequencia.justificativa!,
                       style: TextStyle(
                         color: CustomColors.azul,
                         fontFamily: 'Ubuntu',

@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:projetocrescer/models/class_agendamento.dart';
 import 'package:projetocrescer/models/class_penalidades.dart';
 import 'package:projetocrescer/models/class_pendencias.dart';
 import 'package:projetocrescer/models/login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
-import 'package:projetocrescer/preferences/notification_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
@@ -18,6 +15,7 @@ import 'package:projetocrescer/widgets/menu_home_page_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+  static const route = '/home-page';
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -34,120 +32,24 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> loadPendencias(BuildContext context) {
     return Provider.of<Pendencias>(context, listen: false)
-        .loadPendencias(Provider.of<Login>(context, listen: false).matricula);
+        .loadPendencias(Provider.of<Login>(context, listen: false).matricula!);
   }
 
   Future<void> loadPenalidades(BuildContext context) {
     return Provider.of<Penalidades>(context, listen: false)
-        .loadPenalidades(Provider.of<Login>(context, listen: false).matricula);
+        .loadPenalidades(Provider.of<Login>(context, listen: false).matricula!);
   }
 
   Future<void> loadAgendamentos(BuildContext context) {
     return Provider.of<AgendamentosAtendimentos>(context, listen: false)
-        .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula);
+        .loadAgendamentos(
+            Provider.of<Login>(context, listen: false).matricula!);
   }
-
-  //*--------------FIREBASE E NOTIFICACAO------------------------
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-  NotificationServices services = NotificationServices();
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  final AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
-
-  _registerOnFirebase() {
-    _firebaseMessaging.subscribeToTopic('all');
-    _firebaseMessaging.getToken();
-  }
-
-  Future onSelectNotificaton(payload) async {
-    if (payload == 'comunicados') {
-      await Navigator.of(context).pushNamed(AppRoute.COMUNICADOS);
-    }
-  }
-
-//*--------------------------------------------------------------
 
   @override
   void initState() {
     super.initState();
-    services.requestPermission();
-    var initilizationSettingsAndroid =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-    );
-    var initializationSettings = InitializationSettings(
-        android: initilizationSettingsAndroid, iOS: initializationSettingsIOS);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectNotificaton);
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      Map<String, dynamic> dataValue = message.data;
-      String screen = dataValue['screen'].toString();
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channel.description,
-              icon: "@mipmap/ic_launcher",
-              setAsGroupSummary: true,
-              enableLights: true,
-            ),
-            iOS: IOSNotificationDetails(
-              presentAlert: true,
-              presentBadge: true,
-              presentSound: true,
-            ),
-          ),
-          payload: screen,
-        );
-      }
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      Map<String, dynamic> dataValue = message.data;
-      String screen = dataValue['screen'].toString();
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channel.description,
-              icon: "@mipmap/ic_launcher",
-              setAsGroupSummary: true,
-              enableLights: true,
-            ),
-            iOS: IOSNotificationDetails(
-              presentAlert: true,
-              presentBadge: true,
-              presentSound: true,
-            ),
-          ),
-          payload: screen,
-        );
-      }
-    });
-    _registerOnFirebase();
+
     loadPenalidades(context).then((value) {
       itemsPenalidades =
           Provider.of<Penalidades>(context, listen: false).itemsCount;
@@ -272,10 +174,10 @@ class _HomePageState extends State<HomePage> {
 
 class BodyHome extends StatelessWidget {
   const BodyHome({
-    Key key,
-    @required this.links,
-    @required this.itemsPendencias,
-    @required this.itemsPenalidades,
+    Key? key,
+    required this.links,
+    required this.itemsPendencias,
+    required this.itemsPenalidades,
   }) : super(key: key);
 
   final CustomLinks links;
@@ -319,7 +221,9 @@ class BodyHome extends StatelessWidget {
         MenuHomePageScreen(
           title: 'HORÁRIO',
           subTitle: 'Confira o horário completo',
-          ontap: () {},
+          ontap: () {
+            Navigator.of(context).pushNamed(AppRoute.HORARIO_ALUNO);
+          },
           imageUrl: 'images/horarios.png',
         ),
         MenuHomePageScreen(
@@ -348,7 +252,7 @@ class BodyHome extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Theme.of(context).errorColor),
+                      color: Theme.of(context).colorScheme.error),
                   constraints: BoxConstraints(
                     minHeight: 5,
                     minWidth: 22,
@@ -385,7 +289,7 @@ class BodyHome extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Theme.of(context).errorColor),
+                      color: Theme.of(context).colorScheme.error),
                   constraints: BoxConstraints(
                     minHeight: 5,
                     minWidth: 22,

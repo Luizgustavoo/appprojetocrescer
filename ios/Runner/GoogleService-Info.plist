@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>869247178721-oa6vq2o60ea1bgv9bn4nv1rvqnr4b0l2.apps.googleusercontent.com</string>
+	<string>675944931585-vsj66go20mndmgj57e5dk4qo4q6qhk5s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.869247178721-oa6vq2o60ea1bgv9bn4nv1rvqnr4b0l2</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>869247178721-2747svvbb8rnco15vt53anj94obop5hv.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.675944931585-vsj66go20mndmgj57e5dk4qo4q6qhk5s</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCujJkF3eVOSKVWzdlXiWZ43xybJ-9TWVs</string>
+	<string>AIzaSyCGksiVAgq7vOBryVYlNCbkeKITnbsNo-o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>869247178721</string>
+	<string>675944931585</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.projetocrescer</string>
 	<key>PROJECT_ID</key>
-	<string>projeto-crescer-8fef9</string>
+	<string>projeto-crescer-d1070</string>
 	<key>STORAGE_BUCKET</key>
-	<string>projeto-crescer-8fef9.appspot.com</string>
+	<string>projeto-crescer-d1070.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:869247178721:ios:a503d05d91866df76564a0</string>
+	<string>1:675944931585:ios:07d6266d30d6a9b0e17b00</string>
 </dict>
 </plist>

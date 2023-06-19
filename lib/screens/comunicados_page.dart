@@ -17,7 +17,7 @@ class _ComunicadosPageState extends State<ComunicadosPage> {
     // final usuarioData = Provider.of<Login>(context, listen: false);
 
     return Provider.of<Comunicados>(context, listen: false)
-        .loadComunicados(Provider.of<Login>(context, listen: false).matricula)
+        .loadComunicados(Provider.of<Login>(context, listen: false).matricula!)
         .then((_) {
       setState(() {
         _isLoading = false;

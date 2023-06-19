@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "869247178721",
-    "project_id": "projeto-crescer-8fef9",
-    "storage_bucket": "projeto-crescer-8fef9.appspot.com"
+    "project_number": "675944931585",
+    "project_id": "projeto-crescer-d1070",
+    "storage_bucket": "projeto-crescer-d1070.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:869247178721:android:7ee5bae244b8d41f6564a0",
+        "mobilesdk_app_id": "1:675944931585:android:65dd856e7d5143d0e17b00",
         "android_client_info": {
           "package_name": "com.example.projetocrescer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "869247178721-2747svvbb8rnco15vt53anj94obop5hv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.projetocrescer",
-            "certificate_hash": "ea04320274b43d38d77d569bb0a48009c8322d44"
-          }
-        },
-        {
-          "client_id": "869247178721-gpknve6bus4p8o53kf26g84crq3a05j1.apps.googleusercontent.com",
+          "client_id": "675944931585-k68jnn26rddufe87j3kobf96hvoljh2t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAActoovUuK9cVEjWb0VbSaaKaSGZRgKTA"
+          "current_key": "AIzaSyBuOMf3P1LjtfxmBRs2sZLQDQrjeEfehuE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "869247178721-gpknve6bus4p8o53kf26g84crq3a05j1.apps.googleusercontent.com",
+              "client_id": "675944931585-k68jnn26rddufe87j3kobf96hvoljh2t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:projetocrescer/utils/constants.dart';
 
 class Pendencia {
-  final String idPendencia;
-  final String dataPendencia;
-  final String descricaoTipoPendencia;
-  final String observacao;
-  final String statusPendencia;
+  final String? idPendencia;
+  final String? dataPendencia;
+  final String? descricaoTipoPendencia;
+  final String? observacao;
+  final String? statusPendencia;
 
   Pendencia({
     this.idPendencia,

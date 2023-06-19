@@ -97,7 +97,7 @@ class _OpcoesAgendamentoState extends State<OpcoesAgendamento> {
   }
 
   String _connection = "";
-  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  StreamSubscription<ConnectivityResult>? _connectivitySubscription;
 
   void _updateStatus(ConnectivityResult connectivityResult) async {
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -126,7 +126,7 @@ class _OpcoesAgendamentoState extends State<OpcoesAgendamento> {
 
   @override
   void dispose() {
-    _connectivitySubscription.cancel();
+    _connectivitySubscription!.cancel();
 
     super.dispose();
   }
@@ -143,7 +143,7 @@ class _OpcoesAgendamentoState extends State<OpcoesAgendamento> {
 
   @override
   Widget build(BuildContext context) {
-    final idPessoa = ModalRoute.of(context).settings.arguments as String;
+    final idPessoa = ModalRoute.of(context)!.settings.arguments as String;
 
     var jsonTEMP = jsonDecode(utf8.decode(base64Url.decode(idPessoa)));
 

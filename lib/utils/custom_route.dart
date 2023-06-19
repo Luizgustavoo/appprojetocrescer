@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CustomRoute<T> extends MaterialPageRoute<T> {
   CustomRoute({
-    @required WidgetBuilder builder,
-    RouteSettings settings,
+    @required WidgetBuilder? builder,
+    RouteSettings? settings,
   }) : super(
-          builder: builder,
+          builder: builder!,
           settings: settings,
         );
 
@@ -23,9 +23,7 @@ class CustomRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-
 class CustomPageTransitionsBuilder extends PageTransitionsBuilder {
-  
   @override
   Widget buildTransitions<T>(
     PageRoute<T> route,

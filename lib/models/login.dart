@@ -7,16 +7,15 @@ import 'package:projetocrescer/preferences/store.dart';
 import 'package:projetocrescer/utils/constants.dart';
 
 class Usuario {
-  final String matriculaUsuario;
-  final String nomeUsuario;
-  final String emailUsuario;
-  final String foto;
-  // ignore: non_constant_identifier_names
-  final String serie_matricula;
+  final String? matriculaUsuario;
+  final String? nomeUsuario;
+  final String? emailUsuario;
+  final String? foto;
+  final String? serieMatricula;
 
   Usuario({
     // ignore: non_constant_identifier_names
-    this.serie_matricula,
+    this.serieMatricula,
     this.foto,
     this.matriculaUsuario,
     this.nomeUsuario,
@@ -30,46 +29,37 @@ class Login with ChangeNotifier {
 
   List<Usuario> get items => [..._items];
 
-  String _matricula;
-  String _usuarioMatricula;
-  String _foto;
-  // ignore: non_constant_identifier_names
-  String _serie_matricula;
+  String? _matricula;
+  String? _usuarioMatricula;
+  String? _foto;
+  String? _serieMatricula;
 
   int get itemsCount {
     return _items.length;
   }
 
   // ignore: missing_return
-  String get serie {
-    if (_serie_matricula != null) {
-      return _serie_matricula;
-    }
+  String? get serie {
+    return _serieMatricula;
   }
 
   // ignore: missing_return
-  String get foto {
-    if (_foto != null) {
-      return _foto;
-    }
+  String? get foto {
+    return _foto;
   }
 
   // ignore: missing_return
-  String get matricula {
-    if (_matricula != null) {
-      return _matricula;
-    }
+  String? get matricula {
+    return _matricula;
   }
 
   // ignore: missing_return
-  String get usuarioMatricula {
-    if (_usuarioMatricula != null) {
-      return _usuarioMatricula;
-    }
+  String? get usuarioMatricula {
+    return _usuarioMatricula;
   }
 
   bool get isAuth {
-    return usuarioMatricula != null && matricula != null;
+    return matricula != null;
   }
 
   Future<void> get logout async {
@@ -77,7 +67,7 @@ class Login with ChangeNotifier {
     _matricula = null;
     _usuarioMatricula = null;
     _foto = null;
-    _serie_matricula = null;
+    _serieMatricula = null;
     Store.remove('userData');
     notifyListeners();
   }
@@ -94,7 +84,7 @@ class Login with ChangeNotifier {
       _matricula = userData["matricula_usuario"].toString();
       _usuarioMatricula = userData["nome_usuario"].toString();
       _foto = userData["foto"].toString();
-      _serie_matricula = userData["serie_matricula"].toString();
+      _serieMatricula = userData["serie_matricula"].toString();
 
       notifyListeners();
       return Future.value();
@@ -131,14 +121,14 @@ class Login with ChangeNotifier {
                 nomeUsuario: usuarioData['nome_usuario'].toString(),
                 emailUsuario: usuarioData['email_usuario'].toString(),
                 foto: usuarioData['foto'].toString(),
-                serie_matricula: usuarioData['serie_matricula'].toString(),
+                serieMatricula: usuarioData['serie_matricula'].toString(),
               ),
             );
 
             _matricula = usuarioData['matricula_usuario'].toString();
             _usuarioMatricula = usuarioData['nome_usuario'].toString();
             _foto = usuarioData['foto'].toString();
-            _serie_matricula = usuarioData['serie_matricula'].toString();
+            _serieMatricula = usuarioData['serie_matricula'].toString();
 
             Store.saveMap('userData', {
               "matricula_usuario": usuarioData['matricula_usuario'].toString(),

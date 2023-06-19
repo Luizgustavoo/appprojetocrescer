@@ -59,7 +59,7 @@ class _AgendamentosItemState extends State<AgendamentosItem> {
                   });
                 },
                 title: Text(
-                  widget.agendamento.statusAgendamento.toUpperCase(),
+                  widget.agendamento.statusAgendamento!.toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     color: CustomColors.azul,
@@ -70,9 +70,9 @@ class _AgendamentosItemState extends State<AgendamentosItem> {
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(
-                    widget.agendamento.dataAgendamento +
+                    widget.agendamento.dataAgendamento! +
                         " - " +
-                        widget.agendamento.horaAgendamento,
+                        widget.agendamento.horaAgendamento!,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Ubuntu',
@@ -109,7 +109,7 @@ class _AgendamentosItemState extends State<AgendamentosItem> {
                 child: ListView(
                   children: [
                     Text(
-                      widget.agendamento.motivoAgendamento,
+                      widget.agendamento.motivoAgendamento!,
                       style: TextStyle(
                         color: CustomColors.azul,
                         fontFamily: 'Ubuntu',

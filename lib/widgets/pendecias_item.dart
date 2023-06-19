@@ -17,19 +17,19 @@ class _PendenciasItemState extends State<PendenciasItem> {
   @override
   Widget build(BuildContext context) {
     var imagem = "";
-    if (widget._pendencia.descricaoTipoPendencia.contains('CRACHÁ')) {
+    if (widget._pendencia.descricaoTipoPendencia!.contains('CRACHÁ')) {
       imagem = 'images/crachaa.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('LIVRO')) {
+    } else if (widget._pendencia.descricaoTipoPendencia!.contains('LIVRO')) {
       imagem = 'images/livro.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('CHAVE')) {
+    } else if (widget._pendencia.descricaoTipoPendencia!.contains('CHAVE')) {
       imagem = 'images/chave.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('FIGURINO')) {
+    } else if (widget._pendencia.descricaoTipoPendencia!.contains('FIGURINO')) {
       imagem = 'images/figurino.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('FLAUTA')) {
+    } else if (widget._pendencia.descricaoTipoPendencia!.contains('FLAUTA')) {
       imagem = 'images/flauta.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('MÁSCARA')) {
+    } else if (widget._pendencia.descricaoTipoPendencia!.contains('MÁSCARA')) {
       imagem = 'images/mascara.png';
-    } else if (widget._pendencia.descricaoTipoPendencia.contains('UNIFORME')) {
+    } else if (widget._pendencia.descricaoTipoPendencia!.contains('UNIFORME')) {
       imagem = 'images/uniforme.png';
     } else {
       imagem = 'images/perigo.png';
@@ -54,7 +54,7 @@ class _PendenciasItemState extends State<PendenciasItem> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  widget._pendencia.descricaoTipoPendencia,
+                  widget._pendencia.descricaoTipoPendencia!,
                   style: const TextStyle(
                     fontSize: 25,
                     fontFamily: 'Montserrat',
@@ -73,7 +73,7 @@ class _PendenciasItemState extends State<PendenciasItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "DATA: " + widget._pendencia.dataPendencia,
+                          "DATA: " + widget._pendencia.dataPendencia!,
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Ubuntu',
@@ -84,7 +84,7 @@ class _PendenciasItemState extends State<PendenciasItem> {
                           height: 3,
                         ),
                         Text(
-                          "STATUS: " + widget._pendencia.statusPendencia,
+                          "STATUS: " + widget._pendencia.statusPendencia!,
                           style: TextStyle(
                             fontFamily: 'Ubuntu',
                             fontSize: 16,
@@ -121,7 +121,7 @@ class _PendenciasItemState extends State<PendenciasItem> {
           subtitle: _expanded && widget._pendencia.statusPendencia == 'ativo'
               ? Container(
                   child: Text(
-                    widget._pendencia.observacao,
+                    widget._pendencia.observacao!,
                     style: TextStyle(
                       color: Colors.red,
                       fontFamily: 'Ubunutu',

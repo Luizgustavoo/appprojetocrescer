@@ -10,8 +10,8 @@ class _HideHomeState extends State<HideHome>
     with SingleTickerProviderStateMixin {
   var _visible = true;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void initState() {
@@ -20,14 +20,20 @@ class _HideHomeState extends State<HideHome>
     animationController = new AnimationController(
         vsync: this, duration: new Duration(seconds: 2));
     animation = new CurvedAnimation(
-        parent: animationController, curve: Curves.easeInOut);
+        parent: animationController!, curve: Curves.easeInOut);
 
-    animation.addListener(() => this.setState(() {}));
-    animationController.forward();
+    animation!.addListener(() => this.setState(() {}));
+    animationController!.forward();
 
     setState(() {
       _visible = !_visible;
     });
+  }
+
+  @override
+  void dispose() {
+    animationController!.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,8 +42,8 @@ class _HideHomeState extends State<HideHome>
     return Stack(
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.grey[300],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade100,
           child: GridView.count(
             shrinkWrap: true,
             childAspectRatio: 1,
@@ -62,7 +68,7 @@ class _HideHomeState extends State<HideHome>
           child: Container(
             color: Colors.red,
             width: size.width,
-            height: animation.value * 20,
+            height: animation!.value * 20,
             child: Text(
               'Conecte-se a uma rede (Wifi/Móvel)',
               textAlign: TextAlign.center,

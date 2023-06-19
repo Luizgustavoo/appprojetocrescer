@@ -1,9 +1,9 @@
 class CalendarItem {
   static String table = "events";
   
-  int id;
-  String name;
-  String date;
+  int? id;
+  String? name;
+  String? date;
 
   CalendarItem({this.id, this.name, this.date});
 

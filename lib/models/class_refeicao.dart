@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:projetocrescer/utils/constants.dart';
 
 class AgendamentoRefeicao {
-  final String matricula;
-  final String nome;
-  final String tipo;
-  final String opcao;
-  final String periodo;
-  final String instituicao;
+  final String? matricula;
+  final String? nome;
+  final String? tipo;
+  final String? opcao;
+  final String? periodo;
+  final String? instituicao;
 
   AgendamentoRefeicao({
     this.matricula,

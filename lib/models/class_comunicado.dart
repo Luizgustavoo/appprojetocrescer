@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:projetocrescer/utils/constants.dart';
 
 class Comunicado {
-  final String idComunicado;
-  final String dataComunicado;
-  final String destinatarioComunicado;
-  final String assuntoComunicado;
-  final String descricaoComunicado;
-  final String imagemComunicado;
-  final String nomeUsuario;
-  final String statusComunicado;
-  final String visualizou;
+  final String? idComunicado;
+  final String? dataComunicado;
+  final String? destinatarioComunicado;
+  final String? assuntoComunicado;
+  final String? descricaoComunicado;
+  final String? imagemComunicado;
+  final String? nomeUsuario;
+  final String? statusComunicado;
+  final String? visualizou;
 
   Comunicado({
     this.idComunicado,
@@ -65,7 +65,8 @@ class Comunicados with ChangeNotifier {
       notifyListeners();
     }
 
-    return Future.value();
+    // ignore: null_argument_to_non_null_type
+    return Future.value(true);
   }
 
   Future<String> visualizarComunicado(

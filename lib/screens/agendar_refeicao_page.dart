@@ -5,6 +5,8 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/widgets/refeicao_tile.dart';
 import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 import '../utils/app_route.dart';
@@ -18,7 +20,7 @@ String qrCodeResult = "Aguardando...";
 String codeInvalido = "";
 bool resultInternet = false;
 bool _isLoading = true;
-StreamSubscription<ConnectivityResult> _connectivitySubscription;
+StreamSubscription<ConnectivityResult>? _connectivitySubscription;
 
 class _AgendarRefeicaoState extends State<AgendarRefeicao> {
   //*--------------CHECANDO CONEXAO COM A INTERNET ----------------
@@ -43,27 +45,7 @@ class _AgendarRefeicaoState extends State<AgendarRefeicao> {
 
   void updateText(String texto) {
     setState(() {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.greenAccent,
-          content: Text(
-            texto,
-            style: TextStyle(
-              fontSize: 16,
-              fontFamily: 'Ubuntu',
-              color: Colors.white,
-            ),
-          ),
-          duration: resultInternet ? Duration(seconds: 3) : Duration(days: 1),
-          action: SnackBarAction(
-            textColor: Colors.white,
-            label: 'Fechar',
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-      );
+      _isLoading = false;
     });
   }
 
@@ -78,7 +60,7 @@ class _AgendarRefeicaoState extends State<AgendarRefeicao> {
   @override
   void dispose() {
     super.dispose();
-    _connectivitySubscription.cancel();
+    _connectivitySubscription?.cancel();
   }
 
   @override
@@ -102,7 +84,7 @@ class _AgendarRefeicaoState extends State<AgendarRefeicao> {
                 onPressed: () async {
                   await BarcodeScanner.scan().then((value) {
                     var jsonTEMP = jsonDecode(
-                        utf8.decode(base64Url.decode(value.rawContent ?? '')));
+                        utf8.decode(base64Url.decode(value.rawContent)));
 
                     print(jsonTEMP['matricula']);
 
@@ -123,8 +105,22 @@ class _AgendarRefeicaoState extends State<AgendarRefeicao> {
                     }
                   });
                 },
-                icon: Icon(FontAwesomeIcons.utensils),
-                label: Text('AGENDAR REFEIÇÃO'),
+                style: ElevatedButton.styleFrom(
+                  elevation: 3,
+                  backgroundColor: CustomColors.azul,
+                ),
+                icon: Icon(
+                  FontAwesomeIcons.utensils,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'AGENDAR REFEIÇÃO',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
               ),
             ),
           ),
@@ -137,7 +133,11 @@ class _AgendarRefeicaoState extends State<AgendarRefeicao> {
                   duration: Duration(milliseconds: 100),
                   child: ScaleAnimation(
                     duration: Duration(milliseconds: 500),
-                    child: Container(),
+                    child: AgendarTile(
+                      data: '23/05/2023',
+                      cafe: 'CAFE',
+                      almoco: 'ALMOCO',
+                    ),
                   ),
                 );
               },

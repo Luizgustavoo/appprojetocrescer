@@ -22,19 +22,19 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
 
   void _saveForm() {
     final focusNode = FocusScope.of(context);
-    var isValid = _form.currentState.validate();
+    var isValid = _form.currentState!.validate();
 
     if (!isValid) return;
-    _form.currentState.save();
+    _form.currentState?.save();
 
     final agendamento = new AgendamentoAtendimento(
       idMatricula: Provider.of<Login>(context, listen: false).matricula,
-      nomeResponsavel: _formData['nome'],
+      nomeResponsavel: _formData['nome'] as String,
       dataAgendamento: DateFormat('dd/MM/y').format(DateTime.now()),
       horaAgendamento: DateFormat('Hms').format(DateTime.now()),
       setorAgendamento: "psicologo",
       statusAgendamento: "aguardando",
-      motivoAgendamento: _formData['motivo'],
+      motivoAgendamento: _formData['motivo'] as String,
     );
 
     setState(() {
@@ -66,7 +66,7 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
         );
       });
 
-      _form.currentState.reset();
+      _form.currentState!.reset();
     });
   }
 
@@ -186,9 +186,9 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) =>
                           FocusScope.of(context).requestFocus(_tituloFocusNode),
-                      onSaved: (value) => _formData['nome'] = value,
+                      onSaved: (value) => _formData['nome'] = value!,
                       validator: (value) {
-                        if (value.trim().length < 4) {
+                        if (value!.trim().length < 4) {
                           return 'Campo nome deve conter no mínimo 4 caracteres!';
                         }
                         return null;
@@ -204,9 +204,9 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
                       focusNode: _tituloFocusNode,
                       keyboardType: TextInputType.multiline,
                       maxLines: 6,
-                      onSaved: (value) => _formData['motivo'] = value,
+                      onSaved: (value) => _formData['motivo'] = value!,
                       validator: (value) {
-                        if (value.trim().length < 8) {
+                        if (value!.trim().length < 8) {
                           return 'Campo motivo deve conter no mínimo 8 caracteres!';
                         }
                         return null;
@@ -225,11 +225,9 @@ class _AgendarPsicologoPageState extends State<AgendarPsicologoPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              onPressed: _isLoadingButton
-                                  ? CircularProgressIndicator()
-                                  : () {
-                                      _saveForm();
-                                    },
+                              onPressed: () {
+                                _saveForm();
+                              },
                               icon: Icon(Icons.check_rounded),
                               label: Text(
                                 'SOLICITAR',

@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:projetocrescer/utils/constants.dart';
+import 'dart:async';
 
 class AgendamentoAtendimento {
-  final String idAgendamento;
-  final String nomeResponsavel;
-  final String motivoAgendamento;
-  final String dataAgendamento;
-  final String horaAgendamento;
-  final String statusAgendamento;
-  final String idMatricula;
-  final String dataSolicitacao;
-  final String setorAgendamento;
+  final String? idAgendamento;
+  final String? nomeResponsavel;
+  final String? motivoAgendamento;
+  final String? dataAgendamento;
+  final String? horaAgendamento;
+  final String? statusAgendamento;
+  final String? idMatricula;
+  final String? dataSolicitacao;
+  final String? setorAgendamento;
 
   AgendamentoAtendimento({
     this.nomeResponsavel,
@@ -43,8 +44,8 @@ class AgendamentosAtendimentos with ChangeNotifier {
   int get itemsCountCoordenacaoConfirmado {
     return _items
         .where((coordenacao) =>
-            coordenacao.setorAgendamento.toLowerCase() == 'coordenacao' &&
-            (coordenacao.statusAgendamento
+            coordenacao.setorAgendamento!.toLowerCase() == 'coordenacao' &&
+            (coordenacao.statusAgendamento!
                 .toLowerCase()
                 .contains('confirmado')))
         .toList()
@@ -54,8 +55,8 @@ class AgendamentosAtendimentos with ChangeNotifier {
   int get itemsCountPsicologoConfirmado {
     return _items
         .where((psicologo) =>
-            psicologo.setorAgendamento.toLowerCase() == 'psicologo' &&
-            (psicologo.statusAgendamento.toLowerCase().contains('confirmado')))
+            psicologo.setorAgendamento!.toLowerCase() == 'psicologo' &&
+            (psicologo.statusAgendamento!.toLowerCase().contains('confirmado')))
         .toList()
         .length;
   }
@@ -63,7 +64,7 @@ class AgendamentosAtendimentos with ChangeNotifier {
   int get itemsCountCoordenacao {
     return _items
         .where((coordenacao) =>
-            coordenacao.setorAgendamento.toLowerCase() == 'coordenacao')
+            coordenacao.setorAgendamento!.toLowerCase() == 'coordenacao')
         .toList()
         .length;
   }
@@ -71,7 +72,7 @@ class AgendamentosAtendimentos with ChangeNotifier {
   int get itemsCountPsicologo {
     return _items
         .where((coordenacao) =>
-            coordenacao.setorAgendamento.toLowerCase() == 'psicologo')
+            coordenacao.setorAgendamento!.toLowerCase() == 'psicologo')
         .toList()
         .length;
   }
@@ -79,14 +80,14 @@ class AgendamentosAtendimentos with ChangeNotifier {
   List<AgendamentoAtendimento> get itemsCoordenacao {
     return _items
         .where((coordenacao) =>
-            coordenacao.setorAgendamento.toLowerCase() == 'coordenacao')
+            coordenacao.setorAgendamento!.toLowerCase() == 'coordenacao')
         .toList();
   }
 
   List<AgendamentoAtendimento> get itemsPsicologo {
     return _items
         .where((psicologo) =>
-            psicologo.setorAgendamento.toLowerCase() == 'psicologo')
+            psicologo.setorAgendamento!.toLowerCase() == 'psicologo')
         .toList();
   }
 

@@ -4,7 +4,7 @@ import 'package:projetocrescer/utils/custom_colors.dart';
 class CustomListTile extends StatelessWidget {
   final IconData icon;
   final String title;
-  final Function ontap;
+  final VoidCallback ontap;
   final bool seta;
 
   CustomListTile(this.icon, this.title, this.ontap, this.seta);
@@ -28,7 +28,7 @@ class CustomListTile extends StatelessWidget {
           title: Text(
             title,
             style: TextStyle(
-              fontFamily: 'Ubuntu',
+              fontFamily: 'Montserrat',
               fontWeight: FontWeight.bold,
             ),
           ),

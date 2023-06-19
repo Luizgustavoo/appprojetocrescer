@@ -16,7 +16,7 @@ class _PendeciasPageState extends State<PendeciasPage> {
   Future<void> loadPendencias(BuildContext context) {
     // final usuarioData = Provider.of<Login>(context, listen: false);
     return Provider.of<Pendencias>(context, listen: false)
-        .loadPendencias(Provider.of<Login>(context, listen: false).matricula)
+        .loadPendencias(Provider.of<Login>(context, listen: false).matricula!)
         .then((_) {
       setState(() {
         _isLoading = false;

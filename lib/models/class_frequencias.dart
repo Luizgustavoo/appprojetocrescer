@@ -5,13 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:projetocrescer/utils/constants.dart';
 
 class Frequencia {
-  final String nomePessoa;
-  final String idMatricula;
-  final String dataFrequencia;
-  final String justificado;
-  final String justificativa;
-  final String tipoFalta;
-  final String descricaoTipoFalta;
+  final String? nomePessoa;
+  final String? idMatricula;
+  final String? dataFrequencia;
+  final String? justificado;
+  final String? justificativa;
+  final String? tipoFalta;
+  final String? descricaoTipoFalta;
 
   Frequencia({
     this.descricaoTipoFalta,

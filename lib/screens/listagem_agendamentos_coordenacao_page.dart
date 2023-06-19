@@ -18,7 +18,7 @@ class _ListagemAgendamentoCoordenacaoPageState
 
   Future<void> loadAgendamentos(BuildContext context) {
     return Provider.of<AgendamentosAtendimentos>(context, listen: false)
-        .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula)
+        .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula!)
         .then((_) {
       setState(() {
         _isLoading = false;

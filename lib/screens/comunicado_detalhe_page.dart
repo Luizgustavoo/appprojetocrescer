@@ -15,13 +15,13 @@ class _ComunicadoDetalhePageState extends State<ComunicadoDetalhePage> {
 
   @override
   Widget build(BuildContext context) {
-    final comunicado = ModalRoute.of(context).settings.arguments as Comunicado;
+    final comunicado = ModalRoute.of(context)?.settings.arguments as Comunicado;
 
     return WillPopScope(
       onWillPop: () {
         Navigator.of(context).pop(false);
         return Provider.of<Comunicados>(context, listen: false).loadComunicados(
-            Provider.of<Login>(context, listen: false).matricula);
+            Provider.of<Login>(context, listen: false).matricula!);
       },
       child: Scaffold(
         body: SafeArea(
@@ -35,7 +35,7 @@ class _ComunicadoDetalhePageState extends State<ComunicadoDetalhePage> {
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(
-                    comunicado.assuntoComunicado.toUpperCase(),
+                    comunicado.assuntoComunicado!.toUpperCase(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: 'Montserrat',
@@ -46,9 +46,9 @@ class _ComunicadoDetalhePageState extends State<ComunicadoDetalhePage> {
                     fit: StackFit.expand,
                     children: [
                       Hero(
-                        tag: comunicado.idComunicado,
+                        tag: comunicado.idComunicado!,
                         child: Image.network(
-                          imagem + comunicado.imagemComunicado,
+                          imagem + comunicado.imagemComunicado!,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -93,7 +93,7 @@ class _ComunicadoDetalhePageState extends State<ComunicadoDetalhePage> {
                             color: CustomColors.azul,
                             thickness: 5,
                           ),
-                          int.parse(comunicado.visualizou) > 0
+                          int.parse(comunicado.visualizou!) > 0
                               ? Row(
                                   children: [
                                     Icon(
@@ -126,7 +126,7 @@ class _ComunicadoDetalhePageState extends State<ComunicadoDetalhePage> {
                         margin:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                         child: Text(
-                          comunicado.descricaoComunicado.toUpperCase(),
+                          comunicado.descricaoComunicado!.toUpperCase(),
                           softWrap: true,
                           style: TextStyle(
                             color: Colors.black87,

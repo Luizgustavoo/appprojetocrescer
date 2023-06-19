@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 
 class MenuHomePageScreen extends StatelessWidget {
-  final String title;
-  final String subTitle;
-  final Function ontap;
-  final String imageUrl;
+  final String? title;
+  final String? subTitle;
+  final VoidCallback? ontap;
+  final String? imageUrl;
 
   MenuHomePageScreen({
     @required this.title,
@@ -32,12 +32,12 @@ class MenuHomePageScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                imageUrl,
+                imageUrl!,
                 width: MediaQuery.of(context).size.height * .09,
               ),
               SizedBox(height: 7),
               Text(
-                title,
+                title!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -48,7 +48,7 @@ class MenuHomePageScreen extends StatelessWidget {
               ),
               SizedBox(height: 4),
               Text(
-                subTitle,
+                subTitle!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15,
