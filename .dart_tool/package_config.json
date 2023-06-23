@@ -26,6 +26,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "banner_carousel",
+      "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/banner_carousel-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "barcode_scan2",
       "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/barcode_scan2-4.2.4",
       "packageUri": "lib/",
@@ -542,7 +548,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-06-19T17:53:24.029613Z",
+  "generated": "2023-06-21T16:38:10.890924Z",
   "generator": "pub",
   "generatorVersion": "3.0.2"
 }

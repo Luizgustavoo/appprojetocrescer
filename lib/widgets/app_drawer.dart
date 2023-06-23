@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projetocrescer/models/login.dart';
@@ -43,97 +45,97 @@ class AppDrawer extends StatelessWidget {
         height: size.height,
         child: networkStatus == NetworkStatus.online
             ? Drawer(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(10),
-                  ),
-                ),
                 child: ListView(
                   children: [
-                    SizedBox(
+                    Container(
                       height: size.height * .3,
-                      child: DrawerHeader(
-                        duration: Duration(milliseconds: 200),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Material(
-                                  color: CustomColors.amarelo,
-                                  elevation: 5,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(60),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: CircleAvatar(
-                                      radius: size.width * .15,
-                                      backgroundImage: fotoExiste
-                                          ? NetworkImage(
-                                              foto,
-                                            )
-                                          : AssetImage('images/avatar.png')
-                                              as ImageProvider,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 15,
-                              ),
-                              child: Row(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            CustomColors.azul,
+                            Colors.blue.shade500,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: BackdropFilter(
+                        filter:
+                            new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        child: DrawerHeader(
+                          duration: Duration(milliseconds: 200),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Flexible(
-                                    child: Text(
-                                      Provider.of<Login>(context)
-                                              .usuarioMatricula
-                                              .toString() +
-                                          ' | ' +
-                                          Provider.of<Login>(context)
-                                              .serie
-                                              .toString() +
-                                          'º ANO',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        shadows: [
-                                          Shadow(
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 3.0,
-                                            color: Colors.black,
-                                          ),
-                                          Shadow(
-                                            offset: Offset(3.0, 3.0),
-                                            blurRadius: 8.0,
-                                            color: Color.fromARGB(255, 0, 0, 0),
-                                          ),
-                                        ],
-                                        fontFamily: 'Montserrat',
-                                        overflow: TextOverflow.clip,
-                                        color: CustomColors.amarelo,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                  Material(
+                                    color: CustomColors.amarelo,
+                                    elevation: 5,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(60),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: CircleAvatar(
+                                        radius: size.width * .15,
+                                        backgroundImage: fotoExiste
+                                            ? NetworkImage(
+                                                foto,
+                                              )
+                                            : AssetImage('images/avatar.png')
+                                                as ImageProvider,
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              CustomColors.azul,
-                              Colors.blue.shade500,
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 15,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        Provider.of<Login>(context)
+                                                .usuarioMatricula
+                                                .toString() +
+                                            ' | ' +
+                                            Provider.of<Login>(context)
+                                                .serie
+                                                .toString() +
+                                            'º ANO',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          shadows: [
+                                            Shadow(
+                                              offset: Offset(2.0, 2.0),
+                                              blurRadius: 3.0,
+                                              color: Colors.black,
+                                            ),
+                                            Shadow(
+                                              offset: Offset(3.0, 3.0),
+                                              blurRadius: 8.0,
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0),
+                                            ),
+                                          ],
+                                          fontFamily: 'Montserrat',
+                                          overflow: TextOverflow.clip,
+                                          color: CustomColors.amarelo,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
                           ),
                         ),
                       ),
@@ -349,7 +351,7 @@ class AppDrawer extends StatelessWidget {
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.tiktok,
-                              color: Colors.black54,
+                              color: Colors.black87,
                             ),
                           ),
                           IconButton(
