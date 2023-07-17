@@ -2,35 +2,35 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projetocrescer/firebase_options.dart';
-import 'package:projetocrescer/models/class_agendamento.dart';
-import 'package:projetocrescer/models/class_comunicado.dart';
-import 'package:projetocrescer/models/class_frequencias.dart';
-import 'package:projetocrescer/models/class_penalidades.dart';
-import 'package:projetocrescer/models/class_pendencias.dart';
-import 'package:projetocrescer/models/class_refeicao.dart';
-import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/models/class_scheduling.dart';
+import 'package:projetocrescer/models/class_announcement.dart';
+import 'package:projetocrescer/models/class_frequency.dart';
+import 'package:projetocrescer/models/class_penalties.dart';
+import 'package:projetocrescer/models/class_pendencies.dart';
+import 'package:projetocrescer/models/class_snack.dart';
+import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
-import 'package:projetocrescer/screens/agendar_refeicao_page.dart';
+import 'package:projetocrescer/screens/schedule_meal_page.dart';
 import 'package:projetocrescer/screens/auth_or_home_page.dart';
-import 'package:projetocrescer/screens/comunicado_detalhe_page.dart';
-import 'package:projetocrescer/screens/comunicados_page.dart';
-import 'package:projetocrescer/screens/fale_conosco_page.dart';
-import 'package:projetocrescer/screens/horario_aluno_page.dart';
-import 'package:projetocrescer/screens/listagem_agendamentos_coordenacao_page.dart';
-import 'package:projetocrescer/screens/listagem_agendamentos_psicologo_page.dart';
-import 'package:projetocrescer/screens/opcoes_agend_ref.dart';
-import 'package:projetocrescer/screens/pendencias_page.dart';
+import 'package:projetocrescer/screens/detail_notices_page.dart';
+import 'package:projetocrescer/screens/notices_page.dart';
+import 'package:projetocrescer/screens/contact_us_page.dart';
+import 'package:projetocrescer/screens/student_schedule_page.dart';
+import 'package:projetocrescer/screens/coordination_scheduling_list_page.dart';
+import 'package:projetocrescer/screens/psychologist_scheduling_list_page.dart';
+import 'package:projetocrescer/screens/scheduling_options.dart';
+import 'package:projetocrescer/screens/pendencies_page.dart';
 import 'package:projetocrescer/screens/splash_screen.dart';
 import 'package:projetocrescer/utils/custom_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
-import 'package:projetocrescer/screens/agendar_psicologo_page.dart';
+import 'package:projetocrescer/screens/schedule_psychologist_page.dart';
 import 'package:projetocrescer/utils/firebase_api.dart';
 import 'package:provider/provider.dart';
-import 'package:projetocrescer/screens/agendar_coordenacao_page.dart';
-import 'package:projetocrescer/screens/assiduidade_page.dart';
+import 'package:projetocrescer/screens/schedule_coordination_page.dart';
+import 'package:projetocrescer/screens/assiduity_page.dart';
 import 'package:projetocrescer/screens/home_page.dart';
 import 'package:projetocrescer/screens/login_page.dart';
-import 'package:projetocrescer/screens/penalidades_page.dart';
+import 'package:projetocrescer/screens/penalties_page.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -42,6 +42,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
     systemNavigationBarColor:
         CustomColors.azul, // cor de fundo da barra de navegação
   ));
@@ -133,23 +134,23 @@ class MyApp extends StatelessWidget {
           AppRoute.SPLASH: (ctx) => SplashScreen(),
           AppRoute.INDEX: (ctx) => AuthOrHomePage(),
           AppRoute.HOME: (ctx) => HomePage(),
-          AppRoute.COMUNICADOS: (ctx) => ComunicadosPage(),
-          AppRoute.OPCOES_AGENDAMENTO: (ctx) => OpcoesAgendamento(),
-          AppRoute.ASSIDUIDADE: (ctx) => AssiduidadePage(),
-          AppRoute.PENALIDADES: (ctx) => PenalidadesPage(),
-          AppRoute.AGENDAR_COORDENACAO: (ctx) => AgendarCoordenacaoPage(),
-          AppRoute.AGENDAR_PSICOLOGO: (ctx) => AgendarPsicologoPage(),
-          AppRoute.PENDENCIAS_PAGE: (ctx) => PendeciasPage(),
+          AppRoute.COMUNICADOS: (ctx) => NoticesPage(),
+          AppRoute.OPCOES_AGENDAMENTO: (ctx) => SchedulingOptions(),
+          AppRoute.ASSIDUIDADE: (ctx) => AssiduityPage(),
+          AppRoute.PENALIDADES: (ctx) => PenaltiesPage(),
+          AppRoute.AGENDAR_COORDENACAO: (ctx) => CoordinationSchedulePage(),
+          AppRoute.AGENDAR_PSICOLOGO: (ctx) => PsychologistSchedulePage(),
+          AppRoute.PENDENCIAS_PAGE: (ctx) => PendenciesPage(),
           AppRoute.LIST_AGENDAMENTOS_COORDENACAO: (ctx) =>
-              ListagemAgendamentoCoordenacaoPage(),
+              CoordinationSchedulingPage(),
           AppRoute.LIST_AGENDAMENTOS_PSICOLOGO: (ctx) =>
-              ListagemAgendamentoPsicologoPage(),
-          AppRoute.DETALHES_COMUNICADOS: (ctx) => ComunicadoDetalhePage(),
+              PsychologistSchedulingPage(),
+          AppRoute.DETALHES_COMUNICADOS: (ctx) => DetailNoticesPage(),
           AppRoute.FALE: (ctx) => ShowCaseWidget(
-                builder: Builder(builder: (context) => FaleConosco()),
+                builder: Builder(builder: (context) => ContactUsPage()),
               ),
-          AppRoute.AGENDAR_REF: (ctx) => AgendarRefeicao(),
-          AppRoute.HORARIO_ALUNO: (ctx) => HorarioPage(),
+          AppRoute.AGENDAR_REF: (ctx) => MealPage(),
+          AppRoute.HORARIO_ALUNO: (ctx) => StudentSchedulePage(),
         },
       ),
     );

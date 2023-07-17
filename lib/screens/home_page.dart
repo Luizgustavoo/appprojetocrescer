@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
-import 'package:projetocrescer/models/class_agendamento.dart';
-import 'package:projetocrescer/models/class_penalidades.dart';
-import 'package:projetocrescer/models/class_pendencias.dart';
-import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/models/class_scheduling.dart';
+import 'package:projetocrescer/models/class_penalties.dart';
+import 'package:projetocrescer/models/class_pendencies.dart';
+import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';

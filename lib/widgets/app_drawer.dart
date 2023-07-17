@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/constants.dart';
@@ -72,7 +72,7 @@ class AppDrawer extends StatelessWidget {
                                 children: [
                                   Material(
                                     color: CustomColors.amarelo,
-                                    elevation: 5,
+                                    elevation: 3,
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(60),
                                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/main.dart';
-import 'package:projetocrescer/models/login.dart';
+import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/screens/home_page.dart';
 import 'package:provider/provider.dart';
 
