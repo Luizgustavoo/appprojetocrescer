@@ -1,8 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:projetocrescer/preferences/store.dart';
 import 'package:projetocrescer/utils/constants.dart';
 
@@ -15,12 +17,48 @@ class Usuario {
 
   Usuario({
     // ignore: non_constant_identifier_names
-    this.serieMatricula,
-    this.foto,
     this.matriculaUsuario,
     this.nomeUsuario,
     this.emailUsuario,
+    this.foto,
+    this.serieMatricula,
   });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'matricula_usuario': matriculaUsuario,
+      'nome_usuario': nomeUsuario,
+      'email_usuario': emailUsuario,
+      'foto': foto,
+      'serie_matricula': serieMatricula,
+    };
+  }
+
+  factory Usuario.fromMap(Map<String, dynamic> map) {
+    return Usuario(
+      matriculaUsuario: map['matricula_usuario'] != null
+          ? map['matricula_usuario'] as String
+          : null,
+      nomeUsuario:
+          map['nome_usuario'] != null ? map['nome_usuario'] as String : null,
+      emailUsuario:
+          map['email_usuario'] != null ? map['email_usuario'] as String : null,
+      foto: map['foto'] != null ? map['foto'] as String : null,
+      serieMatricula: map['serie_matricula'] != null
+          ? map['serie_matricula'] as String
+          : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Usuario.fromJson(String source) =>
+      Usuario.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Usuario(matriculaUsuario: $matriculaUsuario, nomeUsuario: $nomeUsuario, emailUsuario: $emailUsuario, foto: $foto, serieMatricula: $serieMatricula)';
+  }
 }
 
 class Login with ChangeNotifier {

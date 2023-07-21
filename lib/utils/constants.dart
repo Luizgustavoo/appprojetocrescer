@@ -41,4 +41,8 @@ class Constants {
 
   static const String URL_AGENDAR_REFEICAO =
       'http://' + IP + '/confirmarrefeicao/refeicao/agendarpeloapp/';
+
+  /*Implementado depois*/
+  static const String URL_DADOS_ALUNO =
+      'http://' + IP + '/sistemaalunos/api/aluno/matricula/';
 }

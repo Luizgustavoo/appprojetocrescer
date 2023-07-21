@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:projetocrescer/firebase_options.dart';
+import 'package:projetocrescer/models/class_account.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_announcement.dart';
 import 'package:projetocrescer/models/class_frequency.dart';
@@ -10,6 +12,7 @@ import 'package:projetocrescer/models/class_pendencies.dart';
 import 'package:projetocrescer/models/class_snack.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
+import 'package:projetocrescer/screens/account_page.dart';
 import 'package:projetocrescer/screens/schedule_meal_page.dart';
 import 'package:projetocrescer/screens/auth_or_home_page.dart';
 import 'package:projetocrescer/screens/detail_notices_page.dart';
@@ -76,12 +79,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Comunicados(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => Perfis(),
+        ),
         StreamProvider(
           create: (context) => NetworkService().controller.stream,
           initialData: NetworkStatus.online,
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         initialRoute: AppRoute.SPLASH,
         debugShowCheckedModeBanner: false,
         title: 'Projeto Crescer',
@@ -151,6 +157,7 @@ class MyApp extends StatelessWidget {
               ),
           AppRoute.AGENDAR_REF: (ctx) => MealPage(),
           AppRoute.HORARIO_ALUNO: (ctx) => StudentSchedulePage(),
+          AppRoute.MEUS_DADOS: (ctx) => AccountPage(),
         },
       ),
     );

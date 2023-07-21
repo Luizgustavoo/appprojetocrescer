@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
 import 'package:projetocrescer/utils/app_route.dart';
@@ -142,18 +143,18 @@ class AppDrawer extends StatelessWidget {
                     ),
 
                     CustomListTile(Icons.home_rounded, 'INÍCIO', () {
-                      Navigator.of(context).pushNamed(AppRoute.HOME);
+                      Get.toNamed(AppRoute.HOME);
                     }, true),
                     CustomListTile(
                         FontAwesomeIcons.bell, 'ALERTAS', () {}, true),
-                    CustomListTile(
-                        Icons.people_alt_rounded, 'MEUS DADOS', () {}, true),
+                    CustomListTile(Icons.people_alt_rounded, 'MEUS DADOS', () {
+                      Get.toNamed(AppRoute.MEUS_DADOS);
+                    }, true),
                     Stack(
                       children: [
                         CustomListTile(
                             Icons.pending_actions_rounded, 'AG. PSICÓLOGO', () {
-                          Navigator.of(context)
-                              .pushNamed(AppRoute.LIST_AGENDAMENTOS_PSICOLOGO);
+                          Get.toNamed(AppRoute.LIST_AGENDAMENTOS_PSICOLOGO);
                         }, true),
                         if (totalAgendamentoPsicologoConfirmado > 0)
                           Positioned(
@@ -186,8 +187,7 @@ class AppDrawer extends StatelessWidget {
                         CustomListTile(
                             Icons.pending_actions_rounded, 'AG. COORDENAÇÃO',
                             () {
-                          Navigator.of(context).pushNamed(
-                              AppRoute.LIST_AGENDAMENTOS_COORDENACAO);
+                          Get.toNamed(AppRoute.LIST_AGENDAMENTOS_COORDENACAO);
                         }, true),
                         if (totalAgendamentoCoordenacaoConfirmado > 0)
                           Positioned(
@@ -217,10 +217,10 @@ class AppDrawer extends StatelessWidget {
                       ],
                     ),
                     CustomListTile(Icons.percent_rounded, 'ASSIDUIDADE', () {
-                      Navigator.of(context).pushNamed(AppRoute.ASSIDUIDADE);
+                      Get.toNamed(AppRoute.ASSIDUIDADE);
                     }, true),
                     CustomListTile(Icons.message_rounded, 'COMUNICADOS', () {
-                      Navigator.pushNamed(context, AppRoute.COMUNICADOS);
+                      Get.toNamed(AppRoute.COMUNICADOS);
                     }, true),
                     CustomListTile(
                         Icons.credit_card_rounded, 'CRACHÁ', () {}, true),
@@ -230,8 +230,7 @@ class AppDrawer extends StatelessWidget {
                       children: [
                         CustomListTile(
                             Icons.pending_actions_rounded, 'PENDÊNCIAS', () {
-                          Navigator.of(context)
-                              .pushNamed(AppRoute.PENDENCIAS_PAGE);
+                          Get.toNamed(AppRoute.PENDENCIAS_PAGE);
                         }, true),
                         if (totalPendencias > 0)
                           Positioned(
@@ -264,7 +263,7 @@ class AppDrawer extends StatelessWidget {
                       children: [
                         CustomListTile(Icons.warning_rounded, 'PENALIDADES',
                             () {
-                          Navigator.of(context).pushNamed(AppRoute.PENALIDADES);
+                          Get.toNamed(AppRoute.PENALIDADES);
                         }, true),
                         if (totalPennalidades > 0)
                           Positioned(
@@ -294,16 +293,11 @@ class AppDrawer extends StatelessWidget {
                     ),
                     CustomListTile(Icons.phone_in_talk_rounded, 'FALE CONOSCO',
                         () {
-                      Navigator.of(context).pushReplacementNamed(
-                        AppRoute.FALE,
-                      );
+                      Get.toNamed(AppRoute.FALE);
                     }, false),
                     CustomListTile(Icons.exit_to_app_rounded, 'SAIR', () {
                       Provider.of<Login>(context, listen: false).logout;
-
-                      Navigator.of(context).pushReplacementNamed(
-                        AppRoute.INDEX,
-                      );
+                      Get.toNamed(AppRoute.INDEX);
                     }, false),
 
                     Container(

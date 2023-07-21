@@ -67,7 +67,7 @@ class _CoordinationSchedulingPageState
                         : ListView.builder(
                             itemCount: agendamentosData.itemsCountCoordenacao,
                             itemBuilder: (ctx, i) {
-                              return AgendamentosItem(agendamentos[i]);
+                              return SchedulingItem(agendamentos[i]);
                             },
                           ),
                   ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_penalties.dart';
 import 'package:projetocrescer/models/class_pendencies.dart';
@@ -183,13 +184,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 12, bottom: 5),
+                        margin: EdgeInsets.only(left: 12),
                         child: Text(
-                          'Categorias',
+                          'CATEGORIAS',
                           style: TextStyle(
                             color: Colors.black87,
                             fontFamily: 'Montserrat',
-                            fontSize: 18,
+                            fontSize: 20,
                           ),
                         ),
                       ),
@@ -297,7 +298,7 @@ class BodyHome extends StatelessWidget {
             title: 'COMUNICADOS',
             subTitle: 'Importantes',
             ontap: () {
-              Navigator.pushNamed(context, AppRoute.COMUNICADOS);
+              Get.toNamed(AppRoute.COMUNICADOS);
             },
             imageUrl: 'images/comunicados.png',
           ),
@@ -306,13 +307,13 @@ class BodyHome extends StatelessWidget {
               subTitle: 'Agende suas refeições',
               imageUrl: 'images/cafe.png',
               ontap: () {
-                Navigator.pushNamed(context, AppRoute.AGENDAR_REF);
+                Get.toNamed(AppRoute.AGENDAR_REF);
               }),
           MenuHomePageScreen(
             title: 'FREQUÊNCIA',
             subTitle: 'Confira as faltas do(a) aluno(a)',
             ontap: () {
-              Navigator.of(context).pushNamed(AppRoute.ASSIDUIDADE);
+              Get.toNamed(AppRoute.ASSIDUIDADE);
             },
             imageUrl: 'images/frequencia.png',
           ),
@@ -320,7 +321,7 @@ class BodyHome extends StatelessWidget {
             title: 'HORÁRIO',
             subTitle: 'Confira o horário completo',
             ontap: () {
-              Navigator.of(context).pushNamed(AppRoute.HORARIO_ALUNO);
+              Get.toNamed(AppRoute.HORARIO_ALUNO);
             },
             imageUrl: 'images/horarios.png',
           ),
@@ -339,7 +340,7 @@ class BodyHome extends StatelessWidget {
                 title: 'PENDÊNCIAS',
                 subTitle: 'Confira as pendências \nem nossos registros',
                 ontap: () {
-                  Navigator.of(context).pushNamed(AppRoute.PENDENCIAS_PAGE);
+                  Get.toNamed(AppRoute.PENDENCIAS_PAGE);
                 },
                 imageUrl: 'images/pendencia.png',
               ),
@@ -376,7 +377,7 @@ class BodyHome extends StatelessWidget {
                 title: 'PENALIDADES',
                 subTitle: 'Confira as penalidades',
                 ontap: () {
-                  Navigator.of(context).pushNamed(AppRoute.PENALIDADES);
+                  Get.toNamed(AppRoute.PENALIDADES);
                 },
                 imageUrl: 'images/penalidades.png',
               ),
@@ -410,7 +411,7 @@ class BodyHome extends StatelessWidget {
             title: 'FALE CONOSCO',
             subTitle: 'Confira nossos canais \nde atendimento',
             ontap: () {
-              Navigator.of(context).pushNamed(AppRoute.FALE);
+              Get.toNamed(AppRoute.FALE);
             },
             imageUrl: 'images/faleconosco.png',
           ),

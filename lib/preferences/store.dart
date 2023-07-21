@@ -12,14 +12,19 @@ class Store {
     saveString(key, json.encode(value));
   }
 
-  static Future<String?> getString(String key) async {
+  static read(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key);
+    return json.decode(prefs.getString(key) ?? '');
+  }
+
+  static Future<String> getString(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key)!;
   }
 
   static Future<Map<String, dynamic>?> getMap(String? key) async {
     try {
-      Map<String, dynamic> map = json.decode(await getString(key!) ?? '');
+      Map<String, dynamic> map = json.decode(await getString(key!));
       return map;
     } catch (e) {
       return null;
