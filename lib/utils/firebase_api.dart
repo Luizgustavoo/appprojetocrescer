@@ -23,7 +23,7 @@ class FirebaseApi {
 
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
-    navigatorKey.currentState?.pushNamed(
+    navigatorKey.currentState?.pushReplacementNamed(
       HomePage.route,
       arguments: message,
     );
@@ -76,17 +76,11 @@ class FirebaseApi {
     });
   }
 
-  Future<void> registerOnFirebase() async {
-    final fCMToken = await _firebaseMessaging.getToken();
-    print('Token:  $fCMToken');
-    await _firebaseMessaging.subscribeToTopic('all');
-  }
-
   Future<void> initNotifications() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
     print('Token:  $fCMToken');
-    // registerOnFirebase();
+    await _firebaseMessaging.subscribeToTopic("all");
     initPushNotifications();
     initLocalNotifications();
   }

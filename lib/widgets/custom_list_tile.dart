@@ -29,6 +29,7 @@ class CustomListTile extends StatelessWidget {
             title,
             style: TextStyle(
               fontFamily: 'Montserrat',
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projetocrescer/models/class_announcement.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 
 class NoticesItem extends StatelessWidget {
@@ -61,8 +63,11 @@ class NoticesItem extends StatelessWidget {
                   right: 10,
                   bottom: 10,
                   child: Container(
+                    decoration: BoxDecoration(
+                      color: CustomColors.azul,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     width: 300,
-                    color: Colors.black87,
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                     child: Text(
                       comunicado.assuntoComunicado!.toUpperCase(),
@@ -89,8 +94,9 @@ class NoticesItem extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.date_range,
-                        size: 25,
+                        FontAwesomeIcons.solidCalendarDays,
+                        size: 22,
+                        color: CustomColors.azul,
                       ),
                       SizedBox(width: 6),
                       Text(
@@ -99,7 +105,7 @@ class NoticesItem extends StatelessWidget {
                           fontFamily: 'Ubuntu',
                           fontSize: 16,
                           color: Colors.black,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
@@ -107,19 +113,20 @@ class NoticesItem extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        Icons.people,
-                        size: 25,
+                        FontAwesomeIcons.solidUser,
+                        color: CustomColors.azul,
+                        size: 22,
                       ),
                       SizedBox(width: 6),
                       Text(
-                        comunicado.nomeUsuario!.substring(0, 10),
+                        comunicado.nomeUsuario!.substring(0, 10).toUpperCase(),
                         softWrap: true,
                         overflow: TextOverflow.fade,
                         style: TextStyle(
                           fontFamily: 'Ubuntu',
                           color: Colors.black,
                           fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w800,
                         ),
                       )
                     ],

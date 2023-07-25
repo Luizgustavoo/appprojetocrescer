@@ -21,4 +21,5 @@ class AppRoute {
   static const String HORARIO_ALUNO = "/horario";
   static const String OPCOES_AGENDAMENTO = "/opcoes-agendamento";
   static const String MEUS_DADOS = "/meus-dados";
+  static const String NOTIFICACAO = "/notificacao";
 }

@@ -10,7 +10,7 @@ import 'package:projetocrescer/utils/constants.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/widgets/custom_list_tile.dart';
-import 'package:projetocrescer/widgets/hide_drawer.dart';
+import 'package:projetocrescer/utils/hide_drawer.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -145,8 +145,6 @@ class AppDrawer extends StatelessWidget {
                     CustomListTile(Icons.home_rounded, 'INÍCIO', () {
                       Get.toNamed(AppRoute.HOME);
                     }, true),
-                    CustomListTile(
-                        FontAwesomeIcons.bell, 'ALERTAS', () {}, true),
                     CustomListTile(Icons.people_alt_rounded, 'MEUS DADOS', () {
                       Get.toNamed(AppRoute.MEUS_DADOS);
                     }, true),
@@ -224,8 +222,7 @@ class AppDrawer extends StatelessWidget {
                     }, true),
                     CustomListTile(
                         Icons.credit_card_rounded, 'CRACHÁ', () {}, true),
-                    CustomListTile(
-                        Icons.category_rounded, 'OFICINAS/NÍVEIS', () {}, true),
+
                     Stack(
                       children: [
                         CustomListTile(
@@ -291,6 +288,9 @@ class AppDrawer extends StatelessWidget {
                           ),
                       ],
                     ),
+                    CustomListTile(FontAwesomeIcons.bell, 'NOTIFICAÇÕES', () {
+                      Get.toNamed(AppRoute.NOTIFICACAO);
+                    }, true),
                     CustomListTile(Icons.phone_in_talk_rounded, 'FALE CONOSCO',
                         () {
                       Get.toNamed(AppRoute.FALE);
@@ -314,7 +314,7 @@ class AppDrawer extends StatelessWidget {
                         ],
                       ),
                     ),
-
+                    /* REDES SOCIAIS */
                     Container(
                       padding: EdgeInsets.only(bottom: 4),
                       child: Row(

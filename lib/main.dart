@@ -13,6 +13,7 @@ import 'package:projetocrescer/models/class_snack.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
 import 'package:projetocrescer/screens/account_page.dart';
+import 'package:projetocrescer/screens/alert_page.dart';
 import 'package:projetocrescer/screens/schedule_meal_page.dart';
 import 'package:projetocrescer/screens/auth_or_home_page.dart';
 import 'package:projetocrescer/screens/detail_notices_page.dart';
@@ -158,6 +159,7 @@ class MyApp extends StatelessWidget {
           AppRoute.AGENDAR_REF: (ctx) => MealPage(),
           AppRoute.HORARIO_ALUNO: (ctx) => StudentSchedulePage(),
           AppRoute.MEUS_DADOS: (ctx) => AccountPage(),
+          AppRoute.NOTIFICACAO: (ctx) => AlertPage(),
         },
       ),
     );

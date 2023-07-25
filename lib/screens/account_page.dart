@@ -206,14 +206,14 @@ class DataWidget extends StatelessWidget {
           ),
           SizedBox(height: 5),
           CustomTextField(
-              labelText: 'Nº',
-              data: perfil.nomeEscola!,
+              labelText: 'NOME ESCOLA',
+              data: perfil.nomeEscola!.toUpperCase(),
               iconData: FontAwesomeIcons.school),
           SizedBox(height: 5),
-          // CustomTextField(
-          //     labelText: 'Nº',
-          //     data: perfil.telefoneEscola!,
-          //     iconData: FontAwesomeIcons.phone),
+          CustomTextField(
+              labelText: 'Nº',
+              data: Formater.formatarTelefoneFixo(perfil.telefoneEscola!),
+              iconData: FontAwesomeIcons.phone),
         ],
       ),
     );

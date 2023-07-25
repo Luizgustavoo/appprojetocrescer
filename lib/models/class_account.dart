@@ -56,7 +56,7 @@ class Perfil {
       'numero_endereco_pessoa': numeroEnderecoPessoa,
       'periodo_matricula': periodoMatricula,
       'nome_escola': nomeEscola,
-      'telefone_pessoa': telefoneEscola,
+      'telefone_escola': telefoneEscola,
       'descricao_instituicao': descricaoInstituicao,
       'foto_pessoa': fotoPessoa,
     };
@@ -91,8 +91,8 @@ class Perfil {
           : null,
       nomeEscola:
           map['nome_escola'] != null ? map['nome_escola'] as String : null,
-      telefoneEscola: map['telefone_pessoa'] != null
-          ? map['telefone_pessoa'] as String
+      telefoneEscola: map['telefone_escola'] != null
+          ? map['telefone_escola'] as String
           : null,
       descricaoInstituicao: map['descricao_instituicao'] != null
           ? map['descricao_instituicao'] as String

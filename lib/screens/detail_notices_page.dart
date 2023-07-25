@@ -23,9 +23,9 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
         return Provider.of<Comunicados>(context, listen: false).loadComunicados(
             Provider.of<Login>(context, listen: false).matricula!);
       },
-      child: Scaffold(
-        body: SafeArea(
-          child: CustomScrollView(
+      child: SafeArea(
+        child: Scaffold(
+          body: CustomScrollView(
             slivers: [
               SliverAppBar(
                 expandedHeight: 300,
@@ -82,7 +82,7 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
                             "ATENÇÃO AO RECADO ",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.red[600],
+                              color: Colors.red.shade500,
                               fontSize:
                                   MediaQuery.of(context).textScaleFactor * 22,
                               fontWeight: FontWeight.bold,
@@ -102,7 +102,10 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
                                     ),
                                     Text(
                                       ' Lido',
-                                      style: TextStyle(color: Colors.green),
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontFamily: 'Ubuntu',
+                                      ),
                                     )
                                   ],
                                 )

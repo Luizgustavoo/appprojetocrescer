@@ -58,22 +58,6 @@ class _ContactUsPageState extends State<ContactUsPage> {
         padding: const EdgeInsets.only(top: 10, right: 5, left: 5),
         child: ListView(
           children: [
-            // Container(
-            //   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
-            //   margin: EdgeInsets.all(8),
-            //   height: 115,
-            //   width: MediaQuery.of(context).size.width,
-            //   child: Text(
-            //     'Aqui, o pai ou responsável poderá encontrar facilmente o contato necessário para solucionar qualquer questão relacionada ao Projeto Crescer. Seja para falar com a secretaria, coordenação ou outro setor, todos os números importantes estarão disponíveis nesta tela.',
-            //     textAlign: TextAlign.justify,
-            //     style: TextStyle(
-            //       // backgroundColor: CustomColors.azul,
-            //       color: Colors.black,
-            //       fontSize: 16,
-            //       fontFamily: 'Ubuntu',
-            //     ),
-            //   ),
-            // ),
             ContactUsTile(
               icon: Icons.phone,
               color: Colors.green,

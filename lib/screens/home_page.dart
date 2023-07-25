@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     loadPenalidades(context).then((value) {
       itemsPenalidades =
           Provider.of<Penalidades>(context, listen: false).itemsCount;
@@ -114,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     'NÃO',
                     style: TextStyle(
+                      color: Colors.white,
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                     ),
@@ -133,7 +133,8 @@ class _HomePageState extends State<HomePage> {
                   child: Text(
                     'SIM',
                     style: TextStyle(
-                      fontFamily: 'Ubuntu',
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -249,16 +250,19 @@ class _BannerWidgetState extends State<BannerWidget> {
           left: 10,
           bottom: 30,
           child: Container(
+            decoration: BoxDecoration(
+                color: CustomColors.azul,
+                borderRadius: BorderRadius.circular(5)),
             width: 220,
-            color: Colors.blue.shade900.withAlpha(220),
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             child: Text(
               'EVENTO: 26/06/2023',
               style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
+                color: Colors.white,
+                fontFamily: 'Montserrat',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

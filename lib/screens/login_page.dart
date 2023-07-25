@@ -45,23 +45,26 @@ class _LoginPageState extends State<LoginPage> {
   checkStatus() async {
     var result = await Connectivity().checkConnectivity();
 
-    if (result == ConnectivityResult.mobile ||
-        result == ConnectivityResult.wifi) {
-      setState(() {
-        resultInternet = true;
-      });
-    } else {
-      setState(() {
-        resultInternet = false;
-      });
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Verifique sua conexão com a internet!"),
-          duration: Duration(seconds: 2),
-          backgroundColor: Colors.red,
-        ),
-      );
+    if (mounted) {
+      // Verifica se o widget está montado antes de atualizar o estado
+      if (result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi) {
+        setState(() {
+          resultInternet = true;
+        });
+      } else {
+        setState(() {
+          resultInternet = false;
+        });
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Verifique sua conexão com a internet!"),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 

@@ -19,7 +19,7 @@ class _FrequencyItemState extends State<FrequencyItem> {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
       curve: Curves.linear,
-      height: _expanded ? 196 : 110,
+      height: _expanded ? 155 : 105,
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(
