@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">675944931585-k68jnn26rddufe87j3kobf96hvoljh2t.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">675944931585</string>
+    <string name="google_api_key" translatable="false">AIzaSyBuOMf3P1LjtfxmBRs2sZLQDQrjeEfehuE</string>
+    <string name="google_app_id" translatable="false">1:675944931585:android:65dd856e7d5143d0e17b00</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBuOMf3P1LjtfxmBRs2sZLQDQrjeEfehuE</string>
+    <string name="google_storage_bucket" translatable="false">projeto-crescer-d1070.appspot.com</string>
+    <string name="project_id" translatable="false">projeto-crescer-d1070</string>
+</resources>
