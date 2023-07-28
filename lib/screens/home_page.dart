@@ -29,21 +29,21 @@ class _HomePageState extends State<HomePage> {
   int itemsPsicologoConfirmado = 0;
 
   CustomLinks links = CustomLinks();
-
+  bool _isMounted = false;
   //*---------LOAD REQUESTS----------------------------------------
 
-  Future<void> loadPendencias(BuildContext context) {
-    return Provider.of<Pendencias>(context, listen: false)
+  Future<void> loadPendencias(BuildContext context) async {
+    await Provider.of<Pendencias>(context, listen: false)
         .loadPendencias(Provider.of<Login>(context, listen: false).matricula!);
   }
 
-  Future<void> loadPenalidades(BuildContext context) {
-    return Provider.of<Penalidades>(context, listen: false)
+  Future<void> loadPenalidades(BuildContext context) async {
+    await Provider.of<Penalidades>(context, listen: false)
         .loadPenalidades(Provider.of<Login>(context, listen: false).matricula!);
   }
 
-  Future<void> loadAgendamentos(BuildContext context) {
-    return Provider.of<AgendamentosAtendimentos>(context, listen: false)
+  Future<void> loadAgendamentos(BuildContext context) async {
+    await Provider.of<AgendamentosAtendimentos>(context, listen: false)
         .loadAgendamentos(
             Provider.of<Login>(context, listen: false).matricula!);
   }
@@ -51,30 +51,46 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _isMounted = true; // Define como true quando o widget é montado
+
     loadPenalidades(context).then((value) {
-      itemsPenalidades =
-          Provider.of<Penalidades>(context, listen: false).itemsCount;
+      if (_isMounted) {
+        // Verifica se o widget ainda está montado antes de chamar setState
+        setState(() {
+          itemsPenalidades =
+              Provider.of<Penalidades>(context, listen: false).itemsCount;
+        });
+      }
     });
+
     loadPendencias(context).then((value) {
-      setState(() {
-        itemsPendencias =
-            Provider.of<Pendencias>(context, listen: false).itemsCount;
-      });
+      if (_isMounted) {
+        // Verifica se o widget ainda está montado antes de chamar setState
+        setState(() {
+          itemsPendencias =
+              Provider.of<Pendencias>(context, listen: false).itemsCount;
+        });
+      }
     });
+
     loadAgendamentos(context).then((value) {
-      setState(() {
-        itemsCoordenacaoConfirmado =
-            Provider.of<AgendamentosAtendimentos>(context, listen: false)
-                .itemsCountCoordenacaoConfirmado;
-        itemsPsicologoConfirmado =
-            Provider.of<AgendamentosAtendimentos>(context, listen: false)
-                .itemsCountPsicologoConfirmado;
-      });
+      if (_isMounted) {
+        // Verifica se o widget ainda está montado antes de chamar setState
+        setState(() {
+          itemsCoordenacaoConfirmado =
+              Provider.of<AgendamentosAtendimentos>(context, listen: false)
+                  .itemsCountCoordenacaoConfirmado;
+          itemsPsicologoConfirmado =
+              Provider.of<AgendamentosAtendimentos>(context, listen: false)
+                  .itemsCountPsicologoConfirmado;
+        });
+      }
     });
   }
 
   @override
   void dispose() {
+    _isMounted = false; // Define como false quando o widget é removido
     super.dispose();
   }
 

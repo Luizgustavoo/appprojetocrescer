@@ -220,8 +220,9 @@ class AppDrawer extends StatelessWidget {
                     CustomListTile(Icons.message_rounded, 'COMUNICADOS', () {
                       Get.toNamed(AppRoute.COMUNICADOS);
                     }, true),
-                    CustomListTile(
-                        Icons.credit_card_rounded, 'CRACHÁ', () {}, true),
+                    CustomListTile(Icons.credit_card_rounded, 'CRACHÁ', () {
+                      Get.toNamed(AppRoute.CRACHA);
+                    }, true),
 
                     Stack(
                       children: [

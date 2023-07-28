@@ -15,13 +15,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final Map<String, String> _authData = {'email': '', 'senha': ''};
-
   bool _isLoading = false;
-
   GlobalKey<FormState> _form = GlobalKey();
-
   int onToggle = 0;
-
   bool resultInternet = false;
 
   void _showErrorDialog(String msg) {

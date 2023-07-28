@@ -98,4 +98,11 @@ class Formater {
       return telefone;
     }
   }
+
+  static bool comparaData(DateTime data1, DateTime data2) {
+    if (data1.isAfter(data2)) {
+      return true;
+    }
+    return false;
+  }
 }

@@ -10,7 +10,7 @@ class DetailNoticesPage extends StatefulWidget {
 }
 
 class _DetailNoticesPageState extends State<DetailNoticesPage> {
-  String imagem =
+  final String imagemBaseUrl =
       'http://projetocrescer.ddns.net/sistemaalunos/web-pages/documentos/comunicados/';
 
   @override
@@ -27,120 +27,12 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
         child: Scaffold(
           body: CustomScrollView(
             slivers: [
-              SliverAppBar(
-                expandedHeight: 300,
-                elevation: 0,
-                centerTitle: true,
-                floating: true,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    comunicado.assuntoComunicado!.toUpperCase(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: MediaQuery.of(context).textScaleFactor * 15,
-                    ),
-                  ),
-                  background: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Hero(
-                        tag: comunicado.idComunicado!,
-                        child: Image.network(
-                          imagem + comunicado.imagemComunicado!,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment(0, 0.8),
-                            end: Alignment(0, 0),
-                            colors: [
-                              Color.fromRGBO(0, 0, 0, 0.7),
-                              Color.fromRGBO(0, 0, 0, 0),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _buildSliverAppBar(comunicado),
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
-                    Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "ATENÇÃO AO RECADO ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.red.shade500,
-                              fontSize:
-                                  MediaQuery.of(context).textScaleFactor * 22,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
-                          Divider(
-                            color: CustomColors.azul,
-                            thickness: 5,
-                          ),
-                          int.parse(comunicado.visualizou!) > 0
-                              ? Row(
-                                  children: [
-                                    Icon(
-                                      Icons.check,
-                                      color: Colors.green,
-                                    ),
-                                    Text(
-                                      ' Lido',
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                        fontFamily: 'Ubuntu',
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : Icon(
-                                  Icons.check,
-                                  color: Colors.red,
-                                ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10, left: 10),
-                      child: Divider(
-                        color: CustomColors.azul,
-                        thickness: 2,
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                        child: Text(
-                          comunicado.descricaoComunicado!.toUpperCase(),
-                          softWrap: true,
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize:
-                                MediaQuery.of(context).textScaleFactor * 16,
-                            fontFamily: 'Ubuntu',
-                          ),
-                          textAlign: TextAlign.justify,
-                        ),
-                      ),
-                    ),
+                    _buildComunicadoInfo(comunicado),
+                    _buildComunicadoDescription(comunicado),
                   ],
                 ),
               ),
@@ -148,6 +40,129 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSliverAppBar(Comunicado comunicado) {
+    return SliverAppBar(
+      expandedHeight: 300,
+      elevation: 0,
+      centerTitle: true,
+      floating: true,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text(
+          comunicado.assuntoComunicado!.toUpperCase(),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: MediaQuery.of(context).textScaleFactor * 15,
+          ),
+        ),
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            Hero(
+              tag: comunicado.idComunicado!,
+              child: Image.network(
+                '$imagemBaseUrl${comunicado.imagemComunicado}',
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(0, 0.8),
+                  end: Alignment(0, 0),
+                  colors: [
+                    Color.fromRGBO(0, 0, 0, 0.7),
+                    Color.fromRGBO(0, 0, 0, 0),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildComunicadoInfo(Comunicado comunicado) {
+    final bool isLido = int.parse(comunicado.visualizou!) > 0;
+
+    return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "ATENÇÃO AO RECADO ",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.red.shade500,
+              fontSize: MediaQuery.of(context).textScaleFactor * 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Montserrat',
+            ),
+          ),
+          Divider(
+            color: CustomColors.azul,
+            thickness: 5,
+          ),
+          isLido
+              ? Row(
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                    Text(
+                      ' Lido',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontFamily: 'Ubuntu',
+                      ),
+                    )
+                  ],
+                )
+              : Icon(
+                  Icons.check,
+                  color: Colors.red,
+                ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComunicadoDescription(Comunicado comunicado) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10, left: 10),
+          child: Divider(
+            color: CustomColors.azul,
+            thickness: 2,
+          ),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+            child: Text(
+              comunicado.descricaoComunicado!.toUpperCase(),
+              softWrap: true,
+              style: TextStyle(
+                color: Colors.black87,
+                fontSize: MediaQuery.of(context).textScaleFactor * 16,
+                fontFamily: 'Ubuntu',
+              ),
+              textAlign: TextAlign.justify,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

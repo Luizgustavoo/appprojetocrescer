@@ -13,15 +13,14 @@ class NoticesPage extends StatefulWidget {
 class _NoticesPageState extends State<NoticesPage> {
   bool _isLoading = true;
 
-  Future<void> loadComunicados(BuildContext context) {
-    // final usuarioData = Provider.of<Login>(context, listen: false);
-
-    return Provider.of<Comunicados>(context, listen: false)
-        .loadComunicados(Provider.of<Login>(context, listen: false).matricula!)
-        .then((_) {
-      setState(() {
-        _isLoading = false;
-      });
+  Future<void> loadComunicados(BuildContext context) async {
+    final matricula = Provider.of<Login>(context, listen: false).matricula;
+    if (matricula != null) {
+      await Provider.of<Comunicados>(context, listen: false)
+          .loadComunicados(matricula);
+    }
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -31,9 +30,13 @@ class _NoticesPageState extends State<NoticesPage> {
     loadComunicados(context);
   }
 
-  Widget build(BuildContext context) {
+  Widget _buildNoticesItem(BuildContext context, int index) {
     final comunicadosData = Provider.of<Comunicados>(context);
     final comunicados = comunicadosData.items;
+    return NoticesItem(comunicados[index]);
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColors.fundo,
       appBar: AppBar(
@@ -48,17 +51,17 @@ class _NoticesPageState extends State<NoticesPage> {
           : RefreshIndicator(
               color: CustomColors.amarelo,
               onRefresh: () => loadComunicados(context),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: comunicadosData.itemsCount,
-                      itemBuilder: (ctx, i) {
-                        return NoticesItem(comunicados[i]);
-                      },
+              child: Consumer<Comunicados>(
+                builder: (context, comunicadosData, _) => Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: comunicadosData.itemsCount,
+                        itemBuilder: _buildNoticesItem,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
     );

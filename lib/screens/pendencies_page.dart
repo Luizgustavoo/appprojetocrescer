@@ -13,14 +13,14 @@ class PendenciesPage extends StatefulWidget {
 class _PendenciesPageState extends State<PendenciesPage> {
   bool _isLoading = true;
 
-  Future<void> loadPendencias(BuildContext context) {
-    // final usuarioData = Provider.of<Login>(context, listen: false);
-    return Provider.of<Pendencias>(context, listen: false)
-        .loadPendencias(Provider.of<Login>(context, listen: false).matricula!)
-        .then((_) {
-      setState(() {
-        _isLoading = false;
-      });
+  Future<void> loadPendencias(BuildContext context) async {
+    final matricula = Provider.of<Login>(context, listen: false).matricula;
+    if (matricula != null) {
+      await Provider.of<Pendencias>(context, listen: false)
+          .loadPendencias(matricula);
+    }
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -30,10 +30,44 @@ class _PendenciesPageState extends State<PendenciesPage> {
     loadPendencias(context);
   }
 
-  Widget build(BuildContext context) {
+  Widget _buildPendencyItem(BuildContext context, int index) {
     final pendenciasData = Provider.of<Pendencias>(context);
     final pendencias = pendenciasData.items;
+    return AnimationConfiguration.staggeredList(
+      position: index,
+      duration: Duration(milliseconds: 100),
+      child: ScaleAnimation(
+        duration: Duration(milliseconds: 500),
+        child: PendenciesItem(pendencias[index]),
+      ),
+    );
+  }
 
+  Widget _buildPendenciesList(BuildContext context) {
+    return Expanded(
+      child: Consumer<Pendencias>(
+        builder: (context, pendenciasData, _) => pendenciasData.itemsCount <= 0
+            ? Center(
+                child: Text(
+                  'Nenhuma pendência encontrada! \nParabéns. 💙',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat',
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: pendenciasData.itemsCount,
+                itemBuilder: (ctx, i) => _buildPendencyItem(context, i),
+              ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,34 +82,7 @@ class _PendenciesPageState extends State<PendenciesPage> {
               onRefresh: () => loadPendencias(context),
               child: Column(
                 children: [
-                  Expanded(
-                    child: pendenciasData.itemsCount <= 0
-                        ? Center(
-                            child: Text(
-                              'Nenhuma pendência encontrada! \nParabéns.' +
-                                  '💙',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: pendenciasData.itemsCount,
-                            itemBuilder: (ctx, i) {
-                              return AnimationConfiguration.staggeredList(
-                                position: i,
-                                duration: Duration(milliseconds: 100),
-                                child: ScaleAnimation(
-                                  duration: Duration(milliseconds: 500),
-                                  child: PendenciesItem(pendencias[i]),
-                                ),
-                              );
-                            },
-                          ),
-                  ),
+                  _buildPendenciesList(context),
                 ],
               ),
             ),

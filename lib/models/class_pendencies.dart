@@ -30,14 +30,6 @@ class Pendencias with ChangeNotifier {
     return _items.length;
   }
 
-//  int get totalOcorrencias {
-//     return _items.where((penalidade) => int.parse(penalidade.tipo_penalidade) == 1).toList().length;
-//   }
-
-//  int get totalAdvertencias {
-//     return _items.where((penalidade) => int.parse(penalidade.tipo_penalidade) == 2).toList().length;
-//   }
-
   Future<void> loadPendencias(String matricula) async {
     var _base = Uri.parse('$_baseUrl/$matricula');
     final response = await http.get(_base);

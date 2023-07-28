@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projetocrescer/models/class_classroom.dart';
 import 'package:projetocrescer/widgets/classes_tile.dart';
+import 'package:provider/provider.dart';
 
 class StudentSchedulePage extends StatefulWidget {
   @override
@@ -7,6 +9,13 @@ class StudentSchedulePage extends StatefulWidget {
 }
 
 class _StudentSchedulePageState extends State<StudentSchedulePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<AulasDias>(context, listen: false).loadAulas();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

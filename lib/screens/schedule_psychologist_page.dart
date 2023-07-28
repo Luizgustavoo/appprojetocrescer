@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/widgets/custom_rich_text.dart';
 import 'package:provider/provider.dart';
 
 class PsychologistSchedulePage extends StatefulWidget {
@@ -83,6 +83,7 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
+    var serie = Provider.of<Login>(context).serie.toString();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -94,82 +95,33 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
               child: CircularProgressIndicator(),
             )
           : Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _form,
                 child: ListView(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                            color: Colors.blue[600],
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: Text(
-                                      'Solicite uma conversa com um de nossos psicólogos do Projeto Crescer através do nosso aplicativo.',
-                                      textAlign: TextAlign.justify,
-                                      softWrap: true,
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Ubuntu',
-                                        letterSpacing: 1.5,
-                                      ),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        child: Text(
-                                          "Fechar",
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            color: CustomColors.azul,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            icon: Icon(
-                              FontAwesomeIcons.circleInfo,
-                            ))
-                      ],
-                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 15,
                       ),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'NOME ALUNO: ' +
-                                Provider.of<Login>(context)
-                                    .usuarioMatricula
-                                    .toString(),
-                            style: TextStyle(
-                              color: CustomColors.azul,
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.clip,
-                            ),
+                          CustomRichTextWidget(
+                            label: 'NOME DO ALUNO',
+                            value: Provider.of<Login>(context)
+                                .usuarioMatricula
+                                .toString(),
                           ),
                           Text(
-                            'SÉRIE: ' +
-                                Provider.of<Login>(context).serie.toString() +
-                                'º ANO',
+                            serie +
+                                (serie == 'oficineiro' ? 'oficineiro' : 'º ANO')
+                                    .toUpperCase(),
                             style: TextStyle(
                               color: CustomColors.azul,
-                              fontFamily: 'Ubuntu',
+                              fontFamily: 'Montserrat',
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.clip,
                             ),
@@ -183,6 +135,10 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Nome do responsável',
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Ubuntu',
+                        ),
                       ),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) =>
@@ -201,6 +157,11 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Motivo/Assunto',
+                        isDense: true,
+                        labelStyle: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Ubuntu',
+                        ),
                       ),
                       focusNode: _tituloFocusNode,
                       keyboardType: TextInputType.multiline,
@@ -216,10 +177,12 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           SizedBox(
-                            height: 40,
-                            child: ElevatedButton.icon(
+                            height: 50,
+                            child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: CustomColors.azul,
                                 shape: RoundedRectangleBorder(
@@ -229,12 +192,11 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
                               onPressed: () {
                                 _saveForm();
                               },
-                              icon: Icon(Icons.check_rounded),
-                              label: Text(
+                              child: Text(
                                 'SOLICITAR',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontFamily: 'Ubuntu',
+                                  fontFamily: 'Montserrat',
                                   fontSize: 16,
                                 ),
                               ),

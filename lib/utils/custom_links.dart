@@ -8,6 +8,13 @@ class CustomLinks {
     }
   }
 
+  final Uri _url2 = Uri.parse('http://projetocrescer.ddns.net/sistemaalunos');
+  Future<void> entrarProfessor() async {
+    if (!await launchUrl(_url2)) {
+      throw Exception('Não consegui encontrar a $_url2');
+    }
+  }
+
   final Uri _urlFacebook =
       Uri.parse('https://www.facebook.com/casadobommeninodearapongas');
   Future<void> facebook() async {

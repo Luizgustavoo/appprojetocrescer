@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:projetocrescer/firebase_options.dart';
 import 'package:projetocrescer/models/class_account.dart';
+import 'package:projetocrescer/models/class_classroom.dart';
+import 'package:projetocrescer/models/class_meal_schedule.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_announcement.dart';
 import 'package:projetocrescer/models/class_frequency.dart';
@@ -14,6 +17,7 @@ import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
 import 'package:projetocrescer/screens/account_page.dart';
 import 'package:projetocrescer/screens/alert_page.dart';
+import 'package:projetocrescer/screens/badge_page.dart';
 import 'package:projetocrescer/screens/schedule_meal_page.dart';
 import 'package:projetocrescer/screens/auth_or_home_page.dart';
 import 'package:projetocrescer/screens/detail_notices_page.dart';
@@ -83,20 +87,38 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Perfis(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ListarAgendamentoRefeicao(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AulasDias(),
+        ),
         StreamProvider(
           create: (context) => NetworkService().controller.stream,
           initialData: NetworkStatus.online,
         ),
       ],
       child: GetMaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [Locale('pt', 'BR')],
         initialRoute: AppRoute.SPLASH,
         debugShowCheckedModeBanner: false,
         title: 'Projeto Crescer',
         theme: ThemeData(
+          textTheme: TextTheme(
+            titleLarge: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+              fontSize: 45,
+            ),
+          ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(5),
           ))),
           useMaterial3: true,
           primaryColor: CustomColors.azul,
@@ -111,7 +133,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                 width: 3,
-                color: Colors.grey.shade400,
+                color: CustomColors.azul,
               ),
             ),
             focusedBorder: OutlineInputBorder(
@@ -160,6 +182,7 @@ class MyApp extends StatelessWidget {
           AppRoute.HORARIO_ALUNO: (ctx) => StudentSchedulePage(),
           AppRoute.MEUS_DADOS: (ctx) => AccountPage(),
           AppRoute.NOTIFICACAO: (ctx) => AlertPage(),
+          AppRoute.CRACHA: (ctx) => BadgePage(),
         },
       ),
     );

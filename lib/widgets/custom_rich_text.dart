@@ -15,6 +15,7 @@ class CustomRichTextWidget extends StatelessWidget {
           fontSize: 18,
           fontFamily: 'Ubuntu',
           color: CustomColors.azul,
+          overflow: TextOverflow.clip,
         ),
         children: [
           TextSpan(
@@ -22,6 +23,8 @@ class CustomRichTextWidget extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat',
+              overflow: TextOverflow.clip,
+              color: CustomColors.amarelo,
             ),
           ),
           TextSpan(text: value),

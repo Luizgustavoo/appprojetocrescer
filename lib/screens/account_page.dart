@@ -17,24 +17,26 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  late bool fotoExiste;
+
+  late String foto;
   @override
   void initState() {
     super.initState();
+
     Provider.of<Perfis>(context, listen: false).loadAccounts();
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final providerFoto = Provider.of<Login>(context).foto.toString();
+    fotoExiste = providerFoto != 'null';
+    foto = Constants.URL_FOTOS + providerFoto;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var providerFoto = Provider.of<Login>(context).foto.toString();
-
-    bool fotoExiste = false;
-
-    final String foto = Constants.URL_FOTOS + providerFoto;
-
-    if (providerFoto != 'null') {
-      fotoExiste = true;
-    }
-
     final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(),

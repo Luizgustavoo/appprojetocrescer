@@ -14,6 +14,7 @@ class Usuario {
   final String? emailUsuario;
   final String? foto;
   final String? serieMatricula;
+  final String? qrCode;
 
   Usuario({
     // ignore: non_constant_identifier_names
@@ -22,6 +23,7 @@ class Usuario {
     this.emailUsuario,
     this.foto,
     this.serieMatricula,
+    this.qrCode,
   });
 
   Map<String, dynamic> toMap() {
@@ -31,6 +33,7 @@ class Usuario {
       'email_usuario': emailUsuario,
       'foto': foto,
       'serie_matricula': serieMatricula,
+      'qr_code': qrCode,
     };
   }
 
@@ -47,6 +50,7 @@ class Usuario {
       serieMatricula: map['serie_matricula'] != null
           ? map['serie_matricula'] as String
           : null,
+      qrCode: map['qr_code'] != null ? map['qr_code'] as String : null,
     );
   }
 
@@ -54,11 +58,6 @@ class Usuario {
 
   factory Usuario.fromJson(String source) =>
       Usuario.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'Usuario(matriculaUsuario: $matriculaUsuario, nomeUsuario: $nomeUsuario, emailUsuario: $emailUsuario, foto: $foto, serieMatricula: $serieMatricula)';
-  }
 }
 
 class Login with ChangeNotifier {
@@ -71,6 +70,7 @@ class Login with ChangeNotifier {
   String? _usuarioMatricula;
   String? _foto;
   String? _serieMatricula;
+  String? _qrCode;
 
   int get itemsCount {
     return _items.length;
@@ -79,6 +79,10 @@ class Login with ChangeNotifier {
   // ignore: missing_return
   String? get serie {
     return _serieMatricula;
+  }
+
+  String? get qrCode {
+    return _qrCode;
   }
 
   // ignore: missing_return
@@ -106,6 +110,7 @@ class Login with ChangeNotifier {
     _usuarioMatricula = null;
     _foto = null;
     _serieMatricula = null;
+    _qrCode = null;
     Store.remove('userData');
     notifyListeners();
   }
@@ -123,6 +128,7 @@ class Login with ChangeNotifier {
       _usuarioMatricula = userData["nome_usuario"].toString();
       _foto = userData["foto"].toString();
       _serieMatricula = userData["serie_matricula"].toString();
+      _qrCode = userData["qr_code"].toString();
 
       notifyListeners();
       return Future.value();
@@ -151,30 +157,32 @@ class Login with ChangeNotifier {
         var data = json.decode(response.body);
 
         if (data != null) {
-          //print(data);
-          data.forEach((usuarioData) {
-            _items.add(
-              Usuario(
-                matriculaUsuario: usuarioData['matricula_usuario'].toString(),
-                nomeUsuario: usuarioData['nome_usuario'].toString(),
-                emailUsuario: usuarioData['email_usuario'].toString(),
-                foto: usuarioData['foto'].toString(),
-                serieMatricula: usuarioData['serie_matricula'].toString(),
-              ),
-            );
+          print(data['qr_code']);
 
-            _matricula = usuarioData['matricula_usuario'].toString();
-            _usuarioMatricula = usuarioData['nome_usuario'].toString();
-            _foto = usuarioData['foto'].toString();
-            _serieMatricula = usuarioData['serie_matricula'].toString();
+          _items.add(
+            Usuario(
+              matriculaUsuario: data['matricula_usuario'].toString(),
+              nomeUsuario: data['nome_usuario'].toString(),
+              emailUsuario: data['email_usuario'].toString(),
+              foto: data['foto'].toString(),
+              serieMatricula: data['serie_matricula'].toString(),
+              qrCode: data['qr_code'].toString(),
+            ),
+          );
 
-            Store.saveMap('userData', {
-              "matricula_usuario": usuarioData['matricula_usuario'].toString(),
-              "nome_usuario": usuarioData['nome_usuario'].toString(),
-              "email_usuario": usuarioData['email_usuario'].toString(),
-              "foto": usuarioData['foto'].toString(),
-              "serie_matricula": usuarioData['serie_matricula'].toString(),
-            });
+          _matricula = data['matricula_usuario'].toString();
+          _usuarioMatricula = data['nome_usuario'].toString();
+          _foto = data['foto'].toString();
+          _serieMatricula = data['serie_matricula'].toString();
+          _qrCode = data['qr_code'].toString();
+
+          Store.saveMap('userData', {
+            "matricula_usuario": data['matricula_usuario'].toString(),
+            "nome_usuario": data['nome_usuario'].toString(),
+            "email_usuario": data['email_usuario'].toString(),
+            "foto": data['foto'].toString(),
+            "serie_matricula": data['serie_matricula'].toString(),
+            "qr_code": data['qr_code'].toString(),
           });
           retorno = 'success';
         } else {
@@ -184,5 +192,11 @@ class Login with ChangeNotifier {
     }
     notifyListeners();
     return Future.value(retorno);
+  }
+
+  Future<String> pegarCracha() async {
+    Map<String, dynamic> maps = jsonDecode(await Store.getString('userData'));
+    var qrCode = maps['qr_code'];
+    return qrCode;
   }
 }

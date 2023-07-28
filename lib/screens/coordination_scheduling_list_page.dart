@@ -16,8 +16,8 @@ class _CoordinationSchedulingPageState
     extends State<CoordinationSchedulingPage> {
   bool _isLoading = true;
 
-  Future<void> loadAgendamentos(BuildContext context) {
-    return Provider.of<AgendamentosAtendimentos>(context, listen: false)
+  Future<void> loadAgendamentos(BuildContext context) async {
+    await Provider.of<AgendamentosAtendimentos>(context, listen: false)
         .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula!)
         .then((_) {
       setState(() {
@@ -49,30 +49,25 @@ class _CoordinationSchedulingPageState
           : RefreshIndicator(
               color: CustomColors.amarelo,
               onRefresh: () => loadAgendamentos(context),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: agendamentosData.itemsCountCoordenacao <= 0
-                        ? Center(
-                            child: Text(
-                              'Nenhum agendamento encontrado!',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: agendamentosData.itemsCountCoordenacao,
-                            itemBuilder: (ctx, i) {
-                              return SchedulingItem(agendamentos[i]);
-                            },
-                          ),
-                  ),
-                ],
-              ),
+              child: agendamentosData.itemsCountCoordenacao <= 0
+                  ? Center(
+                      child: Text(
+                        'Nenhum agendamento encontrado!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: agendamentosData.itemsCountCoordenacao,
+                      itemBuilder: (ctx, i) {
+                        return SchedulingItem(agendamentos[i]);
+                      },
+                    ),
             ),
       floatingActionButton: FloatingActionButton.extended(
         shape: RoundedRectangleBorder(

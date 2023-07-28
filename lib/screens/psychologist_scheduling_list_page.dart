@@ -16,13 +16,14 @@ class _PsychologistSchedulingPageState
     extends State<PsychologistSchedulingPage> {
   bool _isLoading = true;
 
-  Future<void> loadAgendamentos(BuildContext context) {
-    return Provider.of<AgendamentosAtendimentos>(context, listen: false)
-        .loadAgendamentos(Provider.of<Login>(context, listen: false).matricula!)
-        .then((_) {
-      setState(() {
-        _isLoading = false;
-      });
+  Future<void> loadAgendamentos(BuildContext context) async {
+    final matricula = Provider.of<Login>(context, listen: false).matricula;
+    if (matricula != null) {
+      await Provider.of<AgendamentosAtendimentos>(context, listen: false)
+          .loadAgendamentos(matricula);
+    }
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -32,9 +33,28 @@ class _PsychologistSchedulingPageState
     loadAgendamentos(context);
   }
 
-  Widget build(BuildContext context) {
+  Widget _buildSchedulingItem(BuildContext context, int index) {
     final agendamentosData = Provider.of<AgendamentosAtendimentos>(context);
     final agendamentos = agendamentosData.itemsPsicologo;
+    return SchedulingItem(agendamentos[index]);
+  }
+
+  Widget _buildEmptySchedulingList() {
+    return Center(
+      child: Text(
+        'Nenhum agendamento encontrado!',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Montserrat',
+        ),
+      ),
+    );
+  }
+
+  Widget build(BuildContext context) {
+    final agendamentosData = Provider.of<AgendamentosAtendimentos>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -53,22 +73,11 @@ class _PsychologistSchedulingPageState
                 children: [
                   Expanded(
                     child: agendamentosData.itemsCountPsicologo <= 0
-                        ? Center(
-                            child: Text(
-                              'Nenhum agendamento encontrado!',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                          )
+                        ? _buildEmptySchedulingList()
                         : ListView.builder(
                             itemCount: agendamentosData.itemsCountPsicologo,
-                            itemBuilder: (ctx, i) {
-                              return SchedulingItem(agendamentos[i]);
-                            },
+                            itemBuilder: (ctx, i) =>
+                                _buildSchedulingItem(context, i),
                           ),
                   ),
                 ],

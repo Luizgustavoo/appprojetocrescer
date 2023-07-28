@@ -188,6 +188,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_localizations",
+      "rootUri": "file:///C:/src/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///C:/src/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -237,7 +243,7 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.17.0",
+      "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -342,6 +348,18 @@
       "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "qr",
+      "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/qr-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "qr_flutter",
+      "rootUri": "file:///C:/Users/luiz/AppData/Local/Pub/Cache/hosted/pub.dev/qr_flutter-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "rive",
@@ -554,7 +572,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-07-17T14:40:48.595774Z",
+  "generated": "2023-07-28T16:23:02.094791Z",
   "generator": "pub",
   "generatorVersion": "3.0.2"
 }
