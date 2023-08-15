@@ -3,15 +3,21 @@ import 'package:projetocrescer/models/class_penalties.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/penalty_item.dart';
+import 'package:projetocrescer/widgets/show_case.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 class PenaltiesPage extends StatefulWidget {
+  static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_PENALTIES";
   @override
   _PenaltiesPageState createState() => _PenaltiesPageState();
 }
 
 class _PenaltiesPageState extends State<PenaltiesPage> {
+  final GlobalKey globalKeyEleven = GlobalKey();
   bool _isLoading = true;
 
   Future<void> loadPenalidades(BuildContext context) async {
@@ -25,8 +31,26 @@ class _PenaltiesPageState extends State<PenaltiesPage> {
     });
   }
 
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences
+            .getBool(PenaltiesPage.PREFERENCES_IS_FIRST_LAUNCH_STRING) ??
+        true;
+
+    if (isFirstLaunch)
+      sharedPreferences.setBool(
+          PenaltiesPage.PREFERENCES_IS_FIRST_LAUNCH_STRING, false);
+
+    return isFirstLaunch;
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isFirstLaunch().then((result) {
+        if (result) ShowCaseWidget.of(context).startShowCase([globalKeyEleven]);
+      });
+    });
     super.initState();
     loadPenalidades(context);
   }
@@ -117,9 +141,13 @@ class _PenaltiesPageState extends State<PenaltiesPage> {
     return Scaffold(
       backgroundColor: CustomColors.fundo,
       appBar: AppBar(
-        title: Text(
-          'PENALIDADES DO ALUNO',
-        ),
+        title: ShowCaseView(
+            globalKey: globalKeyEleven,
+            title: 'PENALIDADES DO ALUNO(A)',
+            description:
+                'Veja as ocorrências e advertências do aluno relacionadas ao comportamento e disciplina. Acesse detalhes e motivos, e acompanhe o suporte pedagógico. Enfatizamos a importância da responsabilidade individual e do respeito às regras da escola. Estamos aqui para orientar e garantir o bem-estar e sucesso acadêmico do aluno, em parceria com os pais e responsáveis. Agradecemos a colaboração de todos.',
+            border: CircleBorder(),
+            child: Text('PENALIDADES DO ALUNO(A)')),
       ),
       body: _isLoading
           ? Center(

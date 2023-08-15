@@ -19,7 +19,7 @@ class _AlertPageState extends State<AlertPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Notificações"),
+        title: Text("NOTIFICAÇÕES"),
       ),
       body: ListView.builder(
         itemCount: notifications.length,

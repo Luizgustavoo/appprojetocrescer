@@ -19,7 +19,6 @@ class _CoordinationSchedulePageState extends State<CoordinationSchedulePage> {
   final _formData = Map<String, Object>();
 
   bool _isLoading = true;
-  bool _isLoadingButton = true;
 
   void _saveForm() {
     final focusNode = FocusScope.of(context);
@@ -42,15 +41,12 @@ class _CoordinationSchedulePageState extends State<CoordinationSchedulePage> {
       focusNode.unfocus();
       Navigator.of(context)
           .pushReplacementNamed(AppRoute.LIST_AGENDAMENTOS_COORDENACAO);
-      _isLoadingButton = false;
     });
 
     Provider.of<AgendamentosAtendimentos>(context, listen: false)
         .cadastrar(agendamento)
         .then((value) {
       setState(() {
-        _isLoadingButton = false;
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.green,
@@ -74,10 +70,8 @@ class _CoordinationSchedulePageState extends State<CoordinationSchedulePage> {
   @override
   void initState() {
     super.initState();
-
     setState(() {
       _isLoading = false;
-      _isLoadingButton = false;
     });
   }
 

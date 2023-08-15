@@ -8,7 +8,7 @@ import 'package:showcaseview/showcaseview.dart';
 
 class ContactUsPage extends StatefulWidget {
   static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
-      "PREFERENCES_IS_FIRST_LAUNCH_STRING";
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_CONTACT";
   @override
   State<ContactUsPage> createState() => _ContactUsPageState();
 }
@@ -16,7 +16,7 @@ class ContactUsPage extends StatefulWidget {
 CustomLinks links = CustomLinks();
 
 class _ContactUsPageState extends State<ContactUsPage> {
-  final GlobalKey globalKeyOne = GlobalKey();
+  final GlobalKey globalKeyThree = GlobalKey();
   String phoneNumber = 'tel:433056-0777';
 
   Future<bool> _isFirstLaunch() async {
@@ -36,7 +36,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _isFirstLaunch().then((result) {
-        if (result) ShowCaseWidget.of(context).startShowCase([globalKeyOne]);
+        if (result) ShowCaseWidget.of(context).startShowCase([globalKeyThree]);
       });
     });
     super.initState();
@@ -47,7 +47,7 @@ class _ContactUsPageState extends State<ContactUsPage> {
     return Scaffold(
       appBar: AppBar(
         title: ShowCaseView(
-            globalKey: globalKeyOne,
+            globalKey: globalKeyThree,
             title: 'FALE CONOSCO',
             description:
                 'Aqui, o pai ou responsável poderá encontrar facilmente o contato necessário para solucionar qualquer questão relacionada ao Projeto Crescer. Seja para falar com a secretaria, coordenação ou outro setor, todos os números importantes estarão disponíveis nesta tela.',

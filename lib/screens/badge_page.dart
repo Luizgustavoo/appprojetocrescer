@@ -1,18 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_login.dart';
+import 'package:projetocrescer/widgets/show_case.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../utils/constants.dart';
 
-class BadgePage extends StatelessWidget {
+class BadgePage extends StatefulWidget {
+  static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_BADGE";
   const BadgePage({super.key});
+
+  @override
+  State<BadgePage> createState() => _BadgePageState();
+}
+
+class _BadgePageState extends State<BadgePage> {
+  final GlobalKey globalKeySeven = GlobalKey();
+
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences
+            .getBool(BadgePage.PREFERENCES_IS_FIRST_LAUNCH_STRING) ??
+        true;
+
+    if (isFirstLaunch)
+      sharedPreferences.setBool(
+          BadgePage.PREFERENCES_IS_FIRST_LAUNCH_STRING, false);
+
+    return isFirstLaunch;
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isFirstLaunch().then((result) {
+        if (result) ShowCaseWidget.of(context).startShowCase([globalKeySeven]);
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CRACHÁ'),
+        title: ShowCaseView(
+            globalKey: globalKeySeven,
+            title: 'CRACHÁ',
+            description:
+                'Nesta tela, você pode visualizar e acessar o seu crachá escolar de forma prática e rápida. O crachá é uma identificação importante.',
+            border: CircleBorder(),
+            child: Text('CRACHÁ')),
       ),
       body: Center(
         child: Cracha(),

@@ -7,10 +7,10 @@ class ContactUsTile extends StatelessWidget {
   final String? subtitle;
   final IconData? icon;
   final Color? color;
-  final Function? ontap;
+  final Function ontap;
 
   ContactUsTile({
-    this.ontap,
+    required this.ontap,
     this.color,
     this.title,
     this.subtitle,
@@ -29,7 +29,7 @@ class ContactUsTile extends StatelessWidget {
         child: ListTile(
           contentPadding:
               EdgeInsets.only(top: 15, bottom: 10, right: 10, left: 10),
-          onTap: () => ontap,
+          onTap: () => ontap(),
           leading: Icon(
             icon,
             color: color,

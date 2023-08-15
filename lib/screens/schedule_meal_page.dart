@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:barcode_scan2/barcode_scan2.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -10,55 +7,41 @@ import 'package:intl/intl.dart';
 import 'package:projetocrescer/models/class_meal_schedule.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/utils/formater.dart';
+import 'package:projetocrescer/widgets/show_case.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 import '../utils/app_route.dart';
 
 class MealPage extends StatefulWidget {
+  static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_MEAL";
   @override
   State<MealPage> createState() => _MealPageState();
 }
 
-String qrCodeResult = "Aguardando...";
-String codeInvalido = "";
-bool resultInternet = false;
 bool _isLoading = true;
-StreamSubscription<ConnectivityResult>? _connectivitySubscription;
 
 class _MealPageState extends State<MealPage> {
-  //*--------------CHECANDO CONEXAO COM A INTERNET ----------------
-  void _updateStatus(ConnectivityResult connectivityResult) async {
-    if (connectivityResult == ConnectivityResult.mobile) {
-      setState(() {
-        resultInternet = true;
-      });
-      updateText("3G/4G");
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      setState(() {
-        resultInternet = true;
-      });
-      updateText("Conectado via wi-fi");
-    } else {
-      setState(() {
-        resultInternet = false;
-      });
-      updateText("Atenção, você não tem uma conexão válida!");
-    }
+  final GlobalKey globalKeyThirteen = GlobalKey();
+  final GlobalKey globalKeyFourteen = GlobalKey();
+
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences
+            .getBool(MealPage.PREFERENCES_IS_FIRST_LAUNCH_STRING) ??
+        true;
+
+    if (isFirstLaunch)
+      sharedPreferences.setBool(
+          MealPage.PREFERENCES_IS_FIRST_LAUNCH_STRING, false);
+
+    return isFirstLaunch;
   }
 
-  void updateText(String texto) {
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-//*-------------------------------------------------------------
-  @override
-  void initState() {
-    super.initState();
-    _connectivitySubscription =
-        Connectivity().onConnectivityChanged.listen(_updateStatus);
+  Future<void> loadRefeicoes(BuildContext context) async {
     Provider.of<ListarAgendamentoRefeicao>(context, listen: false)
         .loadRefeicoes()
         .then((value) {
@@ -69,33 +52,21 @@ class _MealPageState extends State<MealPage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _connectivitySubscription?.cancel();
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isFirstLaunch().then((result) {
+        if (result)
+          ShowCaseWidget.of(context)
+              .startShowCase([globalKeyThirteen, globalKeyFourteen]);
+      });
+    });
+    super.initState();
+    loadRefeicoes(context);
   }
 
-  Future<void> agendar() async {
-    await BarcodeScanner.scan().then((value) {
-      var jsonTEMP =
-          jsonDecode(utf8.decode(base64Url.decode(value.rawContent)));
-
-      print(jsonTEMP['matricula']);
-
-      if (jsonTEMP['matricula'] == null ||
-          jsonTEMP['nome'] == null ||
-          jsonTEMP['periodo'] == null ||
-          jsonTEMP['tipo'] == null) {
-        setState(() {
-          codeInvalido = "QR Code INVÁLIDO!";
-        });
-      } else {
-        setState(() {
-          codeInvalido = "";
-        });
-        Navigator.of(context).pushNamed(AppRoute.OPCOES_AGENDAMENTO,
-            arguments: value.rawContent);
-      }
-    });
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> removerAgendamento(String dataRefeicao, String tipoRefeicao,
@@ -139,7 +110,6 @@ class _MealPageState extends State<MealPage> {
                         Get.back();
                       });
                     }
-                    print(value);
                   });
                 },
                 child: const Text(
@@ -156,7 +126,13 @@ class _MealPageState extends State<MealPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AGENDAMENTO'),
+        title: ShowCaseView(
+            globalKey: globalKeyThirteen,
+            title: 'MEUS DADOS',
+            description:
+                'Agende facilmente café da manhã e almoço. Remova agendamentos quando necessário. Alimentação balanceada é essencial para o bem-estar e desempenho. Estamos aqui para apoiar seus hábitos saudáveis. Bom apetite!',
+            border: CircleBorder(),
+            child: Text('AGENDAMENTO')),
       ),
       body: _isLoading
           ? Center(
@@ -171,7 +147,7 @@ class _MealPageState extends State<MealPage> {
                     height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        agendar();
+                        Get.toNamed(AppRoute.OPCOES_AGENDAMENTO);
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 3,

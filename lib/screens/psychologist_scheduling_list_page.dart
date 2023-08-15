@@ -4,9 +4,14 @@ import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/widgets/scheduling_tile.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:projetocrescer/widgets/show_case.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class PsychologistSchedulingPage extends StatefulWidget {
+  static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_PSYCHOLOGIST";
   @override
   _PsychologistSchedulingPageState createState() =>
       _PsychologistSchedulingPageState();
@@ -15,6 +20,8 @@ class PsychologistSchedulingPage extends StatefulWidget {
 class _PsychologistSchedulingPageState
     extends State<PsychologistSchedulingPage> {
   bool _isLoading = true;
+  final GlobalKey globalKeyFour = GlobalKey();
+  final GlobalKey globalKeyFive = GlobalKey();
 
   Future<void> loadAgendamentos(BuildContext context) async {
     final matricula = Provider.of<Login>(context, listen: false).matricula;
@@ -27,8 +34,28 @@ class _PsychologistSchedulingPageState
     });
   }
 
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences.getBool(
+            PsychologistSchedulingPage.PREFERENCES_IS_FIRST_LAUNCH_STRING) ??
+        true;
+
+    if (isFirstLaunch)
+      sharedPreferences.setBool(
+          PsychologistSchedulingPage.PREFERENCES_IS_FIRST_LAUNCH_STRING, false);
+
+    return isFirstLaunch;
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isFirstLaunch().then((result) {
+        if (result)
+          ShowCaseWidget.of(context)
+              .startShowCase([globalKeyFour, globalKeyFive]);
+      });
+    });
     super.initState();
     loadAgendamentos(context);
   }
@@ -58,9 +85,13 @@ class _PsychologistSchedulingPageState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'AG. PSICÓLOGO',
-        ),
+        title: ShowCaseView(
+            globalKey: globalKeyFour,
+            title: 'AG. PSICÓLOGO',
+            description:
+                'Agende consultas com os psicólogos da escola de forma simples e acolhedora. Nossa equipe está pronta para apoiar o desenvolvimento emocional e comportamental dos alunos. Garantimos confidencialidade e suporte contínuo. Sua opinião é valiosa para nós. Entre em contato para mais informações. Estamos aqui para ajudar!',
+            border: CircleBorder(),
+            child: Text('AG. PSICÓLOGO')),
       ),
       body: _isLoading
           ? Center(
@@ -90,13 +121,20 @@ class _PsychologistSchedulingPageState
         onPressed: () {
           Navigator.of(context).pushNamed(AppRoute.AGENDAR_PSICOLOGO);
         },
-        label: Text(
-          "NOVO",
-          style: TextStyle(
-            fontFamily: 'Ubuntu',
-            fontSize: 14,
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
+        label: ShowCaseView(
+          globalKey: globalKeyFive,
+          title: 'NOVO AGENDAMENTO',
+          description:
+              'Clique aqui para adicionar um novo agendamento com um de nossos psicólogos da instituição.',
+          border: CircleBorder(),
+          child: Text(
+            "NOVO",
+            style: TextStyle(
+              fontFamily: 'Ubuntu',
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
         icon: Icon(

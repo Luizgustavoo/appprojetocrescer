@@ -19,7 +19,6 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
   final _formData = Map<String, Object>();
 
   bool _isLoading = true;
-  bool _isLoadingButton = true;
 
   void _saveForm() {
     final focusNode = FocusScope.of(context);
@@ -42,15 +41,12 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
       focusNode.unfocus();
       Navigator.of(context)
           .pushReplacementNamed(AppRoute.LIST_AGENDAMENTOS_PSICOLOGO);
-      _isLoadingButton = false;
     });
 
     Provider.of<AgendamentosAtendimentos>(context, listen: false)
         .cadastrar(agendamento)
         .then((value) {
       setState(() {
-        _isLoadingButton = false;
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.green,
@@ -77,7 +73,6 @@ class _PsychologistSchedulePageState extends State<PsychologistSchedulePage> {
 
     setState(() {
       _isLoading = false;
-      _isLoadingButton = false;
     });
   }
 

@@ -3,16 +3,22 @@ import 'package:projetocrescer/models/class_frequency.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/frequency_item.dart';
+import 'package:projetocrescer/widgets/show_case.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 class AssiduityPage extends StatefulWidget {
+  static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_ASSIDUITY";
   @override
   _AssiduityPageState createState() => _AssiduityPageState();
 }
 
 class _AssiduityPageState extends State<AssiduityPage> {
   bool _isLoading = true;
+  final GlobalKey globalKeySix = GlobalKey();
 
   Future<void> loadFrequencias(BuildContext context) async {
     await Provider.of<Frequencias>(context, listen: false)
@@ -24,8 +30,26 @@ class _AssiduityPageState extends State<AssiduityPage> {
     });
   }
 
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences
+            .getBool(AssiduityPage.PREFERENCES_IS_FIRST_LAUNCH_STRING) ??
+        true;
+
+    if (isFirstLaunch)
+      sharedPreferences.setBool(
+          AssiduityPage.PREFERENCES_IS_FIRST_LAUNCH_STRING, false);
+
+    return isFirstLaunch;
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isFirstLaunch().then((result) {
+        if (result) ShowCaseWidget.of(context).startShowCase([globalKeySix]);
+      });
+    });
     super.initState();
     loadFrequencias(context);
   }
@@ -36,11 +60,14 @@ class _AssiduityPageState extends State<AssiduityPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'FREQUENCIAS DO(A) ALUNO(A)',
-        ),
+        title: ShowCaseView(
+            globalKey: globalKeySix,
+            title: 'FREQUÊNCIAS DO(A) ALUNO(A)',
+            description:
+                'Visualize a frequência e faltas do aluno de forma detalhada. Veja as faltas justificadas e não justificadas. Acesse o histórico completo de frequência. Justifique faltas não justificadas e obtenha suporte da equipe escolar. Garanta o sucesso acadêmico do aluno com sua participação ativa.',
+            border: CircleBorder(),
+            child: Text('FREQUÊNCIAS DO(A) ALUNO(A)')),
       ),
-      // drawer: AppDrawer(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -131,9 +158,9 @@ class FrequencyChip extends StatelessWidget {
         child: Text(
           count,
           style: TextStyle(
-            fontSize: MediaQuery.of(context).textScaleFactor * 15,
-            fontFamily: 'Montserrat',
-          ),
+              fontSize: MediaQuery.of(context).textScaleFactor * 15,
+              fontFamily: 'Montserrat',
+              color: Colors.white),
         ),
       ),
       labelStyle: TextStyle(

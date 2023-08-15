@@ -1,12 +1,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/utils/app_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -24,14 +24,34 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text("Ocorreu um erro"),
-        content: Text(msg),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        title: Text(
+          "OCORREU UM ERRO",
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: 18,
+          ),
+        ),
+        content: Text(
+          msg,
+          style: TextStyle(
+            fontFamily: 'Ubuntu',
+            fontSize: 16,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
             },
-            child: Text('Fechar'),
+            child: Text(
+              'FECHAR',
+              style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontSize: 16,
+                  color: CustomColors.azul,
+                  fontWeight: FontWeight.bold),
+            ),
           )
         ],
       ),
@@ -116,55 +136,48 @@ class _LoginPageState extends State<LoginPage> {
                         child: Image.asset("images/logo.png"),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 13),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ToggleSwitch(
-                            initialLabelIndex: 0,
-                            activeFgColor: Colors.white,
-                            minWidth: 150.0,
-                            minHeight: 38.0,
-                            cornerRadius: 8.0,
-                            onToggle: (index) => onToggle = index!,
-                            labels: ['ALUNO', 'PROFESSOR'],
-                            activeBgColor: [
-                              CustomColors.azul,
-                            ],
-                            customTextStyles: [
-                              TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w900),
-                              TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w900)
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 13),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       ToggleSwitch(
+                    //         initialLabelIndex: 0,
+                    //         activeFgColor: Colors.white,
+                    //         minWidth: 150.0,
+                    //         minHeight: 38.0,
+                    //         cornerRadius: 8.0,
+                    //         onToggle: (index) => onToggle = index!,
+                    //         labels: ['ALUNO', 'PROFESSOR'],
+                    //         activeBgColor: [
+                    //           CustomColors.azul,
+                    //         ],
+                    //         customTextStyles: [
+                    //           TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: 18.0,
+                    //               fontFamily: 'Montserrat',
+                    //               fontWeight: FontWeight.w900),
+                    //           TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: 18.0,
+                    //               fontFamily: 'Montserrat',
+                    //               fontWeight: FontWeight.w900)
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
                     TextFormField(
-                      // autofocus: true,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: CustomColors.azul)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        isDense: true,
                         prefixIcon: Icon(
                           Icons.account_circle,
                           size: 20,
-                          color: CustomColors.azul,
+                          color: CustomColors.amarelo,
                         ),
                         suffixIcon: IconButton(
                           onPressed: () {
@@ -172,6 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
                                   title: Text(
                                     "NÚMERO DA MATRÍCULA",
                                     textAlign: TextAlign.center,
@@ -182,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   content: Text(
-                                    "O número que você procura pode ser encontrado no contrato de matrícula que você assinou no momento da matrícula. Esse número está localizado entre [    ].",
+                                    "O número que você procura pode ser encontrado na parte de trás do crachá do Aluno, logo abaixo do QRCODE.",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                       fontSize: 17,
@@ -192,14 +207,14 @@ class _LoginPageState extends State<LoginPage> {
                                   actions: [
                                     TextButton(
                                       child: Text(
-                                        "Fechar",
+                                        "FECHAR",
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
                                           color: CustomColors.azul,
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.of(context).pop();
+                                        Get.back();
                                       },
                                     )
                                   ],
@@ -209,20 +224,10 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           icon: Icon(
                             FontAwesomeIcons.circleInfo,
-                            color: CustomColors.azul,
+                            color: CustomColors.amarelo,
                           ),
                         ),
                         labelText: "Nº MATRÍCULA",
-                        errorStyle: TextStyle(
-                            color: Color.fromARGB(255, 255, 17, 0),
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                        labelStyle: TextStyle(
-                          color: CustomColors.azul,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                        ),
                       ),
                       style: TextStyle(fontSize: 20),
                       validator: (value) {
@@ -240,27 +245,11 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: CustomColors.azul)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                         labelText: "Nº CPF",
-                        errorStyle: TextStyle(
-                            color: Color.fromARGB(255, 255, 17, 0),
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold),
-                        labelStyle: TextStyle(
-                          color: CustomColors.azul,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                        ),
-                        isDense: true,
                         prefixIcon: Icon(
                           Icons.lock_rounded,
                           size: 20,
-                          color: CustomColors.azul,
+                          color: CustomColors.amarelo,
                         ),
                       ),
                       style: TextStyle(fontSize: 20),

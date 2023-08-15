@@ -298,7 +298,7 @@ class AppDrawer extends StatelessWidget {
                     }, false),
                     CustomListTile(Icons.exit_to_app_rounded, 'SAIR', () {
                       Provider.of<Login>(context, listen: false).logout;
-                      Get.toNamed(AppRoute.INDEX);
+                      Get.offAllNamed(AppRoute.INDEX);
                     }, false),
 
                     Container(
@@ -333,7 +333,7 @@ class AppDrawer extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              links.facebook();
+                              links.whatsapp('+5543999289380');
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.facebook,
@@ -360,7 +360,7 @@ class AppDrawer extends StatelessWidget {
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               )

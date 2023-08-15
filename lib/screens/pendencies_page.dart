@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_pendencies.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/widgets/pendencies_item.dart';
+import 'package:projetocrescer/widgets/show_case.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
 class PendenciesPage extends StatefulWidget {
+  static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
+      "PREFERENCES_IS_FIRST_LAUNCH_STRING_PENDENCIES";
   @override
   _PendenciesPageState createState() => _PendenciesPageState();
 }
 
 class _PendenciesPageState extends State<PendenciesPage> {
+  final GlobalKey globalKeyTwelve = GlobalKey();
   bool _isLoading = true;
 
   Future<void> loadPendencias(BuildContext context) async {
@@ -24,8 +30,26 @@ class _PendenciesPageState extends State<PendenciesPage> {
     });
   }
 
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences
+            .getBool(PendenciesPage.PREFERENCES_IS_FIRST_LAUNCH_STRING) ??
+        true;
+
+    if (isFirstLaunch)
+      sharedPreferences.setBool(
+          PendenciesPage.PREFERENCES_IS_FIRST_LAUNCH_STRING, false);
+
+    return isFirstLaunch;
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _isFirstLaunch().then((result) {
+        if (result) ShowCaseWidget.of(context).startShowCase([globalKeyTwelve]);
+      });
+    });
     super.initState();
     loadPendencias(context);
   }
@@ -70,9 +94,13 @@ class _PendenciesPageState extends State<PendenciesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'PENDÊNCIAS DO ALUNO',
-        ),
+        title: ShowCaseView(
+            globalKey: globalKeyTwelve,
+            title: 'PENDÊNCIAS DO ALUNO(A)',
+            description:
+                'Visualize e resolva as pendências do aluno de forma organizada. Verifique chaves, uniforme, figurino e livros. Mantenha o contato com a equipe escolar para solucionar as questões. Sua colaboração é essencial para o sucesso acadêmico e o bom funcionamento da instituição. Agradecemos sua atenção e cooperação!',
+            border: CircleBorder(),
+            child: Text('PENDÊNCIAS DO ALUNO(A)')),
       ),
       body: _isLoading
           ? Center(

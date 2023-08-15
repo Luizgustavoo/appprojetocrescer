@@ -15,6 +15,8 @@ class Usuario {
   final String? foto;
   final String? serieMatricula;
   final String? qrCode;
+  final String? idInstituicao;
+  final String? periodoMatricula;
 
   Usuario({
     // ignore: non_constant_identifier_names
@@ -24,6 +26,8 @@ class Usuario {
     this.foto,
     this.serieMatricula,
     this.qrCode,
+    this.idInstituicao,
+    this.periodoMatricula,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,6 +38,8 @@ class Usuario {
       'foto': foto,
       'serie_matricula': serieMatricula,
       'qr_code': qrCode,
+      'id_instituicao': idInstituicao,
+      'periodo_matricula': periodoMatricula,
     };
   }
 
@@ -51,6 +57,12 @@ class Usuario {
           ? map['serie_matricula'] as String
           : null,
       qrCode: map['qr_code'] != null ? map['qr_code'] as String : null,
+      idInstituicao: map['id_instituicao'] != null
+          ? map['id_instituicao'] as String
+          : null,
+      periodoMatricula: map['periodo_matricula'] != null
+          ? map['periodo_matricula'] as String
+          : null,
     );
   }
 
@@ -71,6 +83,8 @@ class Login with ChangeNotifier {
   String? _foto;
   String? _serieMatricula;
   String? _qrCode;
+  String? _idInstituicao;
+  String? _periodoMatricula;
 
   int get itemsCount {
     return _items.length;
@@ -100,6 +114,14 @@ class Login with ChangeNotifier {
     return _usuarioMatricula;
   }
 
+  String? get idInstituicao {
+    return _idInstituicao;
+  }
+
+  String? get periodoMatricula {
+    return _periodoMatricula;
+  }
+
   bool get isAuth {
     return matricula != null;
   }
@@ -111,6 +133,8 @@ class Login with ChangeNotifier {
     _foto = null;
     _serieMatricula = null;
     _qrCode = null;
+    _idInstituicao = null;
+    _periodoMatricula = null;
     Store.remove('userData');
     notifyListeners();
   }
@@ -129,6 +153,8 @@ class Login with ChangeNotifier {
       _foto = userData["foto"].toString();
       _serieMatricula = userData["serie_matricula"].toString();
       _qrCode = userData["qr_code"].toString();
+      _idInstituicao = userData["id_instituicao"].toString();
+      _periodoMatricula = userData["periodo_matricula"].toString();
 
       notifyListeners();
       return Future.value();
@@ -137,7 +163,6 @@ class Login with ChangeNotifier {
 
   Future<String> signin(String email, String senha, int tipoLogin) async {
     String retorno = "fail";
-    print(tipoLogin);
 
     final response = await http.post(
       _baseUrl,
@@ -151,14 +176,10 @@ class Login with ChangeNotifier {
       retorno = json.decode(response.body)['error'];
     } else {
       if (response.body.isNotEmpty) {
-        // print(response.body);
-
         _items.clear();
         var data = json.decode(response.body);
 
         if (data != null) {
-          print(data['qr_code']);
-
           _items.add(
             Usuario(
               matriculaUsuario: data['matricula_usuario'].toString(),
@@ -167,6 +188,8 @@ class Login with ChangeNotifier {
               foto: data['foto'].toString(),
               serieMatricula: data['serie_matricula'].toString(),
               qrCode: data['qr_code'].toString(),
+              idInstituicao: data['id_instituicao'].toString(),
+              periodoMatricula: data['periodo_matricula'].toString(),
             ),
           );
 
@@ -175,6 +198,8 @@ class Login with ChangeNotifier {
           _foto = data['foto'].toString();
           _serieMatricula = data['serie_matricula'].toString();
           _qrCode = data['qr_code'].toString();
+          _idInstituicao = data['id_instituicao'].toString();
+          _periodoMatricula = data['periodo_matricula'].toString();
 
           Store.saveMap('userData', {
             "matricula_usuario": data['matricula_usuario'].toString(),
@@ -183,6 +208,8 @@ class Login with ChangeNotifier {
             "foto": data['foto'].toString(),
             "serie_matricula": data['serie_matricula'].toString(),
             "qr_code": data['qr_code'].toString(),
+            "id_instituicao": data['id_instituicao'].toString(),
+            "periodo_matricula": data['periodo_matricula'].toString(),
           });
           retorno = 'success';
         } else {

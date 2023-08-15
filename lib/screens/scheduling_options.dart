@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/models/class_snack.dart';
+import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 
 class SchedulingOptions extends StatefulWidget {
@@ -14,31 +15,22 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
   ButtonStyle estiloBotao(Color cor) {
     final ButtonStyle flatButtonStyle = ElevatedButton.styleFrom(
       foregroundColor: cor,
-      elevation: 4,
+      elevation: 2,
       shadowColor: Colors.black,
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       backgroundColor: cor,
     );
     return flatButtonStyle;
   }
 
-  bool _isSelectedP1 = true;
-  bool _isSelectedP2 = false;
-
-  String matricula = "";
-  String nome = "";
-  String tipo = "";
-  String opcao = "";
-  String periodo = "";
-  String instituicao = "1";
-
   String botaoSelecionado = "Selecione um botão";
   bool resultInternet = true;
 
-  void _agendarRefeicao() {
+  void _agendarRefeicao(String matricula, String nome, String tipo,
+      String instituicao, String periodo, String opcao) {
     if (!resultInternet) {
       showDialog(
         context: context,
@@ -134,23 +126,18 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
   @override
   void initState() {
     // checkStatus();
-
     super.initState();
-
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen(_updateStatus);
   }
 
   @override
   Widget build(BuildContext context) {
-    final idPessoa = ModalRoute.of(context)!.settings.arguments as String;
-
-    var jsonTEMP = jsonDecode(utf8.decode(base64Url.decode(idPessoa)));
-
-    matricula = jsonTEMP['matricula'];
-    nome = jsonTEMP['nome'];
-    periodo = jsonTEMP['periodo'];
-    tipo = jsonTEMP['tipo'];
+    String matricula = Provider.of<Login>(context).matricula.toString();
+    String nome = Provider.of<Login>(context).usuarioMatricula.toString();
+    String periodo = Provider.of<Login>(context).periodoMatricula.toString();
+    String tipo = '10';
+    String instituicao = Provider.of<Login>(context).idInstituicao.toString();
 
     return Scaffold(
       appBar: AppBar(
@@ -180,7 +167,7 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
                       Center(
                         child: Text.rich(
@@ -193,113 +180,27 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
                                 text: 'OLÁ, ',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  color: Color(0xFFEBAE1F),
+                                  color: CustomColors.amarelo,
                                 ),
                               ),
                               TextSpan(
-                                text: jsonTEMP['nome'],
+                                text: Provider.of<Login>(context)
+                                    .usuarioMatricula
+                                    .toString(),
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF130B3B),
+                                  color: CustomColors.azul,
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 20),
-                        child: Center(
-                          child: Text(
-                            "ATENÇÃO SELECIONE A INSTITUIÇÃO CORRETA ABAIXO:",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.red,
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Wrap(
-                              children: [
-                                ChoiceChip(
-                                  label: Text(
-                                    'PROJETO I',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Ubuntu',
-                                    ),
-                                  ),
-                                  labelPadding:
-                                      EdgeInsets.symmetric(horizontal: 50),
-                                  selected: _isSelectedP1,
-                                  onSelected: (selected) {
-                                    setState(() {
-                                      _isSelectedP1 = selected;
-                                      _isSelectedP2 = !selected;
-                                      instituicao = "1";
-                                    });
-                                  },
-                                  selectedColor: Colors.red[700],
-                                  shape: ContinuousRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Wrap(
-                              children: [
-                                ChoiceChip(
-                                  label: Text(
-                                    'PROJETO II',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Ubuntu',
-                                    ),
-                                  ),
-                                  labelPadding:
-                                      EdgeInsets.symmetric(horizontal: 50),
-                                  selected: _isSelectedP2,
-                                  onSelected: (selected) {
-                                    setState(() {
-                                      _isSelectedP2 = selected;
-                                      _isSelectedP1 = !selected;
-                                      instituicao = "2";
-                                    });
-                                  },
-                                  selectedColor: Colors.red[700],
-                                  shape: ContinuousRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-
                       SizedBox(
                         height: 30.0,
                       ),
-//Selecione apenas uma opção abaixo
+                      //Selecione apenas uma opção abaixo
                       Center(
                         child: Text.rich(
                           TextSpan(
@@ -310,7 +211,7 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
                             ),
                             children: [
                               TextSpan(
-                                text: 'Selecione apenas, ',
+                                text: 'Selecione apenas ',
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),
@@ -334,35 +235,37 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
                       ),
 
                       SizedBox(
-                        height: 20.0,
+                        height: 30.0,
                       ),
                       ElevatedButton(
-                        style: estiloBotao(Colors.amber),
+                        style: estiloBotao(CustomColors.amarelo),
                         onPressed: () {
                           setState(() {
-                            opcao = "1";
-                            _agendarRefeicao();
+                            _agendarRefeicao(matricula, nome, tipo, instituicao,
+                                periodo, '1');
                           });
                         },
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 5),
-                              child: SizedBox(
-                                  height: 80,
-                                  width: 80,
-                                  child: Image.asset("images/cafe_novo.png")),
-                            ),
                             SizedBox(
-                              width: 20.0,
-                            ),
-                            Text(
-                              "APENAS CAFÉ",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 38, 255),
-                                fontSize: 23.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
+                                height: 65,
+                                width: 65,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset("images/cafe_novo.png"),
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                "APENAS CAFÉ",
+                                style: TextStyle(
+                                  color: CustomColors.azul,
+                                  fontSize: 23.0,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Montserrat',
+                                ),
                               ),
                             ),
                           ],
@@ -370,36 +273,38 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
                       ),
 
                       SizedBox(
-                        height: 18.0,
+                        height: 10.0,
                       ),
 
                       ElevatedButton(
-                        style: estiloBotao(Colors.blue),
+                        style: estiloBotao(CustomColors.amarelo),
                         onPressed: () {
                           setState(() {
-                            opcao = "2";
-                            _agendarRefeicao();
+                            _agendarRefeicao(matricula, nome, tipo, instituicao,
+                                periodo, '2');
                           });
                         },
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 5),
-                              child: SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: Image.asset("images/almoco_novo.png")),
-                            ),
                             SizedBox(
-                              width: 20.0,
-                            ),
-                            Text(
-                              "APENAS ALMOÇO",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 23.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
+                                width: 65,
+                                height: 65,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset("images/almoco_novo.png"),
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                "APENAS ALMOÇO",
+                                style: TextStyle(
+                                  color: CustomColors.azul,
+                                  fontSize: 23.0,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Montserrat',
+                                ),
                               ),
                             )
                           ],
@@ -407,43 +312,43 @@ class _SchedulingOptionsState extends State<SchedulingOptions> {
                       ),
 
                       SizedBox(
-                        height: 18.0,
+                        height: 10.0,
                       ),
                       ElevatedButton(
-                        style: estiloBotao(Color.fromRGBO(76, 175, 80, 1)),
+                        style: estiloBotao(CustomColors.amarelo),
                         onPressed: () {
                           setState(() {
-                            opcao = "3";
-                            _agendarRefeicao();
+                            _agendarRefeicao(matricula, nome, tipo, instituicao,
+                                periodo, '3');
                           });
                         },
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 5),
-                              child: SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: Image.asset(
-                                      "images/cafe_almoco_novo.png")),
-                            ),
                             SizedBox(
-                              width: 20.0,
-                            ),
-                            Text(
-                              "CAFÉ E ALMOÇO",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 23.0,
-                                fontWeight: FontWeight.w900,
-                                fontFamily: 'Montserrat',
+                                width: 65,
+                                height: 65,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                      "images/cafe_almoco_novo.png"),
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                "CAFÉ E ALMOÇO",
+                                style: TextStyle(
+                                  color: CustomColors.azul,
+                                  fontSize: 23.0,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: 'Montserrat',
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-
-                      //flatButton("Generate QR CODE", GeneratePage()),
                     ],
                   )
                 : Column(

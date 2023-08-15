@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:projetocrescer/firebase_options.dart';
 import 'package:projetocrescer/models/class_account.dart';
@@ -99,11 +98,6 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: GetMaterialApp(
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: [Locale('pt', 'BR')],
         initialRoute: AppRoute.SPLASH,
         debugShowCheckedModeBanner: false,
         title: 'Projeto Crescer',
@@ -117,16 +111,18 @@ class MyApp extends StatelessWidget {
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ))),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+          )),
           useMaterial3: true,
           primaryColor: CustomColors.azul,
           inputDecorationTheme: InputDecorationTheme(
             labelStyle: TextStyle(
               color: CustomColors.azul,
-              fontFamily: 'Ubuntu',
-              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              fontFamily: 'Montserrat',
             ),
             isDense: true,
             enabledBorder: OutlineInputBorder(
@@ -140,6 +136,10 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(width: 2, color: CustomColors.azul),
             ),
+            errorStyle: TextStyle(
+                color: Color.fromARGB(255, 255, 17, 0),
+                fontSize: 12,
+                fontWeight: FontWeight.bold),
           ),
           appBarTheme: AppBarTheme(
             iconTheme: IconThemeData(color: CustomColors.amarelo),
@@ -163,26 +163,52 @@ class MyApp extends StatelessWidget {
           AppRoute.SPLASH: (ctx) => SplashScreen(),
           AppRoute.INDEX: (ctx) => AuthOrHomePage(),
           AppRoute.HOME: (ctx) => HomePage(),
-          AppRoute.COMUNICADOS: (ctx) => NoticesPage(),
+          AppRoute.COMUNICADOS: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => NoticesPage(),
+              )),
           AppRoute.OPCOES_AGENDAMENTO: (ctx) => SchedulingOptions(),
-          AppRoute.ASSIDUIDADE: (ctx) => AssiduityPage(),
-          AppRoute.PENALIDADES: (ctx) => PenaltiesPage(),
+          AppRoute.ASSIDUIDADE: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => AssiduityPage(),
+              )),
+          AppRoute.PENALIDADES: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => PenaltiesPage(),
+              )),
           AppRoute.AGENDAR_COORDENACAO: (ctx) => CoordinationSchedulePage(),
           AppRoute.AGENDAR_PSICOLOGO: (ctx) => PsychologistSchedulePage(),
-          AppRoute.PENDENCIAS_PAGE: (ctx) => PendenciesPage(),
-          AppRoute.LIST_AGENDAMENTOS_COORDENACAO: (ctx) =>
-              CoordinationSchedulingPage(),
-          AppRoute.LIST_AGENDAMENTOS_PSICOLOGO: (ctx) =>
-              PsychologistSchedulingPage(),
+          AppRoute.PENDENCIAS_PAGE: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => PendenciesPage(),
+              )),
+          AppRoute.LIST_AGENDAMENTOS_COORDENACAO: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => CoordinationSchedulingPage(),
+              )),
+          AppRoute.LIST_AGENDAMENTOS_PSICOLOGO: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => PsychologistSchedulingPage(),
+              )),
           AppRoute.DETALHES_COMUNICADOS: (ctx) => DetailNoticesPage(),
           AppRoute.FALE: (ctx) => ShowCaseWidget(
                 builder: Builder(builder: (context) => ContactUsPage()),
               ),
-          AppRoute.AGENDAR_REF: (ctx) => MealPage(),
+          AppRoute.AGENDAR_REF: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => MealPage(),
+              )),
           AppRoute.HORARIO_ALUNO: (ctx) => StudentSchedulePage(),
-          AppRoute.MEUS_DADOS: (ctx) => AccountPage(),
+          AppRoute.MEUS_DADOS: (ctx) => ShowCaseWidget(
+                builder: Builder(
+                  builder: (context) => AccountPage(),
+                ),
+              ),
           AppRoute.NOTIFICACAO: (ctx) => AlertPage(),
-          AppRoute.CRACHA: (ctx) => BadgePage(),
+          AppRoute.CRACHA: (ctx) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => BadgePage(),
+              )),
         },
       ),
     );
