@@ -17,7 +17,7 @@ CustomLinks links = CustomLinks();
 
 class _ContactUsPageState extends State<ContactUsPage> {
   final GlobalKey globalKeyThree = GlobalKey();
-  String phoneNumber = 'tel:433056-0777';
+  String phoneNumber = '0433056-0777';
 
   Future<bool> _isFirstLaunch() async {
     final sharedPreferences = await SharedPreferences.getInstance();

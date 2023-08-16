@@ -75,6 +75,9 @@ class _MealPageState extends State<MealPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
             title: Text('REMOVER AGENDAMENTO'),
             content: Text('Deseja realmente remover esse agendamento?'),
             actions: [
@@ -147,7 +150,51 @@ class _MealPageState extends State<MealPage> {
                     height: 50,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        Get.toNamed(AppRoute.OPCOES_AGENDAMENTO);
+                        DateTime horaAtual = DateTime.now();
+                        if ((horaAtual.hour < 8 ||
+                                (horaAtual.hour == 8 &&
+                                    horaAtual.minute <= 30)) ||
+                            (horaAtual.hour >= 12 && horaAtual.hour < 14)) {
+                          Get.toNamed(AppRoute.OPCOES_AGENDAMENTO);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                title: Text(
+                                  'Horário Indisponível',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                content: Text(
+                                  'Você só pode agendar refeições antes das 8:30 da manhã e 14:00 da tarde.',
+                                  style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text(
+                                      'OK',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 3,

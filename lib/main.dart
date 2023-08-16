@@ -6,6 +6,7 @@ import 'package:projetocrescer/firebase_options.dart';
 import 'package:projetocrescer/models/class_account.dart';
 import 'package:projetocrescer/models/class_classroom.dart';
 import 'package:projetocrescer/models/class_meal_schedule.dart';
+import 'package:projetocrescer/models/class_notification.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_announcement.dart';
 import 'package:projetocrescer/models/class_frequency.dart';
@@ -91,6 +92,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => AulasDias(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
         ),
         StreamProvider(
           create: (context) => NetworkService().controller.stream,
@@ -204,7 +208,7 @@ class MyApp extends StatelessWidget {
                   builder: (context) => AccountPage(),
                 ),
               ),
-          AppRoute.NOTIFICACAO: (ctx) => AlertPage(),
+          AppRoute.NOTIFICACAO: (ctx) => NotificationsScreen(),
           AppRoute.CRACHA: (ctx) => ShowCaseWidget(
                   builder: Builder(
                 builder: (context) => BadgePage(),

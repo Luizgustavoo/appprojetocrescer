@@ -1,41 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:projetocrescer/utils/custom_colors.dart';
+import 'package:provider/provider.dart';
+import '../models/class_notification.dart';
 
-class AlertPage extends StatefulWidget {
-  const AlertPage({super.key});
-
-  @override
-  State<AlertPage> createState() => _AlertPageState();
-}
-
-class _AlertPageState extends State<AlertPage> {
-  final List<String> notifications = [
-    "Promoção imperdível!",
-    "Novos produtos chegaram.",
-    "Sua compra foi enviada.",
-  ];
-
+class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final notificationProvider = Provider.of<NotificationProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("NOTIFICAÇÕES"),
+        title: Text('Notifications'),
       ),
       body: ListView.builder(
-        itemCount: notifications.length,
+        itemCount: notificationProvider.notifications.length,
         itemBuilder: (context, index) {
+          final notification = notificationProvider.notifications[index];
           return ListTile(
-            leading: CircleAvatar(),
-            title: Text(notifications[index]),
-            subtitle: Text("Detalhes da notificação"),
-            trailing: Icon(
-              Icons.arrow_right_rounded,
-              color: CustomColors.amarelo,
-              size: 30,
-            ),
-            onTap: () {
-              // Implemente a ação para exibir detalhes da notificação
-            },
+            title: Text(notification.notification?.title ?? ''),
+            subtitle: Text(notification.notification?.body ?? ''),
           );
         },
       ),
