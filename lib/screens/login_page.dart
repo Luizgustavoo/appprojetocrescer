@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:projetocrescer/models/class_login.dart';
-import 'package:projetocrescer/utils/app_route.dart';
+import 'package:projetocrescer/routes/app_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 

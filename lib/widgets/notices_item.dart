@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projetocrescer/models/class_announcement.dart';
 import 'package:projetocrescer/models/class_login.dart';
-import 'package:projetocrescer/utils/app_route.dart';
+import 'package:projetocrescer/routes/app_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +73,7 @@ class NoticesItem extends StatelessWidget {
                       comunicado.assuntoComunicado!.toUpperCase(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: MediaQuery.of(context).textScaleFactor * 18,
+                        // fontSize: MediaQuery.of(context).textScaleFactor * 18,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Montserrat',

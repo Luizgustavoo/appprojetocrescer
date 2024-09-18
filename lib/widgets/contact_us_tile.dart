@@ -38,14 +38,14 @@ class ContactUsTile extends StatelessWidget {
           title: Text(
             title!,
             style: TextStyle(
-              fontSize: MediaQuery.of(context).textScaleFactor * 12.5,
+              // fontSize: MediaQuery.of(context).textScaleFactor * 12.5,
               fontFamily: 'Montserrat',
             ),
           ),
           subtitle: Text(
             subtitle!,
             style: TextStyle(
-              fontSize: MediaQuery.of(context).textScaleFactor * 11,
+              // fontSize: MediaQuery.of(context).textScaleFactor * 11,
               fontFamily: 'Ubuntu',
               fontWeight: FontWeight.w500,
             ),

@@ -8,7 +8,7 @@ import 'package:projetocrescer/models/class_penalties.dart';
 import 'package:projetocrescer/models/class_pendencies.dart';
 import 'package:projetocrescer/models/class_login.dart';
 import 'package:projetocrescer/preferences/network_services.dart';
-import 'package:projetocrescer/utils/app_route.dart';
+import 'package:projetocrescer/routes/app_route.dart';
 import 'package:projetocrescer/utils/custom_links.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/utils/hide_home.dart';
@@ -238,15 +238,15 @@ class _BannerWidgetState extends State<BannerWidget> {
   List<BannerModel> listBanners = [
     BannerModel(
         imagePath:
-            'https://casadobommeninodearapongas.org/images/noticias/projeto_crescer_realiza_a_doacao_de_19_computadores_para_seus_alunos_1685713621.jpeg',
+            'https://casadobommeninodearapongas.org//storage/12125/Site-1.jpg',
         id: '1'),
     BannerModel(
         imagePath:
-            'https://casadobommeninodearapongas.org/images/noticias/projeto_crescer_promove_com_sucesso_o_ultimo_encontro_do_curso_de_chocolate_1686171479.jpeg',
+            'https://casadobommeninodearapongas.org//storage/11968/2.jpg',
         id: '2'),
     BannerModel(
         imagePath:
-            'https://casadobommeninodearapongas.org/images/noticias/projeto_crescer_realiza_com_sucesso_o_dia_do_desafio_1685624728.jpeg',
+            'https://casadobommeninodearapongas.org//storage/11919/Site.jpg',
         id: '3'),
   ];
 

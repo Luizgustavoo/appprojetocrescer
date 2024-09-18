@@ -40,7 +40,7 @@ class _PenaltyItemState extends State<PenaltyItem> {
                   widget._penalidade.descricaoTipoPenalidade!,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).textScaleFactor * 17,
+                    // fontSize: MediaQuery.of(context).textScaleFactor * 17,
                     fontFamily: 'Montserrat',
                     color: CustomColors.azul,
                   ),

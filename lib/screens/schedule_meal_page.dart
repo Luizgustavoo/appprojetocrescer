@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:simple_annimated_staggered/simple_annimated_staggered.dart';
 
-import '../utils/app_route.dart';
+import '../routes/app_route.dart';
 
 class MealPage extends StatefulWidget {
   static const PREFERENCES_IS_FIRST_LAUNCH_STRING =
@@ -171,7 +171,7 @@ class _MealPageState extends State<MealPage> {
                                   ),
                                 ),
                                 content: Text(
-                                  'Você só pode agendar refeições antes das 8:30 da manhã e 14:00 da tarde.',
+                                  'Você só pode agendar refeições entre 7:30 | 8:30 da manhã e 12:00 | 14:00 da tarde.',
                                   style: TextStyle(
                                     fontFamily: 'Ubuntu',
                                     fontSize: 15,

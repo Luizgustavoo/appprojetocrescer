@@ -56,7 +56,7 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: MediaQuery.of(context).textScaleFactor * 15,
+            // fontSize: MediaQuery.of(context).textScaleFactor * 15,
           ),
         ),
         background: Stack(
@@ -102,7 +102,7 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.red.shade500,
-              fontSize: MediaQuery.of(context).textScaleFactor * 22,
+              // fontSize: MediaQuery.of(context).textScaleFactor * 22,
               fontWeight: FontWeight.bold,
               fontFamily: 'Montserrat',
             ),
@@ -155,7 +155,7 @@ class _DetailNoticesPageState extends State<DetailNoticesPage> {
               softWrap: true,
               style: TextStyle(
                 color: Colors.black87,
-                fontSize: MediaQuery.of(context).textScaleFactor * 16,
+                // fontSize: MediaQuery.of(context).textScaleFactor * 16,
                 fontFamily: 'Ubuntu',
               ),
               textAlign: TextAlign.justify,

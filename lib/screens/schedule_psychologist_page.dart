@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_login.dart';
-import 'package:projetocrescer/utils/app_route.dart';
+import 'package:projetocrescer/routes/app_route.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/custom_rich_text.dart';
 import 'package:provider/provider.dart';

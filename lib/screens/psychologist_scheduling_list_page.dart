@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projetocrescer/models/class_scheduling.dart';
 import 'package:projetocrescer/models/class_login.dart';
-import 'package:projetocrescer/utils/app_route.dart';
+import 'package:projetocrescer/routes/app_route.dart';
 import 'package:projetocrescer/widgets/scheduling_tile.dart';
 import 'package:projetocrescer/utils/custom_colors.dart';
 import 'package:projetocrescer/widgets/show_case.dart';

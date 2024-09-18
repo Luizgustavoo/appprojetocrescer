@@ -158,14 +158,14 @@ class FrequencyChip extends StatelessWidget {
         child: Text(
           count,
           style: TextStyle(
-              fontSize: MediaQuery.of(context).textScaleFactor * 15,
+              // fontSize: MediaQuery.of(context).textScaleFactor * 15,
               fontFamily: 'Montserrat',
               color: Colors.white),
         ),
       ),
       labelStyle: TextStyle(
         color: Colors.white,
-        fontSize: MediaQuery.of(context).textScaleFactor * 15,
+        // fontSize: MediaQuery.of(context).textScaleFactor * 15,
         fontFamily: 'Ubuntu',
         fontWeight: FontWeight.bold,
         letterSpacing: .5,

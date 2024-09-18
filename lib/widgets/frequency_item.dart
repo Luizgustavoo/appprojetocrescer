@@ -44,7 +44,7 @@ class _FrequencyItemState extends State<FrequencyItem> {
                       .toUpperCase(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).textScaleFactor * 13,
+                    // fontSize: MediaQuery.of(context).textScaleFactor * 13,
                     fontFamily: 'Montserrat',
                     color: CustomColors.azul,
                   ),

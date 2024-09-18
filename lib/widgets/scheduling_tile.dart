@@ -64,7 +64,7 @@ class _SchedulingItemState extends State<SchedulingItem> {
                     fontFamily: 'Montserrat',
                     color: CustomColors.azul,
                     fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.of(context).textScaleFactor * 16,
+                    // fontSize: MediaQuery.of(context).textScaleFactor * 16,
                   ),
                 ),
                 subtitle: Padding(

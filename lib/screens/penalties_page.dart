@@ -89,14 +89,14 @@ class _PenaltiesPageState extends State<PenaltiesPage> {
                 child: Text(
                   penalidadesData.totalOcorrencias.toString(),
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).textScaleFactor * 15,
+                    // fontSize: MediaQuery.of(context).textScaleFactor * 15,
                     fontFamily: 'Montserrat',
                   ),
                 ),
               ),
               labelStyle: TextStyle(
                 color: Colors.white,
-                fontSize: MediaQuery.of(context).textScaleFactor * 15,
+                // fontSize: MediaQuery.of(context).textScaleFactor * 15,
                 fontFamily: 'Ubuntu',
                 fontWeight: FontWeight.bold,
                 letterSpacing: .5,
@@ -113,14 +113,14 @@ class _PenaltiesPageState extends State<PenaltiesPage> {
                 child: Text(
                   penalidadesData.totalAdvertencias.toString(),
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).textScaleFactor * 15,
+                    // fontSize: MediaQuery.of(context).textScaleFactor * 15,
                     fontFamily: 'Montserrat',
                   ),
                 ),
               ),
               labelStyle: TextStyle(
                 color: Colors.white,
-                fontSize: MediaQuery.of(context).textScaleFactor * 15,
+                // fontSize: MediaQuery.of(context).textScaleFactor * 15,
                 fontFamily: 'Ubuntu',
                 fontWeight: FontWeight.bold,
                 letterSpacing: .5,
